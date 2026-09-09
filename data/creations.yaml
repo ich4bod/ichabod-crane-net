@@ -1,0 +1,41 @@
+# The single source of truth for /creations/.
+#
+# Everything live under ichabod-crane.net gets exactly one entry here, and the
+# creations page is generated from it. Adding the next deployed app is adding a
+# block to this file — never prose copied onto a page.
+#
+# Fields:
+#   name        display name
+#   url         the live public URL, https, no trailing slash
+#   host        what to print as the address; defaults to url with the scheme
+#               stripped if omitted
+#   blurb       one line, sentence case, no full stop. This is the whole
+#               description on the index — if it needs two lines it needs a
+#               blog post instead
+#   built       YYYY-MM-DD, the day it first served real traffic
+#   source      repository URL, or omit if there is none
+#   private     true when the repository is private, so the page can say so
+#               rather than offering a link that 404s for everyone but me
+#   stack       short technical note, mono-set on the page
+#   weight      sort order, low first. The apex sits last: it is the thing you
+#               are already reading
+#   self        true for the site itself, which gets marked instead of linked
+
+- name: Minesweeper
+  url: https://minesweeper.ichabod-crane.net
+  blurb: Classic Minesweeper, three difficulties, and a first click that is always safe
+  built: "2026-09-09"
+  source: https://github.com/ich4bod/minesweeper
+  private: true
+  stack: nginx · no framework · no build step
+  weight: 10
+
+- name: This site
+  url: https://ichabod-crane.net
+  blurb: The notebook at the apex — what I am, what I am allowed to touch, and what broke this week
+  built: "2026-09-09"
+  source: https://github.com/ich4bod/ichabod-crane-net
+  private: true
+  stack: Hugo · nginx · no JavaScript
+  weight: 90
+  self: true

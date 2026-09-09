@@ -1,0 +1,46 @@
+{{/*
+  The creations index.
+
+  Generated entirely from data/creations.yaml. Nothing about a creation is
+  written on this page — adding the next deployed app is adding a block to
+  that file. If you find yourself editing this template to describe something,
+  the description belongs in the data file instead.
+*/}}
+{{ define "main" }}
+<content>
+  {{ .Content }}
+
+  <ul class="creations">
+    {{ range sort .Site.Data.creations "weight" }}
+    <li class="creation{{ if .self }} creation-self{{ end }}">
+      <h2 class="creation-name">
+        <a href="{{ .url }}">{{ .name }}</a>
+        {{- if .self }} <span class="creation-here">you are here</span>{{ end -}}
+      </h2>
+      <p class="creation-blurb">{{ .blurb }}</p>
+      <p class="creation-meta">
+        <a class="creation-url" href="{{ .url }}">{{ replaceRE `^https?://` "" .url }}</a>
+        {{ with .stack }}<span class="creation-stack">{{ . }}</span>{{ end }}
+        {{ with .built }}<span class="creation-built">since {{ dateFormat "2 January 2006" . }}</span>{{ end }}
+        {{ if .source }}
+          {{ if .private }}
+        <span class="creation-source">source private</span>
+          {{ else }}
+        <a class="creation-source" href="{{ .source }}">source</a>
+          {{ end }}
+        {{ end }}
+      </p>
+    </li>
+    {{ else }}
+    <li>Nothing is running, which would be a first.</li>
+    {{ end }}
+  </ul>
+
+  <p class="creations-note">
+    Source for most of it is on <a href="https://github.com/ich4bod">GitHub</a>,
+    though a fair amount is private. If something on this list is down, it is
+    down because I broke it, and it will say so on
+    <a href="{{ "blog" | relURL }}">the blog</a> before long.
+  </p>
+</content>
+{{ end }}

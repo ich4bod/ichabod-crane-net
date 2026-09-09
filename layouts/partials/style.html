@@ -224,6 +224,128 @@
     ul.blog-posts li span { display: block; }
   }
 
+  /* ---------- creations ---------- */
+
+  /* The one place on the site with anything card-shaped. It earns it: these
+     are separate running things, not paragraphs, and the eye needs to be able
+     to count them. The lantern from the body gradient is reused as the
+     interaction — hovering a row warms its edge and lights its rule, as
+     though the lamp had been carried closer to it. No new colours. */
+
+  ul.creations {
+    list-style: none;
+    padding: 0;
+    margin: 2.5rem 0 2.25rem;
+  }
+
+  .creation {
+    position: relative;
+    margin: 0 0 0.85rem;
+    padding: 1.15rem 1.35rem 1.05rem 1.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background-image: linear-gradient(180deg, var(--code-bg) 0%, transparent 70%);
+    transition: border-color 0.18s ease, background-color 0.18s ease;
+  }
+
+  /* The lit edge. Dim until the row is hovered or holds focus. */
+  .creation::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    bottom: -1px;
+    width: 2px;
+    border-radius: 4px 0 0 4px;
+    background: var(--accent-dim);
+    opacity: 0.55;
+    transition: opacity 0.18s ease, background 0.18s ease;
+  }
+
+  .creation:hover,
+  .creation:focus-within {
+    border-color: var(--accent-dim);
+    background-color: var(--bg-glow);
+  }
+
+  .creation:hover::before,
+  .creation:focus-within::before {
+    background: var(--accent);
+    opacity: 1;
+  }
+
+  .creation-name {
+    margin: 0 0 0.3rem;
+    font-size: 1.2rem;
+    letter-spacing: 0.01em;
+  }
+
+  .creation-name a {
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  .creation-name a:hover { border-bottom-color: var(--accent-dim); }
+
+  /* "you are here" — the apex belongs on its own list, and saying so is more
+     honest than quietly omitting it. */
+  .creation-here {
+    margin-left: 0.5rem;
+    padding: 0.12rem 0.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    vertical-align: 0.15em;
+    white-space: nowrap;
+  }
+
+  .creation-self { border-style: dashed; }
+
+  .creation-blurb { margin: 0 0 0.6rem; }
+
+  .creation-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.5rem;
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+  }
+
+  /* Interpuncts between meta items, drawn rather than typed, so the data file
+     never has to carry punctuation. Hung off the end of each item rather than
+     the front of the next one: the row wraps, and a separator that leads its
+     item ends up stranded at the start of a line with nothing before it. */
+  .creation-meta > *:not(:last-child)::after {
+    content: "·";
+    margin-left: 0.5rem;
+    color: var(--rule);
+  }
+
+  .creation-meta a { color: var(--muted); text-decoration: none; }
+  .creation-meta a:hover { color: var(--accent); }
+  .creation-url { border-bottom: 1px dotted var(--rule); }
+  .creation-url:hover { border-bottom-color: var(--accent-dim); }
+
+  .creations-note {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  @media (max-width: 34rem) {
+    .creation { padding: 1rem 1rem 0.9rem 1.15rem; }
+    .creation-meta { gap: 0.25rem 0.55rem; }
+    .creation-meta > * + *::before { margin-right: 0.55rem; }
+  }
+
   /* ---------- post navigator ---------- */
 
   .post-nav {

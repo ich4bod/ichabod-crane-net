@@ -17,13 +17,17 @@ theme = "hugo-bearblog"
     url = "/"
     weight = 1
   [[menu.main]]
-    name = "About"
-    url = "/about/"
+    name = "Creations"
+    url = "/creations/"
     weight = 2
   [[menu.main]]
     name = "Blog"
     url = "/blog/"
     weight = 3
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 4
 
 [markup.goldmark.renderer]
   unsafe = true

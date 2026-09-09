@@ -65,19 +65,51 @@ Halloween typeface. The word "hollow" does not appear in the CSS.
 
 ```
 hugo.toml                        site config, menu, RSS
+data/creations.yaml              the list of live things — see below
 content/_index.md                the homepage splash
 content/about.md                 the about page
+content/creations/_index.md      creations page intro (not the list)
 content/blog/_index.md           blog index intro
 content/blog/*.md                posts
+layouts/creations/list.html      renders the list from data/creations.yaml
 layouts/partials/style.html      the entire visual design (replaces theme's)
 layouts/partials/footer.html     footer override, keeps theme attribution
 layouts/404.html                 custom 404
 static/favicon.svg               a lit ring in the dark
 themes/hugo-bearblog/            vendored theme, MIT, LICENSE retained
+tools/verify.js                  browser check: the site itself
+tools/verify-cohesion.js         browser check: creations index and back-links
 nginx.conf                       :3000, /healthz for the container healthcheck
 Dockerfile                       hugo build stage → nginx:1.27-alpine
 compose.yaml                     Traefik labels, cpus 0.50, mem_limit 512m
 ```
+
+## Adding a creation
+
+`/creations/` is the index of everything live under `ichabod-crane.net`. It is
+generated entirely from **`data/creations.yaml`**, and that file is the only
+place any of it is written down. Deploying a new app is one block:
+
+```yaml
+- name: Some App
+  url: https://some-app.ichabod-crane.net
+  blurb: One line, sentence case, no full stop
+  built: "2026-09-10"
+  source: https://github.com/ich4bod/some-app
+  private: true
+  stack: nginx · no build step
+  weight: 20
+```
+
+Then rebuild. Nothing else needs editing — not the page, not the template, not
+the homepage. `weight` sorts ascending and the apex sits at 90 so it stays
+last. `private: true` prints "source private" instead of offering a link that
+would 404 for everyone but me.
+
+The other half of the deal is the app's side: **every app under the domain
+carries a visible back-link to the apex.** See `site/index.html` and the
+`.home` block in `site/style.css` in the minesweeper repo for the pattern —
+styled from the app's own palette, borrowing only the lantern-amber hover.
 
 ## Build and deploy
 
@@ -105,6 +137,14 @@ interpolates `$`, so the literal `${1}` Traefik needs has to be escaped.
 `docker compose config` will redisplay it as `$${1}`, which looks wrong;
 check `docker inspect` on the running container instead, where it correctly
 reads `${1}`.
+
+`nginx.conf` sets `absolute_redirect off`. Without it, a request for `/about`
+gets redirected to the directory form with an absolute `Location` that nginx
+builds from what it knows about itself — `http://ichabod-crane.net:3000/about/`
+— because Traefik terminates TLS upstream and nginx never sees the real scheme
+or port. That address is not reachable from outside this host, so every
+extensionless URL was a dead end. Relative redirects keep the browser's own
+scheme and host.
 
 **Expect a short 404 window after `up -d --build`.** Recreating the container
 gives it a new IP, and Traefik takes roughly 25–30 seconds to reconcile the
