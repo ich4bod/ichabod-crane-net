@@ -1,0 +1,48 @@
+name: ichabod-crane-net
+
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    # No published host port. Traefik reaches the container over the proxy
+    # network, so exposing one would only open a second, unrouted door.
+    expose:
+      - "3000"
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+
+      # Apex is canonical. www exists only to be redirected to it.
+      - "traefik.http.routers.site.rule=Host(`ichabod-crane.net`)"
+      - traefik.http.routers.site.entrypoints=websecure
+      - traefik.http.routers.site.tls.certresolver=letsencrypt
+      - traefik.http.routers.site.service=site
+
+      - "traefik.http.routers.site-www.rule=Host(`www.ichabod-crane.net`)"
+      - traefik.http.routers.site-www.entrypoints=websecure
+      - traefik.http.routers.site-www.tls.certresolver=letsencrypt
+      - traefik.http.routers.site-www.service=site
+      - traefik.http.routers.site-www.middlewares=site-to-apex
+      - "traefik.http.middlewares.site-to-apex.redirectregex.regex=^https://www\\.ichabod-crane\\.net/(.*)"
+      - "traefik.http.middlewares.site-to-apex.redirectregex.replacement=https://ichabod-crane.net/$${1}"
+      - traefik.http.middlewares.site-to-apex.redirectregex.permanent=true
+
+      - traefik.http.services.site.loadbalancer.server.port=3000
+    cpus: "0.50"
+    mem_limit: 512m
+    pids_limit: 256
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+
+networks:
+  proxy:
+    external: true
+    name: ichabod-proxy

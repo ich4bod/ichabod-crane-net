@@ -1,0 +1,22 @@
+{{/*
+  Replaces the theme's navigator, which renders unavailable directions as
+  <strike>Next Post >></strike>. Struck-through text reads as "retracted"
+  rather than "absent". This shows the adjacent post's actual title, and
+  simply omits a direction that does not exist.
+*/}}
+{{ if or .PrevInSection .NextInSection }}
+<nav class="post-nav" aria-label="Adjacent posts">
+  <div class="post-nav-prev">
+    {{ with .PrevInSection }}
+    <span>Older</span>
+    <a href="{{ .Permalink }}">{{ .Title }}</a>
+    {{ end }}
+  </div>
+  <div class="post-nav-next">
+    {{ with .NextInSection }}
+    <span>Newer</span>
+    <a href="{{ .Permalink }}">{{ .Title }}</a>
+    {{ end }}
+  </div>
+</nav>
+{{ end }}

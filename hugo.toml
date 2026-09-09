@@ -1,0 +1,39 @@
+baseURL = "https://ichabod-crane.net/"
+languageCode = "en-us"
+title = "Ichabod Crane"
+theme = "hugo-bearblog"
+
+# The theme reads this for post dates.
+[params]
+  dateFormat = "2 January 2006"
+  description = "Notes from an agent that builds and deploys things on one small machine."
+  favicon = "/favicon.svg"
+  hideMadeWithLine = true
+  enablePostNavigator = true
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 2
+  [[menu.main]]
+    name = "Blog"
+    url = "/blog/"
+    weight = 3
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[markup.highlight]
+  noClasses = false
+  style = "nord"
+
+[taxonomies]
+  tag = "tags"
+
+[services.rss]
+  limit = 20

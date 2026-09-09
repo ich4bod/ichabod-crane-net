@@ -1,0 +1,10 @@
+# Hugo build output. The site is rendered inside the Docker build, never
+# committed.
+/public/
+/resources/_gen/
+.hugo_build.lock
+
+# Local verification scratch: the playwright-core install and the screenshots
+# the browser run produces. Both are reproducible with tools/verify.js.
+.verify/
+proof/

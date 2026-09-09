@@ -1,0 +1,284 @@
+{{/*
+  Replaces the theme's stylesheet wholesale.
+
+  The Sleepy Hollow brief was "atmosphere, not costume": no horsemen, no
+  pumpkins, no dripping typeface. The mood is carried by four things only —
+  a night-blue ground, bone-coloured text, one lantern-amber accent, and a
+  book serif with room to breathe. In light mode the same page becomes
+  parchment and iron-gall ink, which is the other half of the same story.
+*/}}
+<style>
+  :root {
+    --bg: #0e1116;
+    --bg-glow: rgba(201, 151, 63, 0.055);
+    --fg: #cec8b9;
+    --fg-strong: #ece6d8;
+    --muted: #7f7a6d;
+    --accent: #c9973f;
+    --accent-dim: #8d6a2c;
+    --rule: rgba(206, 200, 185, 0.16);
+    --code-bg: rgba(255, 255, 255, 0.045);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
+             Georgia, Cambria, "Times New Roman", serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+            "Liberation Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #e9e2d1;
+      --bg-glow: rgba(122, 79, 29, 0.05);
+      --fg: #2a2620;
+      --fg-strong: #14110d;
+      --muted: #6d6455;
+      --accent: #8a5518;
+      --accent-dim: #a9773f;
+      --rule: rgba(42, 38, 32, 0.2);
+      --code-bg: rgba(42, 38, 32, 0.06);
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0 auto;
+    padding: 3.5rem 1.25rem 4rem;
+    max-width: 42rem;
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--fg);
+    background-color: var(--bg);
+    /* The lantern: one soft pool of warm light at the top of the page.
+       It is the only ornament on the site. */
+    background-image: radial-gradient(
+      62rem 34rem at 50% -14rem,
+      var(--bg-glow) 0%,
+      transparent 72%
+    );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    text-rendering: optimizeLegibility;
+    overflow-wrap: break-word;
+  }
+
+  /* ---------- masthead ---------- */
+
+  header {
+    margin-bottom: 3rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  header .title { text-decoration: none; }
+
+  header .title h2 {
+    margin: 0 0 0.4rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-strong);
+  }
+
+  header .title:hover h2 { color: var(--accent); }
+
+  header nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  header nav a {
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+  }
+
+  header nav a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent-dim);
+  }
+
+  /* ---------- prose ---------- */
+
+  h1, h2, h3, h4 {
+    color: var(--fg-strong);
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 2.5rem 0 0.75rem;
+  }
+
+  h1 { font-size: 1.9rem; letter-spacing: -0.01em; margin-top: 0; }
+  h2 { font-size: 1.35rem; }
+  h3 { font-size: 1.1rem; }
+
+  p, ul, ol { margin: 0 0 1.25rem; }
+
+  ul, ol { padding-left: 1.35rem; }
+  li { margin-bottom: 0.4rem; }
+
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+  a:hover { color: var(--fg-strong); }
+
+  strong { color: var(--fg-strong); font-weight: 600; }
+
+  small { color: var(--muted); }
+
+  blockquote {
+    margin: 1.75rem 0;
+    padding: 0.1rem 0 0.1rem 1.25rem;
+    border-left: 2px solid var(--accent-dim);
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  blockquote p:last-child { margin-bottom: 0; }
+
+  hr {
+    border: 0;
+    height: 1px;
+    background: var(--rule);
+    margin: 3rem 0;
+  }
+
+  /* ---------- code ---------- */
+
+  code, pre, kbd {
+    font-family: var(--mono);
+    font-size: 0.875em;
+  }
+
+  code {
+    background: var(--code-bg);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 0.9rem 1rem;
+    overflow-x: auto;
+    line-height: 1.55;
+  }
+
+  pre code { background: none; padding: 0; }
+
+  /* ---------- tables, media ---------- */
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 0.45rem 0.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  th { color: var(--fg-strong); font-weight: 600; }
+
+  img, video { max-width: 100%; height: auto; }
+
+  /* ---------- post list ---------- */
+
+  ul.blog-posts {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 1rem;
+    margin-bottom: 0.9rem;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 8.5rem;
+    color: var(--muted);
+    font-size: 0.8125rem;
+    font-family: var(--mono);
+    font-style: normal;
+  }
+
+  ul.blog-posts li span i { font-style: normal; }
+
+  ul.blog-posts li a { text-decoration: none; border-bottom: 1px solid transparent; }
+  ul.blog-posts li a:hover { border-bottom-color: var(--accent-dim); }
+
+  @media (max-width: 34rem) {
+    ul.blog-posts li { display: block; }
+    ul.blog-posts li span { display: block; }
+  }
+
+  /* ---------- post navigator ---------- */
+
+  .post-nav {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+    margin: 3rem 0 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.9375rem;
+  }
+
+  .post-nav > div { flex: 1 1 0; min-width: 0; }
+  .post-nav-next { text-align: right; }
+
+  .post-nav span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.15rem;
+  }
+
+  .post-nav a { text-decoration: none; }
+  .post-nav a:hover { text-decoration: underline; }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  footer a { color: var(--muted); }
+  footer a:hover { color: var(--accent); }
+
+  /* ---------- accessibility ---------- */
+
+  a:focus-visible, :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--accent-dim);
+    color: var(--bg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
