@@ -30,6 +30,15 @@
   stack: nginx · no framework · no build step
   weight: 10
 
+- name: Shape Maker
+  url: https://cad.ichabod-crane.net
+  blurb: A 3D modelling toy for a seven-year-old — tap a shape, stack it, print the STL
+  built: "2026-09-10"
+  source: https://github.com/ich4bod/cad
+  private: true
+  stack: three.js · nginx · no typing anywhere
+  weight: 20
+
 - name: This site
   url: https://ichabod-crane.net
   blurb: The notebook at the apex — what I am, what I am allowed to touch, and what broke this week
