@@ -75,16 +75,25 @@ async function styleOf(page, sel, prop) {
     check('home returns 200', status === 200, 'status ' + status);
 
     const title = await page.title();
-    check('home <title> is the site name', /Ichabod Crane/.test(title), title);
+    check('home <title> carries the pumpkin before the name',
+      /^🎃\s*Ichabod Crane/.test(title), title);
 
+    const brand = (await page.textContent('header .title')) || '';
+    check('masthead carries the pumpkin before the name',
+      /^🎃\s*Ichabod Crane$/.test(brand.trim()), brand.trim());
+
+    // Zach's complaint was the name appearing as the title and then again as
+    // the first line of the body. The h1 has to say something else.
     const h1 = (await page.textContent('main h1')) || '';
-    check('home shows the name as h1', /Ichabod Crane/.test(h1.trim()), h1.trim());
+    check('home h1 is not a second copy of the name',
+      h1.trim().length > 0 && !/Ichabod Crane/.test(h1), h1.trim());
 
     const bodyText = await page.textContent('body');
     check('home splash describes what this is',
       /software agent/i.test(bodyText) && /queue of cards/i.test(bodyText));
-    check('home mentions Irving without dressing up as him',
-      /Irving/.test(bodyText) && !/headless horseman/i.test(bodyText));
+    check('home leans on the headless-bot joke, not the literary one',
+      /headless/i.test(bodyText) && /horseman/i.test(bodyText) &&
+      !/Irving/i.test(bodyText) && !/schoolmaster/i.test(bodyText));
 
     // Nav must actually be navigable, not just present in markup.
     const navHrefs = await page.$$eval('header nav a', (as) => as.map((a) => a.getAttribute('href')));
@@ -223,6 +232,75 @@ async function styleOf(page, sel, prop) {
     const text = await page.textContent('body');
     check('404 is the custom page', /Nothing down this road/i.test(text));
     await page.screenshot({ path: OUT + '/06-404-dark.png', fullPage: true });
+    await ctx.close();
+  }
+
+  // ------------------------------------------- favicon and link previews
+  console.log('\nFAVICON AND LINK PREVIEW');
+  {
+    const ctx = await browser.newContext({ colorScheme: 'dark' });
+    const page = await ctx.newPage();
+    await page.goto(BASE + '/', { waitUntil: 'networkidle' });
+
+    const iconHref = await page.$eval('link[rel~="icon"], link[rel="shortcut icon"]',
+      (l) => l.href);
+    const icon = await page.request.get(iconHref);
+    const iconBody = await icon.text();
+    check('favicon resolves', icon.status() === 200, iconHref + ' -> ' + icon.status());
+    check('favicon is the pumpkin emoji and nothing else',
+      /image\/svg/.test(icon.headers()['content-type'] || '') &&
+      iconBody.includes('\u{1F383}') &&
+      !/<circle|<rect|<path/.test(iconBody),
+      (icon.headers()['content-type'] || '') + ', ' + iconBody.length + ' bytes');
+
+    const meta = await page.evaluate(() => {
+      const out = {};
+      document.querySelectorAll('meta[property^="og:"], meta[name^="twitter:"]')
+        .forEach((m) => { out[m.getAttribute('property') || m.getAttribute('name')] = m.content; });
+      return out;
+    });
+    check('og:title set', /Ichabod Crane/.test(meta['og:title'] || ''), meta['og:title']);
+    check('og:description set', (meta['og:description'] || '').length > 30,
+      meta['og:description']);
+    check('og:image set', /\/og\.png$/.test(meta['og:image'] || ''), meta['og:image']);
+    check('og:image dimensions declared',
+      meta['og:image:width'] === '1200' && meta['og:image:height'] === '630',
+      meta['og:image:width'] + 'x' + meta['og:image:height']);
+    check('og:image has alt text', (meta['og:image:alt'] || '').length > 20,
+      meta['og:image:alt']);
+    check('twitter card is the large one',
+      meta['twitter:card'] === 'summary_large_image', meta['twitter:card']);
+
+    // The card is only a preview if the bytes are really there at the size
+    // the tags claim, so load it and measure it rather than trusting them.
+    const dims = await page.evaluate((src) => new Promise((res, rej) => {
+      const i = new Image();
+      i.onload = () => res([i.naturalWidth, i.naturalHeight]);
+      i.onerror = () => rej(new Error('og:image failed to load'));
+      i.src = src;
+    }), meta['og:image']);
+    check('og:image is really 1200x630',
+      dims[0] === 1200 && dims[1] === 630, dims.join('x'));
+
+    // Draw what a scraper has to work with. This is a mock of a preview
+    // card, not a real one — it proves the tags and the image are sufficient
+    // to build one, which is the part this site controls.
+    await page.setContent(`<!doctype html><meta charset="utf-8">
+      <body style="margin:0;background:#e6e9ee;font:15px -apple-system,system-ui,sans-serif;
+                   padding:36px;width:492px">
+      <div id="card" style="width:420px;border-radius:18px;overflow:hidden;background:#fff;
+                  box-shadow:0 1px 3px rgba(0,0,0,.22)">
+        <img src="${meta['og:image']}" style="display:block;width:100%">
+        <div style="padding:11px 14px 13px">
+          <div style="font-weight:600;line-height:1.3">${meta['og:title']}</div>
+          <div style="color:#4c5257;line-height:1.35;margin-top:2px">${meta['og:description']}</div>
+          <div style="color:#8b9196;margin-top:5px;text-transform:lowercase">${new URL(meta['og:url'] || BASE).host}</div>
+        </div>
+      </div></body>`, { waitUntil: 'networkidle' });
+    await page.locator('#card').screenshot({ path: OUT + '/07-link-preview.png' });
+
+    await page.goto(BASE + '/', { waitUntil: 'networkidle' });
+    await page.screenshot({ path: OUT + '/08-home-masthead.png', clip: { x: 0, y: 0, width: 1100, height: 300 } });
     await ctx.close();
   }
 

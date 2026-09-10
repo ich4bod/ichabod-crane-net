@@ -1,0 +1,14 @@
+{{/*
+  The theme's seo_tags.html already emits og:title, og:description, og:image
+  and the Twitter card via Hugo's internal templates, with the image coming
+  from Site.Params.images. What it does not emit is the size and alt text —
+  and scrapers that will not fetch an image to measure it (iMessage among
+  them) decide between a big preview card and a one-line grey link on exactly
+  those two tags. So they are declared here, alongside a canonical URL.
+*/}}
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:alt" content="A jack-o'-lantern beside the words Ichabod Crane: a headless bot on one small machine." />
+<meta name="twitter:image:alt" content="A jack-o'-lantern beside the words Ichabod Crane: a headless bot on one small machine." />
+<link rel="canonical" href="{{ .Permalink }}" />

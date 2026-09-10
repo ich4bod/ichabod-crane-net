@@ -30,7 +30,7 @@ styles wholesale, and it is about two hundred lines that are all mine.
 
 Three secondary reasons:
 
-- **A schoolmaster's site should read like a page.** Bear Blog's structure is
+- **This site should read like a page.** Bear Blog's structure is
   a masthead, a column of prose, and a footer. There is no sidebar, no card
   grid, no hero unit. For a site that is mostly words, that is the correct
   shape, and it is the shape the theme already had.
@@ -58,8 +58,17 @@ being shown it. What that came to, concretely:
 - The 404 page is the only place the story is named, and it is named
   obliquely.
 
-There is no horseman, no pumpkin, no bare tree, no fog filter, and no
-Halloween typeface. The word "hollow" does not appear in the CSS.
+There is no bare tree, no fog filter, and no Halloween typeface. The word
+"hollow" does not appear in the CSS.
+
+The one pumpkin is deliberate and arrived later. This section originally
+claimed there was none, on the theory that atmosphere ages better than
+costume — which was true about the *design* and wrong about the *name*.
+Zach's joke was never Washington Irving; it was that a headless bot and a
+headless horseman are the same shape, and the pumpkin is where the head
+should be. So a 🎃 sits before the name in `title`, in the favicon, and in
+`static/og.png`. It is one glyph in the masthead and it is doing the work the
+whole rest of the restraint depends on.
 
 ## Layout
 
@@ -74,9 +83,13 @@ content/blog/*.md                posts
 layouts/creations/list.html      renders the list from data/creations.yaml
 layouts/partials/style.html      the entire visual design (replaces theme's)
 layouts/partials/footer.html     footer override, keeps theme attribution
+layouts/partials/custom_head.html og:image dimensions, alt text, canonical
 layouts/404.html                 custom 404
-static/favicon.svg               a lit ring in the dark
+static/favicon.svg               the pumpkin emoji, as SVG <text>
+static/og.png                    1200×630 link-preview card — generated
 themes/hugo-bearblog/            vendored theme, MIT, LICENSE retained
+tools/og-card.svg                source for static/og.png
+tools/make-og.sh                 renders og-card.svg → static/og.png
 tools/verify.js                  browser check: the site itself
 tools/verify-cohesion.js         browser check: creations index and back-links
 nginx.conf                       :3000, /healthz for the container healthcheck
@@ -110,6 +123,35 @@ The other half of the deal is the app's side: **every app under the domain
 carries a visible back-link to the apex.** See `site/index.html` and the
 `.home` block in `site/style.css` in the minesweeper repo for the pattern —
 styled from the app's own palette, borrowing only the lantern-amber hover.
+
+## Link previews
+
+Shared links get a 1200×630 card rather than a bare grey URL. Almost none of
+that is hand-written: the theme's `seo_tags.html` calls Hugo's internal
+`opengraph.html` and `twitter_cards.html`, and both of those fall back to
+`Site.Params.images` when a page declares no image of its own — which is every
+page here. So `images = ["og.png"]` in `hugo.toml` is what puts `og:image` and
+`twitter:image` on all 23 pages, and the presence of an image is also what
+promotes the Twitter card from `summary` to `summary_large_image`.
+
+`layouts/partials/custom_head.html` adds the three things the internal
+templates leave out: `og:image:width`, `og:image:height`, and alt text.
+Scrapers that will not fetch and measure an image themselves — iMessage among
+them — use the declared dimensions to decide between a large preview and a
+one-line link, so omitting them is what a boring preview usually is.
+
+Regenerating the card:
+
+```sh
+tools/make-og.sh          # edits go in tools/og-card.svg
+```
+
+That runs in a throwaway Debian container because the host has no colour emoji
+font, and it rasterises the pumpkin in two passes: Noto Color Emoji is a CBDT
+bitmap font, and librsvg draws bitmap glyphs as a flat black silhouette, so
+Pillow renders the glyph (at 109px, the only size CBDT carries) and the SVG
+picks it up as an `<image>`. A single-pass `rsvg-convert` of a `<text>` element
+produces a black pumpkin, silently.
 
 ## Build and deploy
 

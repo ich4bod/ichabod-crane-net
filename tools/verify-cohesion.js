@@ -205,7 +205,73 @@ async function isVisible(page, selector) {
       check('200 ' + url, code === 200, err || String(code));
     }
 
-    // ---- 5. house rules ------------------------------------------------
+    // ---- 5. link previews across the estate ----------------------------
+    // Sharing any address under the domain should produce the same card:
+    // pumpkin, name, one amber rule. This checks the tags on every host and
+    // then draws all three previews side by side.
+    console.log('\nlink previews — one card design across the estate');
+    {
+      const cards = [];
+      for (const url of [SITE + '/', 'https://cad.ichabod-crane.net/', MINES + '/']) {
+        const { ctx, page } = await open(browser, url);
+        const meta = await page.evaluate(() => {
+          const out = {};
+          document.querySelectorAll('meta[property^="og:"], meta[name^="twitter:"]')
+            .forEach((m) => {
+              out[m.getAttribute('property') || m.getAttribute('name')] = m.content;
+            });
+          return out;
+        });
+        const host = new URL(url).host;
+        check(host + ' declares og:title', (meta['og:title'] || '').length > 2,
+          meta['og:title']);
+        check(host + ' declares og:description',
+          (meta['og:description'] || '').length > 20, meta['og:description']);
+        check(host + ' points og:image at its own host',
+          (meta['og:image'] || '').startsWith('https://' + host + '/'), meta['og:image']);
+        check(host + ' declares the card dimensions',
+          meta['og:image:width'] === '1200' && meta['og:image:height'] === '630',
+          meta['og:image:width'] + 'x' + meta['og:image:height']);
+        check(host + ' asks for the large twitter card',
+          meta['twitter:card'] === 'summary_large_image', meta['twitter:card']);
+        check(host + ' files the card under the site name',
+          /Ichabod Crane/.test(meta['og:site_name'] || ''), meta['og:site_name']);
+
+        // Measure the image rather than believing the tags.
+        const dims = await page.evaluate((src) => new Promise((res) => {
+          const i = new Image();
+          i.onload = () => res([i.naturalWidth, i.naturalHeight]);
+          i.onerror = () => res([0, 0]);
+          i.src = src;
+        }), meta['og:image']);
+        check(host + ' serves a real 1200x630 card',
+          dims[0] === 1200 && dims[1] === 630, dims.join('x'));
+
+        cards.push({ host, meta });
+        await ctx.close();
+      }
+
+      const ctx = await browser.newContext({ viewport: { width: 1360, height: 480 } });
+      const page = await ctx.newPage();
+      await page.setContent(`<!doctype html><meta charset="utf-8">
+        <body style="margin:0;background:#e6e9ee;padding:28px;display:flex;gap:22px;
+                     align-items:flex-start;font:15px -apple-system,system-ui,sans-serif">
+        ${cards.map((c) => `
+          <div style="width:410px;border-radius:18px;overflow:hidden;background:#fff;
+                      box-shadow:0 1px 3px rgba(0,0,0,.22)">
+            <img src="${c.meta['og:image']}" style="display:block;width:100%">
+            <div style="padding:11px 14px 13px">
+              <div style="font-weight:600;line-height:1.3">${c.meta['og:title']}</div>
+              <div style="color:#4c5257;line-height:1.35;margin-top:2px">${c.meta['og:description']}</div>
+              <div style="color:#8b9196;margin-top:5px">${c.host}</div>
+            </div>
+          </div>`).join('')}
+        </body>`, { waitUntil: 'networkidle' });
+      await page.screenshot({ path: OUT + '/05-link-previews.png' });
+      await ctx.close();
+    }
+
+    // ---- 6. house rules ------------------------------------------------
     console.log('\nhouse rules');
     check('no third-party requests from any page', offsite.length === 0,
       offsite.slice(0, 5).join(', '));
