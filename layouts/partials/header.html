@@ -1,0 +1,23 @@
+{{/*
+  Overrides the theme's header so the masthead can carry the pumpkin without
+  the pumpkin ending up in Site.Title.
+
+  Site.Title is "Ichabod Crane" and has to stay that way: it feeds <title>,
+  og:title and og:site_name, and Zach asked in ich4bod/ichabod-crane-net#2 for
+  the tab to be exactly the name. When 8c580a8 satisfied that by taking the
+  emoji out of Site.Title, the masthead lost it too — issue #3. The two are
+  different surfaces and they get set separately now.
+
+  The pumpkin is a character here, not artwork, and that is fine: a page is
+  rendered with the reader's whole font stack behind it, so the emoji font
+  resolves. The favicon is the case where it does not — no page context, no
+  promise of a font — which is why that one is rasterised pixels and is not
+  touched by this file.
+
+  aria-hidden because the jack-o'-lantern is ornament. The link's accessible
+  name should be the site's name and nothing else.
+*/}}
+<a href="{{ "" | relURL }}" class="title">
+  <h2><span class="wordmark-mark" aria-hidden="true">&#x1F383;</span> {{ .Site.Title }}</h2>
+</a>
+<nav>{{- partial "nav.html" . -}}</nav>

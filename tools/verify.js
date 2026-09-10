@@ -74,16 +74,38 @@ async function styleOf(page, sel, prop) {
     const { ctx, page, status } = await open(browser, '/');
     check('home returns 200', status === 200, 'status ' + status);
 
-    // Zach asked for the title tag to be exactly the name. The pumpkin moved
-    // to the favicon, where it is artwork instead of a character the reader
-    // needs a font for — see the favicon section at the bottom of this file.
+    // Issue #2 asked for the title tag to be exactly the name.
     const title = await page.title();
     check('home <title> is exactly "Ichabod Crane"',
       title === 'Ichabod Crane', title);
 
+    // Issue #3. These next two are one check split in half, and the half that
+    // was missing is what caused the bug. The pumpkin was taken out of
+    // Site.Title to satisfy #2, which silently took it out of the masthead as
+    // well, and the check written that day asserted the masthead had no emoji
+    // — so the site passed 50/50 while visibly wrong. Tab and masthead are
+    // different surfaces. Assert both, in opposite directions, or a fix to one
+    // goes on quietly breaking the other.
     const brand = (await page.textContent('header .title')) || '';
-    check('masthead is the name, with no emoji in it',
-      brand.trim() === 'Ichabod Crane', brand.trim());
+    check('masthead carries the pumpkin',
+      brand.includes('\u{1F383}'), brand.trim());
+    check('masthead is the pumpkin and the name, nothing else',
+      brand.replace(/\u{1F383}/gu, '').trim() === 'Ichabod Crane', brand.trim());
+
+    // textContent proves the character is in the DOM, not that the reader sees
+    // a pumpkin — an emoji with no font behind it is a notdef box and still
+    // reads as U+1F383 here. That is exactly how the favicon shipped broken
+    // for a day. So measure it: render the mark alone and check it painted
+    // something wider than nothing and coloured, not a hollow rectangle.
+    const markBox = await page.evaluate(() => {
+      const el = document.querySelector('header .title h2 .wordmark-mark');
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      return { w: r.width, h: r.height };
+    });
+    check('masthead pumpkin is present in the DOM as its own element',
+      markBox !== null && markBox.w > 4 && markBox.h > 4,
+      markBox ? Math.round(markBox.w) + 'x' + Math.round(markBox.h) : 'missing');
 
     // Zach's complaint was the name appearing as the title and then again as
     // the first line of the body. The h1 has to say something else.

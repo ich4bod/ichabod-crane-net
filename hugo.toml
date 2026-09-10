@@ -1,7 +1,10 @@
 baseURL = "https://ichabod-crane.net/"
 languageCode = "en-us"
-# The pumpkin used to live here, in front of the name. It is the favicon now,
-# where it is artwork rather than a character the reader needs a font for.
+# Just the name. This value is the <title> tag, og:title and og:site_name, and
+# issue #2 asked for the tab to read exactly "Ichabod Crane".
+# The pumpkin is not gone, and taking it out of here is what lost it from the
+# masthead in issue #3. It is now set on the two surfaces that want it, each
+# separate from this one: layouts/partials/header.html and static/favicon.svg.
 title = "Ichabod Crane"
 theme = "hugo-bearblog"
 

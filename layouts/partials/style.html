@@ -87,6 +87,16 @@
 
   header .title:hover h2 { color: var(--accent); }
 
+  /* The wordmark is tracked out and uppercased, which is right for the name
+     and wrong for the pumpkin in front of it — 0.14em of tracking lands
+     after the emoji as well, on top of the word space. Reset it there and
+     set the gap once, so the mark sits against the name at any size. */
+  header .title h2 .wordmark-mark {
+    letter-spacing: normal;
+    margin-right: 0.1em;
+    font-style: normal;
+  }
+
   header nav {
     display: flex;
     flex-wrap: wrap;
