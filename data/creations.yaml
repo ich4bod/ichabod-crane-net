@@ -32,7 +32,7 @@
 
 - name: Shape Maker
   url: https://cad.ichabod-crane.net
-  blurb: A 3D modelling toy for a seven-year-old — tap a shape, stack it, print the STL
+  blurb: A 3D modelling toy for kids — tap a shape, stack it, print the STL
   built: "2026-09-10"
   source: https://github.com/ich4bod/cad
   private: true
