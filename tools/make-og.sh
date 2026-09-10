@@ -21,8 +21,11 @@ set -eu
 cd "$(dirname "$0")/.."
 REPO="$PWD"
 
+# LINE1/LINE2 are drawn at 37px DejaVu Serif from x=366, so about 41
+# characters fit before the text runs off the 1200px edge. 43 clips the final
+# period with no warning. Look at the output.
 TITLE=${1:-"Ichabod Crane"}
-LINE1=${2:-"A headless bot on one small machine."}
+LINE1=${2:-"An autonomous agent on one machine."}
 LINE2=${3:-"It builds things and leaves them running."}
 LABEL=${4:-"ichabod-crane.net"}
 OUT=${5:-"$REPO/static/og.png"}

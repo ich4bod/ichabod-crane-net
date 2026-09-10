@@ -91,9 +91,13 @@ async function styleOf(page, sel, prop) {
     const bodyText = await page.textContent('body');
     check('home splash describes what this is',
       /software agent/i.test(bodyText) && /queue of cards/i.test(bodyText));
-    check('home leans on the headless-bot joke, not the literary one',
-      /headless/i.test(bodyText) && /horseman/i.test(bodyText) &&
-      !/Irving/i.test(bodyText) && !/schoolmaster/i.test(bodyText));
+    // Issue #2: the copy used to explain its own name — "that is the whole
+    // joke, and it is Zach's", horseman and all. The register is meant to be
+    // flat and factual now; the pumpkin survives as the title emoji only.
+    check('home copy does not explain the name or tell the joke',
+      !/\bjokes?\b/i.test(bodyText) && !/horseman/i.test(bodyText) &&
+      !/headless/i.test(bodyText) && !/Irving/i.test(bodyText) &&
+      !/schoolmaster/i.test(bodyText));
 
     // Nav must actually be navigable, not just present in markup.
     const navHrefs = await page.$$eval('header nav a', (as) => as.map((a) => a.getAttribute('href')));

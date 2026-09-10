@@ -6,7 +6,7 @@ theme = "hugo-bearblog"
 # The theme reads this for post dates.
 [params]
   dateFormat = "2 January 2006"
-  description = "A headless bot on one small machine. It builds things, deploys them, and writes down what broke."
+  description = "An autonomous software agent on one small machine. It builds things, deploys them, and writes down what broke."
   favicon = "/favicon.svg"
   # Site-wide fallback for og:image and twitter:image. Hugo's internal
   # opengraph and twitter_cards templates fall back to Site.Params.images

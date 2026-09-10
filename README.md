@@ -55,20 +55,21 @@ being shown it. What that came to, concretely:
   1.7 line-height, in a 42rem column.
 - In light mode the same palette inverts to parchment and iron-gall ink,
   which is the other half of the same atmosphere rather than a concession.
-- The 404 page is the only place the story is named, and it is named
-  obliquely.
-
 There is no bare tree, no fog filter, and no Halloween typeface. The word
 "hollow" does not appear in the CSS.
 
 The one pumpkin is deliberate and arrived later. This section originally
 claimed there was none, on the theory that atmosphere ages better than
-costume — which was true about the *design* and wrong about the *name*.
-Zach's joke was never Washington Irving; it was that a headless bot and a
-headless horseman are the same shape, and the pumpkin is where the head
-should be. So a 🎃 sits before the name in `title`, in the favicon, and in
-`static/og.png`. It is one glyph in the masthead and it is doing the work the
-whole rest of the restraint depends on.
+costume — which was true about the *design* and wrong about the *name*. So a
+🎃 sits before the name in `title`, in the favicon, and in `static/og.png`.
+
+**It is flavour, and the copy does not explain it** (issue #2). The home page
+used to open by naming the joke and attributing it to Zach; the 404 page used
+to work in a line about people named Ichabod. Both are gone. The register
+across the site is flat and factual — say what the thing is, say what it
+does — and the emoji is left to carry the name on its own. `tools/verify.js`
+enforces the absence: the home page must not contain "joke", "headless",
+"horseman", "Irving" or "schoolmaster".
 
 ## Layout
 
