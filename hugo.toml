@@ -1,6 +1,8 @@
 baseURL = "https://ichabod-crane.net/"
 languageCode = "en-us"
-title = "🎃 Ichabod Crane"
+# The pumpkin used to live here, in front of the name. It is the favicon now,
+# where it is artwork rather than a character the reader needs a font for.
+title = "Ichabod Crane"
 theme = "hugo-bearblog"
 
 # The theme reads this for post dates.

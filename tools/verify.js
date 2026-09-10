@@ -74,13 +74,16 @@ async function styleOf(page, sel, prop) {
     const { ctx, page, status } = await open(browser, '/');
     check('home returns 200', status === 200, 'status ' + status);
 
+    // Zach asked for the title tag to be exactly the name. The pumpkin moved
+    // to the favicon, where it is artwork instead of a character the reader
+    // needs a font for — see the favicon section at the bottom of this file.
     const title = await page.title();
-    check('home <title> carries the pumpkin before the name',
-      /^🎃\s*Ichabod Crane/.test(title), title);
+    check('home <title> is exactly "Ichabod Crane"',
+      title === 'Ichabod Crane', title);
 
     const brand = (await page.textContent('header .title')) || '';
-    check('masthead carries the pumpkin before the name',
-      /^🎃\s*Ichabod Crane$/.test(brand.trim()), brand.trim());
+    check('masthead is the name, with no emoji in it',
+      brand.trim() === 'Ichabod Crane', brand.trim());
 
     // Zach's complaint was the name appearing as the title and then again as
     // the first line of the body. The h1 has to say something else.
@@ -92,8 +95,10 @@ async function styleOf(page, sel, prop) {
     check('home splash describes what this is',
       /software agent/i.test(bodyText) && /queue of cards/i.test(bodyText));
     // Issue #2: the copy used to explain its own name — "that is the whole
-    // joke, and it is Zach's", horseman and all. The register is meant to be
-    // flat and factual now; the pumpkin survives as the title emoji only.
+    // joke, and it is Zach's", horseman and all. That constraint still holds
+    // after the middle-ground rewrite: the page may have a voice, but it does
+    // not get to nudge the reader about the name. Test the constraint, not the
+    // flat phrasing that first satisfied it — phrasing is what feedback moves.
     check('home copy does not explain the name or tell the joke',
       !/\bjokes?\b/i.test(bodyText) && !/horseman/i.test(bodyText) &&
       !/headless/i.test(bodyText) && !/Irving/i.test(bodyText) &&
@@ -251,10 +256,45 @@ async function styleOf(page, sel, prop) {
     const icon = await page.request.get(iconHref);
     const iconBody = await icon.text();
     check('favicon resolves', icon.status() === 200, iconHref + ' -> ' + icon.status());
-    check('favicon is the pumpkin emoji and nothing else',
-      /image\/svg/.test(icon.headers()['content-type'] || '') &&
-      iconBody.includes('\u{1F383}') &&
-      !/<circle|<rect|<path/.test(iconBody),
+
+    // The previous version of this check asserted that the file *contained*
+    // U+1F383 and no drawing primitives — and it passed happily for a day
+    // while every reader saw a hollow circle, because the file was
+    // <text>🎃</text> and a favicon is rendered with no page context and no
+    // promise of an emoji font. Zach reported it as "a weird little circle".
+    //
+    // So: draw the thing and look at the pixels. An <img> is the same
+    // SVGImage path a favicon takes, with external loads blocked, which is
+    // what makes the inlined data: URI the load-bearing detail.
+    const paint = await page.evaluate(async (href) => {
+      const img = new Image();
+      img.width = img.height = 64;
+      try {
+        await new Promise((res, rej) => {
+          img.onload = res;
+          img.onerror = () => rej(new Error('decode failed'));
+          img.src = href;
+        });
+      } catch (e) { return { error: e.message }; }
+      const c = document.createElement('canvas');
+      c.width = c.height = 64;
+      const g = c.getContext('2d');
+      g.drawImage(img, 0, 0, 64, 64);
+      const d = g.getImageData(0, 0, 64, 64).data;
+      let opaque = 0, orange = 0;
+      for (let i = 0; i < d.length; i += 4) {
+        if (d[i + 3] < 128) continue;
+        opaque++;
+        if (d[i] > 150 && d[i + 1] > 60 && d[i + 1] < 200 && d[i + 2] < 100) orange++;
+      }
+      return { opaque, orange };
+    }, iconHref);
+
+    check('favicon paints an orange pumpkin, not a fallback glyph',
+      !paint.error && paint.opaque > 500 && paint.orange > 300,
+      paint.error || (paint.opaque + ' opaque px, ' + paint.orange + ' orange'));
+    check('favicon carries its own pixels rather than trusting a system font',
+      !/<text[\s>]/.test(iconBody),
       (icon.headers()['content-type'] || '') + ', ' + iconBody.length + ' bytes');
 
     const meta = await page.evaluate(() => {
