@@ -175,6 +175,7 @@ async function styleOf(page, sel, prop) {
   // ---------------------------------------------------------------- blog
   console.log('\nBLOG  /blog/');
   let firstPostHref;
+  let postTitles = [];
   {
     const { ctx, page, status } = await open(browser, '/blog/');
     check('blog index returns 200', status === 200, 'status ' + status);
@@ -182,8 +183,16 @@ async function styleOf(page, sel, prop) {
     const items = await page.$$eval('ul.blog-posts li a', (as) =>
       as.map((a) => ({ href: a.getAttribute('href'), text: a.textContent.trim() })));
     check('blog index lists at least one real post', items.length >= 1, items.length + ' posts');
-    check('blog index lists both posts', items.length === 2,
-      items.map((i) => i.text).join(' | '));
+    postTitles = items.map((i) => i.text);
+
+    // Don't pin a post count — that assertion goes stale the next time I
+    // publish, and a stale check reports green while the page is wrong. The
+    // feed is generated from the same page list, so disagreement between the
+    // two means a post was dropped (a future date does exactly this).
+    const feed = await (await fetch(BASE + '/blog/index.xml')).text();
+    const feedItems = (feed.match(/<item>/g) || []).length;
+    check('blog index lists every post in the feed', items.length === feedItems,
+      items.length + ' on page, ' + feedItems + ' in feed');
 
     const times = await page.$$eval('ul.blog-posts time', (ts) =>
       ts.map((t) => t.getAttribute('datetime')));
@@ -191,8 +200,9 @@ async function styleOf(page, sel, prop) {
       times.length === items.length && times.every(Boolean), times.join(' '));
 
     firstPostHref = items[0] && items[0].href;
-    check('newest post is the apex piece',
-      /the-first-thing-at-the-apex/.test(firstPostHref || ''), firstPostHref);
+    // Ordering, not identity: newest first, whichever post that happens to be.
+    const sorted = times.every((t, i) => i === 0 || times[i - 1] >= t);
+    check('blog index is ordered newest first', sorted, times.join(' '));
 
     await page.screenshot({ path: OUT + '/03-blog-index-dark.png', fullPage: true });
     await ctx.close();
@@ -224,12 +234,19 @@ async function styleOf(page, sel, prop) {
     check('no struck-through navigator', strikes === 0, strikes + ' found');
     const navLinks = await page.$$eval('.post-nav a', (as) =>
       as.map((a) => a.textContent.trim()));
-    check('navigator names the adjacent post',
-      navLinks.length === 1 && /first click is always safe/i.test(navLinks[0]),
-      navLinks.join(' | '));
     const navLabel = await page.$$eval('.post-nav span', (ss) =>
       ss.map((s) => s.textContent.trim()));
-    check('navigator labels the direction', navLabel.join('') === 'Older', navLabel.join(' '));
+    // This post's position in the list moves every time I publish, so assert
+    // the navigator's shape rather than a fixed neighbour: one label per link,
+    // every direction a real one, and every link naming a different post that
+    // the blog index also lists.
+    const named = navLinks.every((t) =>
+      postTitles.some((p) => p.toLowerCase() === t.toLowerCase()) && !/first thing at the apex/i.test(t));
+    check('navigator names adjacent posts', navLinks.length >= 1 && named,
+      navLinks.join(' | '));
+    check('navigator labels every direction it offers',
+      navLabel.length === navLinks.length && navLabel.every((l) => l === 'Older' || l === 'Newer'),
+      navLabel.join(' '));
 
     // Tag pages are generated; make sure one actually resolves.
     const tagHref = await page.$eval('main a[href*="/tags/"]', (a) => a.href);
@@ -377,7 +394,10 @@ async function styleOf(page, sel, prop) {
     const page = await ctx.newPage();
     await page.goto(BASE + '/blog/', { waitUntil: 'domcontentloaded' });
     const items = await page.$$eval('ul.blog-posts li a', (as) => as.length);
-    check('site works with JavaScript disabled', items === 2, items + ' posts listed');
+    // Same list as with JS on — the point is that nothing here needs a script,
+    // not that the blog has some particular number of posts in it.
+    check('site works with JavaScript disabled', items === postTitles.length,
+      items + ' posts listed, ' + postTitles.length + ' with JS on');
     const scripts = await page.$$eval('script', (s) => s.length);
     check('no <script> tags anywhere', scripts === 0, scripts + ' found');
     await ctx.close();
