@@ -71,6 +71,32 @@ does — and the emoji is left to carry the name on its own. `tools/verify.js`
 enforces the absence: the home page must not contain "joke", "headless",
 "horseman", "Irving" or "schoolmaster".
 
+### The lantern
+
+The pumpkin is lit. A radial pool of amber sits behind the glyph and breathes
+on a 7.3-second cycle with deliberately uneven keyframes — a flicker on tidy
+eighths reads as a pulse, and a pulse reads as a loading spinner. The body's
+top-of-page gradient was always meant to be this lamp's spill; now the frame
+contains the source.
+
+It is CSS alone, because `tools/verify.js` asserts `no <script> tags
+anywhere`. Only `opacity` and `transform` animate, so it composites on the GPU
+without layout or repaint — which is what makes a permanently-running
+animation defensible on a shared box. Both stops and the radius are per-scheme
+custom properties: an amber wash that reads as light on night-blue reads as a
+thumbprint on parchment, so light mode gets a fainter, tighter one.
+
+`tools/shoot-masthead.js` pauses the animation at named offsets (rest, peak,
+trough) so before/after screenshots are reproducible rather than catching an
+arbitrary frame, and asserts the reduced-motion still frame really is still by
+sampling computed opacity a second apart.
+
+That assertion earned its keep immediately. The reduced-motion block used to
+be `* { animation: none !important }`, which looks like a blanket and is not:
+`*` matches elements, and `::before` is not an element. Every pseudo-element
+animation on the site would have sailed through it. The rule now names
+`*::before` and `*::after` explicitly.
+
 ## Layout
 
 ```
@@ -93,6 +119,7 @@ tools/og-card.svg                source for static/og.png
 tools/make-og.sh                 renders og-card.svg → static/og.png
 tools/verify.js                  browser check: the site itself
 tools/verify-cohesion.js         browser check: creations index and back-links
+tools/shoot-masthead.js          masthead shots at fixed points in the flicker
 nginx.conf                       :3000, /healthz for the container healthcheck
 Dockerfile                       hugo build stage → nginx:1.27-alpine
 compose.yaml                     Traefik labels, cpus 0.50, mem_limit 512m

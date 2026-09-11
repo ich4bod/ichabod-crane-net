@@ -20,6 +20,12 @@
     --accent-dim: #8d6a2c;
     --rule: rgba(206, 200, 185, 0.16);
     --code-bg: rgba(255, 255, 255, 0.045);
+    /* The candle inside the lantern. Two stops of the same amber, and the
+       radius it carries. Set per scheme because a glow that reads as light on
+       night-blue reads as a dirty thumbprint on parchment. */
+    --lantern-core: rgba(216, 156, 60, 0.34);
+    --lantern-mid: rgba(201, 151, 63, 0.10);
+    --lantern-size: 7.2em;
     --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
              Georgia, Cambria, "Times New Roman", serif;
     --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
@@ -37,6 +43,11 @@
       --accent-dim: #a9773f;
       --rule: rgba(42, 38, 32, 0.2);
       --code-bg: rgba(42, 38, 32, 0.06);
+      /* Daylight. The flame is still burning, but you can barely tell — which
+         is exactly what a lit lantern looks like at noon. */
+      --lantern-core: rgba(196, 112, 22, 0.26);
+      --lantern-mid: rgba(196, 112, 22, 0.09);
+      --lantern-size: 6.4em;
     }
   }
 
@@ -95,6 +106,64 @@
     letter-spacing: normal;
     margin-right: 0.1em;
     font-style: normal;
+    position: relative;
+  }
+
+  /* The lantern is lit.
+
+     A warm radial pool sits behind the pumpkin and breathes, the way a candle
+     in a carved gourd does — never steady, never strobing. The body's
+     top-of-page gradient was always meant to read as this lamp's spill; now
+     there is a source for it in the same frame.
+
+     Two constraints shaped this into a pseudo-element rather than anything
+     cleverer. tools/verify.js asserts `no <script> tags anywhere`, so it is
+     CSS or it is nothing. And only opacity and transform are animated — both
+     composite on the GPU without layout or repaint, which is what keeps a
+     permanently-running animation honest on a shared t3a.large.
+
+     z-index:-1 puts it behind the glyph. Nothing between here and the root
+     element opens a stacking context, so it lands above the page background
+     and below the pumpkin, which is the one ordering that works. */
+  header .title h2 .wordmark-mark::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: 50%;
+    width: var(--lantern-size);
+    height: var(--lantern-size);
+    border-radius: 50%;
+    background: radial-gradient(
+      closest-side,
+      var(--lantern-core) 0%,
+      var(--lantern-mid) 38%,
+      transparent 70%
+    );
+    /* Matches the 0% keyframe, so the still frame a reduced-motion reader
+       gets is a lit lantern rather than an unlit or blown-out one. */
+    opacity: 0.8;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: lantern-flicker 7.3s ease-in-out infinite;
+  }
+
+  /* Deliberately uneven, and on a period that shares no common factor with
+     anything else on the page — a flicker on tidy eighths reads as a pulse,
+     and a pulse reads as a loading spinner. */
+  @keyframes lantern-flicker {
+    0%   { opacity: 0.80; transform: translate(-50%, -50%) scale(1.00); }
+    9%   { opacity: 1.00; transform: translate(-50%, -50%) scale(1.06); }
+    17%  { opacity: 0.73; transform: translate(-50%, -50%) scale(0.97); }
+    28%  { opacity: 0.93; transform: translate(-50%, -50%) scale(1.03); }
+    36%  { opacity: 0.67; transform: translate(-50%, -50%) scale(0.95); }
+    47%  { opacity: 0.89; transform: translate(-50%, -50%) scale(1.02); }
+    55%  { opacity: 1.00; transform: translate(-50%, -50%) scale(1.05); }
+    63%  { opacity: 0.71; transform: translate(-50%, -50%) scale(0.96); }
+    74%  { opacity: 0.96; transform: translate(-50%, -50%) scale(1.04); }
+    82%  { opacity: 0.75; transform: translate(-50%, -50%) scale(0.98); }
+    91%  { opacity: 0.91; transform: translate(-50%, -50%) scale(1.02); }
+    100% { opacity: 0.80; transform: translate(-50%, -50%) scale(1.00); }
   }
 
   header nav {
@@ -412,7 +481,15 @@
     color: var(--bg);
   }
 
+  /* `*` does not match pseudo-elements — it selects elements, and ::before is
+     not one. The rule below read as a blanket for a year and was not: the
+     lantern flicker sailed straight through it, caught by the still-frame
+     assertion in tools/shoot-masthead.js. Naming ::before and ::after
+     explicitly is the fix, and it covers whatever gets animated there next. */
   @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; animation: none !important; }
+    *, *::before, *::after {
+      transition: none !important;
+      animation: none !important;
+    }
   }
 </style>
