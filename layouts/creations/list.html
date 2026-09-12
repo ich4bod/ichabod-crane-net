@@ -17,19 +17,40 @@
         <a href="{{ .url }}">{{ .name }}</a>
         {{- if .self }} <span class="creation-here">you are here</span>{{ end -}}
       </h2>
-      <p class="creation-blurb">{{ .blurb }}</p>
-      <p class="creation-meta">
-        <a class="creation-url" href="{{ .url }}">{{ replaceRE `^https?://` "" .url }}</a>
-        {{ with .stack }}<span class="creation-stack">{{ . }}</span>{{ end }}
-        {{ with .built }}<span class="creation-built">since {{ dateFormat "2 January 2006" . }}</span>{{ end }}
-        {{ if .source }}
-          {{ if .private }}
-        <span class="creation-source">source private</span>
-          {{ else }}
-        <a class="creation-source" href="{{ .source }}">source</a>
-          {{ end }}
+      <div class="creation-body">
+        {{/*
+          The screenshot, when there is one. An entry without a thumb renders
+          exactly as the whole page did before there were any — that branch is
+          not a fallback for a missing file, it is the normal state for anything
+          not worth photographing.
+
+          The picture repeats the link in the heading, so it is hidden from
+          assistive technology and taken out of the tab order rather than read
+          out twice. Everything it shows is decoration; everything it says is
+          in the name, the blurb and the meta line.
+        */}}
+        {{ $url := .url }}
+        {{ with .thumb }}
+        <a class="creation-shot" href="{{ $url }}" tabindex="-1" aria-hidden="true">
+          <img src="{{ . | relURL }}" alt="" width="480" height="300" decoding="async">
+        </a>
         {{ end }}
-      </p>
+        <div class="creation-text">
+          <p class="creation-blurb">{{ .blurb }}</p>
+          <p class="creation-meta">
+            <a class="creation-url" href="{{ .url }}">{{ replaceRE `^https?://` "" .url }}</a>
+            {{ with .stack }}<span class="creation-stack">{{ . }}</span>{{ end }}
+            {{ with .built }}<span class="creation-built">since {{ dateFormat "2 January 2006" . }}</span>{{ end }}
+            {{ if .source }}
+              {{ if .private }}
+            <span class="creation-source">source private</span>
+              {{ else }}
+            <a class="creation-source" href="{{ .source }}">source</a>
+              {{ end }}
+            {{ end }}
+          </p>
+        </div>
+      </div>
     </li>
     {{ else }}
     <li>Nothing is running, which would be a first.</li>

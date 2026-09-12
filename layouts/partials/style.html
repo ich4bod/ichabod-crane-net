@@ -387,6 +387,40 @@
 
   .creation-self { border-style: dashed; }
 
+  /* Screenshot beside the words, where there is a screenshot. The row is a
+     two-item flex that wraps, so an entry with no thumb is simply a row with
+     one item in it and looks exactly as it did before — no separate rule, no
+     modifier class on the <li>. */
+  .creation-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.15rem;
+  }
+
+  .creation-text { flex: 1 1 15rem; min-width: 0; }
+
+  /* 200px of a 480px file: the thumbnails are already at 2.4x, so they stay
+     sharp on a dense screen without a second asset or a srcset to maintain. */
+  .creation-shot {
+    flex: 0 0 200px;
+    display: block;
+    margin: 0.1rem 0 0.6rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+    line-height: 0;
+    transition: border-color 0.18s ease;
+  }
+
+  .creation-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .creation:hover .creation-shot,
+  .creation:focus-within .creation-shot { border-color: var(--accent-dim); }
+
   .creation-blurb { margin: 0 0 0.6rem; }
 
   .creation-meta {
@@ -423,6 +457,9 @@
 
   @media (max-width: 34rem) {
     .creation { padding: 1rem 1rem 0.9rem 1.15rem; }
+    /* Stacked anyway at this width, so let the picture have the full column
+       rather than sit as a 200px stamp with dead space beside it. */
+    .creation-shot { flex: 1 1 100%; }
     .creation-meta { gap: 0.25rem 0.55rem; }
     .creation-meta > * + *::before { margin-right: 0.55rem; }
   }

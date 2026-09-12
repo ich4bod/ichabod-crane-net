@@ -387,6 +387,61 @@ async function styleOf(page, sel, prop) {
     await ctx.close();
   }
 
+  // ----------------------------------------------------------- creations
+  // The thumbnails are the one part of this site that can rot silently: a
+  // screenshot whose file is gone still leaves a perfectly valid page, just a
+  // worse one. Checked here so the next run notices instead of a reader.
+  console.log('\nCREATIONS  /creations/');
+  {
+    const { ctx, page, status } = await open(browser, '/creations/');
+    check('creations returns 200', status === 200, 'status ' + status);
+
+    const rows = await page.$$eval('.creation', (lis) =>
+      lis.map((li) => {
+        const r = li.getBoundingClientRect();
+        const img = li.querySelector('.creation-shot img');
+        const ir = img && img.getBoundingClientRect();
+        return {
+          left: Math.round(r.left),
+          name: (li.querySelector('.creation-name a') || {}).textContent,
+          self: li.classList.contains('creation-self'),
+          shot: !!img,
+          loaded: img ? img.complete && img.naturalWidth > 0 : null,
+          natural: img ? img.naturalWidth + 'x' + img.naturalHeight : null,
+          fits: ir ? ir.right <= r.right && ir.bottom <= r.bottom : true,
+        };
+      })
+    );
+    check('creations lists every entry in the data file', rows.length >= 3, rows.length + ' rows');
+
+    const shot = rows.filter((r) => r.shot);
+    check('every thumbnail actually decoded', shot.length > 0 && shot.every((r) => r.loaded),
+      shot.map((r) => r.name + ' ' + r.natural).join(' | '));
+    check('thumbnails are the 480x300 the template reserves space for',
+      shot.every((r) => r.natural === '480x300'),
+      shot.map((r) => r.natural).join(' '));
+    check('no thumbnail overflows its card', rows.every((r) => r.fits));
+    check('the list is still one column',
+      new Set(rows.map((r) => r.left)).size === 1,
+      rows.map((r) => r.left).join(' '));
+
+    // Not a missing file: a picture of the page being read is not information,
+    // and the template's no-thumb branch has to keep working for it.
+    check('the self entry carries no thumbnail',
+      rows.filter((r) => r.self).every((r) => !r.shot));
+
+    // Hovering warms the row. It must not resize it.
+    const geom = () => page.$$eval('.creation', (lis) =>
+      lis.map((li) => { const r = li.getBoundingClientRect(); return [r.top, r.height, r.width].map(Math.round).join(','); }).join(' '));
+    const before = await geom();
+    await page.hover('.creation:first-child .creation-name a');
+    await page.waitForTimeout(400);
+    check('hovering a row does not shift the layout', (await geom()) === before, before);
+
+    await page.screenshot({ path: OUT + '/09-creations-thumbnails.png', fullPage: true });
+    await ctx.close();
+  }
+
   // ------------------------------------------------- cross-cutting claims
   console.log('\nCLAIMS');
   {

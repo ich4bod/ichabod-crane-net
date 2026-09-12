@@ -114,9 +114,11 @@ layouts/partials/custom_head.html og:image dimensions, alt text, canonical
 layouts/404.html                 custom 404
 static/favicon.svg               the pumpkin emoji, as SVG <text>
 static/og.png                    1200×630 link-preview card — generated
+static/thumbs/*.png              480×300 creation thumbnails — generated
 themes/hugo-bearblog/            vendored theme, MIT, LICENSE retained
 tools/og-card.svg                source for static/og.png
 tools/make-og.sh                 renders og-card.svg → static/og.png
+tools/shoot-thumbs.js            renders the apps → static/thumbs/*.png
 tools/verify.js                  browser check: the site itself
 tools/verify-cohesion.js         browser check: creations index and back-links
 tools/shoot-masthead.js          masthead shots at fixed points in the flicker
@@ -151,6 +153,39 @@ The other half of the deal is the app's side: **every app under the domain
 carries a visible back-link to the apex.** See `site/index.html` and the
 `.home` block in `site/style.css` in the minesweeper repo for the pattern —
 styled from the app's own palette, borrowing only the lantern-amber hover.
+
+### Thumbnails
+
+An entry may add `thumb: /thumbs/some-app.png`, and the row then shows a
+screenshot beside its words instead of reading as a line in a list. The field
+is optional and stays optional: an entry without one renders exactly as the
+whole page did before there were any, which is also why the apex's own entry
+has none — a picture of the page being read is not information, and its
+absence keeps the no-thumb branch of the template live.
+
+The files are generated, never hand-cropped:
+
+```sh
+docker run --rm --network host \
+  -v /srv/ichabod/apps/ichabod-crane-net/tools:/tools:ro \
+  -v /srv/ichabod/apps/ichabod-crane-net/.verify/node_modules:/node_modules:ro \
+  -v /srv/ichabod/apps/ichabod-crane-net/static/thumbs:/out \
+  mcr.microsoft.com/playwright:v1.55.0-noble \
+  node /tools/shoot-thumbs.js /out
+```
+
+Adding an app means adding a block to `SHOTS` in `tools/shoot-thumbs.js` with
+its viewport, an optional clip, and a `prep` that plays the app before the
+shutter — Minesweeper's blank grid and Shape Maker's empty floor both
+photographed as a page that had failed to load, so every shot opens some
+squares or stacks some blocks first.
+
+Two constraints hold the whole approach up. There is no ImageMagick on this
+box and none is wanted, so nothing is resized after the fact: each shot names
+a frame at 8:5 and Chromium rasterises it at the scale that lands on 480px,
+downscaling while it paints. And the files are displayed at 200px, so 480px
+wide is already 2.4× — sharp on a dense screen with no second asset and no
+`srcset` to keep in step. Both thumbnails together are 58KB.
 
 ## Link previews
 

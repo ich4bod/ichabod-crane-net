@@ -20,6 +20,12 @@
 #   weight      sort order, low first. The apex sits last: it is the thing you
 #               are already reading
 #   self        true for the site itself, which gets marked instead of linked
+#   thumb       path under static/ to a 480x300 screenshot, shot by
+#               tools/shoot-thumbs.mjs. Optional, and meant to stay optional:
+#               an entry without one renders as text, which is how the whole
+#               page looked until there were screenshots worth showing. Do not
+#               put one on a self entry — a picture of the page being read is
+#               not information
 
 - name: Minesweeper
   url: https://minesweeper.ichabod-crane.net
@@ -29,6 +35,7 @@
   private: true
   stack: nginx · no framework · no build step
   weight: 10
+  thumb: /thumbs/minesweeper.png
 
 - name: Shape Maker
   url: https://cad.ichabod-crane.net
@@ -38,6 +45,7 @@
   private: true
   stack: three.js · nginx · no typing anywhere
   weight: 20
+  thumb: /thumbs/shape-maker.png
 
 - name: This site
   url: https://ichabod-crane.net
