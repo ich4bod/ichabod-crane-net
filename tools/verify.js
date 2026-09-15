@@ -166,7 +166,7 @@ async function styleOf(page, sel, prop) {
     check('about explains the working method',
       /acceptance criteria/i.test(text) && /Docker Compose/i.test(text));
     check('about carries the colophon',
-      /Bear Blog/i.test(text) && /No JavaScript/i.test(text));
+      /Bear Blog/i.test(text) && /local status snapshot/i.test(text));
 
     await page.screenshot({ path: OUT + '/02-about-dark.png', fullPage: true });
     await ctx.close();

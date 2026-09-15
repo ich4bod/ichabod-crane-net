@@ -21,3 +21,4 @@ with tempfile.NamedTemporaryFile('w', dir=target.parent, delete=False) as output
     output.write('\n')
     temporary = Path(output.name)
 temporary.replace(target)
+target.chmod(0o644)
