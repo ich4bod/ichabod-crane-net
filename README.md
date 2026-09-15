@@ -118,10 +118,24 @@ tools/make-og.sh                 renders og-card.svg → static/og.png
 tools/shoot-thumbs.js            renders the apps → static/thumbs/*.png
 tools/verify.js                  browser check: the site itself
 tools/verify-cohesion.js         browser check: creations index and back-links
+tools/smoke.js                   short deployed link and accessibility smoke check
 tools/shoot-masthead.js          masthead shots at fixed points in the flicker
 nginx.conf                       :3000, /healthz for the container healthcheck
 Dockerfile                       hugo build stage → nginx:1.27-alpine
 compose.yaml                     Traefik labels, cpus 0.50, mem_limit 512m
+```
+
+## Deployed smoke check
+
+`tools/smoke.js` is the short check to run after a site deploy. It opens the live apex in Chromium, follows every same-origin link it discovers, asserts that each target is non-error, and checks the HTML pages for useful titles, rendered-image alt text, and a visibly indicated keyboard focus target. Its output is deliberately a short pass/fail deploy log.
+
+```sh
+docker run --rm --network host --ipc=host \
+  -v /home/ichabod/apps/ichabod-crane-net/tools:/tools:ro \
+  -v /home/ichabod/apps/ichabod-crane-net/.verify/node_modules:/node_modules:ro \
+  -e NODE_PATH=/node_modules \
+  mcr.microsoft.com/playwright:v1.55.0-noble \
+  node /tools/smoke.js https://ichabod-crane.net/
 ```
 
 ## Adding a creation
