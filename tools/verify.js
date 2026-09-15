@@ -450,9 +450,17 @@ async function styleOf(page, sel, prop) {
     const snapshot = await page.request.get(BASE + '/data/usage.json');
     check('usage snapshot returns 200', snapshot.status() === 200, 'status ' + snapshot.status());
     const usage = await snapshot.json();
-    check('usage page shows the recorded weekly figure',
-      (await page.textContent('.usage-value')).includes(String(usage.weekly) + '%'),
-      (await page.textContent('.usage-value')).trim());
+    check('usage page shows the recorded five-hour figure',
+      (await page.textContent('.usage-five-hour')).includes(String(usage.five_hour) + '%'),
+      (await page.textContent('.usage-five-hour')).trim());
+    check('usage page shows the recorded weekly figure and reset',
+      (await page.textContent('.usage-weekly')).includes(String(usage.weekly) + '%')
+        && (await page.textContent('.usage-weekly')).includes('Resets'),
+      (await page.textContent('.usage-weekly')).trim());
+    check('usage page explains both refresh schedules',
+      (await page.textContent('.usage-recorded')).includes('15 minutes')
+        && (await page.textContent('.usage-five-hour')).includes('Source refreshes'),
+      (await page.textContent('.usage-recorded')).trim());
     check('usage page has only its local refresh script',
       await page.$$eval('script', (scripts) => scripts.length === 1 && scripts[0].src.endsWith('/usage.js')));
     await ctx.close();
