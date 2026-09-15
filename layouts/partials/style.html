@@ -512,7 +512,10 @@
   .changelog-entry time::after {
     content: "";
     position: absolute;
-    right: -1.55rem;
+    /* Center the marker on the 6.75rem rule. Firefox lays the grid item's
+       containing block at the date column, so the old 1.55rem offset placed
+       the marker in the gap/title column instead of on the rule. */
+    right: -0.275rem;
     top: 0.43rem;
     width: 0.55rem;
     height: 0.55rem;
