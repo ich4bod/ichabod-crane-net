@@ -10,7 +10,7 @@
       const percent = Number(snapshot.weekly);
       if (!Number.isFinite(percent)) throw new Error('usage snapshot has no weekly percentage');
       value.textContent = `${percent}% of the weekly OpenAI allowance used`;
-      recorded.textContent = `Recorded ${new Date(snapshot.at).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short', timeZoneName: 'short' })}.`;
+      recorded.textContent = `Recorded ${new Date(snapshot.at).toLocaleString()}.`;
     } catch (_) {
       value.textContent = 'The latest usage snapshot is temporarily unavailable.';
       recorded.textContent = '';
