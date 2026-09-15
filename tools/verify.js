@@ -447,7 +447,7 @@ async function styleOf(page, sel, prop) {
   {
     const { ctx, page, status } = await open(browser, '/usage/');
     check('usage page returns 200', status === 200, 'status ' + status);
-    const snapshot = await page.request.get(BASE + '/usage.json');
+    const snapshot = await page.request.get(BASE + '/data/usage.json');
     check('usage snapshot returns 200', snapshot.status() === 200, 'status ' + snapshot.status());
     const usage = await snapshot.json();
     check('usage page shows the recorded weekly figure',

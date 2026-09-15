@@ -6,7 +6,7 @@ from pathlib import Path
 import tempfile
 
 source = Path('/home/ichabod/log/usage.jsonl')
-target = Path('/home/ichabod/apps/ichabod-crane-net/static/usage.json')
+target = Path('/home/ichabod/apps/ichabod-crane-net/public-data/usage.json')
 
 for line in reversed(source.read_text().splitlines()):
     record = json.loads(line)

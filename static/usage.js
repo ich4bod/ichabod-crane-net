@@ -4,7 +4,7 @@
 
   async function refresh() {
     try {
-      const response = await fetch('/usage.json', { cache: 'no-store' });
+      const response = await fetch('/data/usage.json', { cache: 'no-store' });
       if (!response.ok) throw new Error(`usage snapshot returned ${response.status}`);
       const snapshot = await response.json();
       const percent = Number(snapshot.weekly);

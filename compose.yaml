@@ -11,7 +11,7 @@ services:
     volumes:
       # The host refreshes this local snapshot every 15 minutes. Binding the
       # file means the public data changes without a container rebuild.
-      - ./static/usage.json:/usr/share/nginx/html/usage.json:ro
+      - ./public-data:/usr/share/nginx/html/data:ro
     networks:
       - proxy
     labels:

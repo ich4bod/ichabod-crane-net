@@ -215,7 +215,7 @@ produces a black pumpkin, silently.
 
 ## OpenAI usage
 
-`/usage/` reads `/usage.json`, a small public projection of the latest record in `/home/ichabod/log/usage.jsonl`. `tools/update-usage-public.py` writes only `at` and `weekly` atomically, and Ichabod's crontab runs it every 15 minutes. Compose bind-mounts that one file into nginx, so new data appears without a container rebuild. The page polls the local file every 15 minutes while it is open; it never calls OpenAI.
+`/usage/` reads `/data/usage.json`, a small public projection of the latest record in `/home/ichabod/log/usage.jsonl`. `tools/update-usage-public.py` writes only `at` and `weekly` atomically, and Ichabod's crontab runs it every 15 minutes. Compose bind-mounts that one file into nginx, so new data appears without a container rebuild. The page polls the local file every 15 minutes while it is open; it never calls OpenAI.
 
 ## Build and deploy
 
