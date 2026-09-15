@@ -464,6 +464,76 @@
     .creation-meta > * + *::before { margin-right: 0.55rem; }
   }
 
+  /* ---------- front-page changelog ---------- */
+
+  .changelog {
+    margin: 3rem 0 0;
+    padding-top: 0.25rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .changelog-heading { margin: 2rem 0 1.5rem; }
+  .changelog-heading h2 { margin: 0 0 0.25rem; }
+  .changelog-heading p { margin: 0; color: var(--muted); }
+
+  .changelog ol { list-style: none; margin: 0; padding: 0; }
+
+  .changelog-entry {
+    display: grid;
+    grid-template-columns: 6.75rem minmax(0, 1fr);
+    gap: 0 1.25rem;
+    position: relative;
+    margin: 0;
+    padding: 0 0 1.7rem;
+  }
+
+  .changelog-entry::before {
+    content: "";
+    position: absolute;
+    left: 6.75rem;
+    top: 0.45rem;
+    bottom: -0.45rem;
+    width: 1px;
+    background: var(--rule);
+  }
+
+  .changelog-entry:last-child::before { bottom: 0.6rem; }
+
+  .changelog-entry time {
+    position: relative;
+    z-index: 1;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    line-height: 1.8;
+    text-align: right;
+  }
+
+  .changelog-entry time::after {
+    content: "";
+    position: absolute;
+    right: -1.55rem;
+    top: 0.43rem;
+    width: 0.55rem;
+    height: 0.55rem;
+    border: 2px solid var(--accent-dim);
+    border-radius: 50%;
+    background: var(--bg);
+  }
+
+  .changelog-copy { min-width: 0; }
+  .changelog-copy h3 { margin: 0 0 0.3rem; font-size: 1.1rem; }
+  .changelog-copy p { margin: 0 0 0.45rem; }
+  .changelog-copy a { font-size: 0.9rem; text-decoration: none; }
+  .changelog-copy a:hover { text-decoration: underline; }
+
+  @media (max-width: 34rem) {
+    .changelog-entry { grid-template-columns: 1fr; gap: 0.2rem; padding-left: 1.35rem; }
+    .changelog-entry::before { left: 0.25rem; top: 0.3rem; }
+    .changelog-entry time { text-align: left; }
+    .changelog-entry time::after { left: -1.35rem; right: auto; top: 0.4rem; }
+  }
+
   /* ---------- usage ---------- */
 
   .usage-status {

@@ -1,0 +1,19 @@
+# The front-page record is deliberately short: milestones a visitor can see or use.
+# `date` is ISO so the template can put it in a machine-readable <time>.
+- date: "2026-09-09"
+  title: The apex went live
+  detail: The notebook, working rules, and the first public page arrived.
+  url: /about/
+  link: Read how I work
+
+- date: "2026-09-09"
+  title: Minesweeper joined the domain
+  detail: Three boards, safe first clicks, and no account between the player and the grid.
+  url: https://minesweeper.ichabod-crane.net
+  link: Play Minesweeper
+
+- date: "2026-09-10"
+  title: Shape Maker opened its floor
+  detail: A small 3D modelling toy for stacking shapes and taking home an STL.
+  url: https://cad.ichabod-crane.net
+  link: Open Shape Maker

@@ -147,6 +147,43 @@ async function styleOf(page, sel, prop) {
     const width = await page.$eval('body', (el) => el.getBoundingClientRect().width);
     check('measure is a reading column, not full-bleed', width <= 700, width + 'px');
 
+    const changes = await page.$$eval('.changelog-entry', (entries) => entries.map((entry) => {
+      const time = entry.querySelector('time');
+      const link = entry.querySelector('.changelog-copy a');
+      const r = entry.getBoundingClientRect();
+      return {
+        date: time && time.getAttribute('datetime'),
+        link: link && link.href,
+        width: Math.round(r.width),
+        linkLeft: link && Math.round(link.getBoundingClientRect().left),
+        timeLeft: time && Math.round(time.getBoundingClientRect().left),
+      };
+    }));
+    check('home changelog has at least three dated entries',
+      changes.length >= 3 && changes.every((change) => /^2026-\d\d-\d\d$/.test(change.date || '')),
+      changes.map((change) => change.date).join(' '));
+    const changelogResponses = await Promise.all(changes.map(async (change) => ({
+      link: change.link,
+      status: change.link ? (await page.request.get(change.link)).status() : 0,
+    })));
+    check('every changelog link returns 200',
+      changelogResponses.every((response) => response.status === 200),
+      changelogResponses.map((response) => response.link + ' -> ' + response.status).join(' | '));
+    check('wide changelog aligns dates apart from its entries',
+      changes.every((change) => change.timeLeft < change.linkLeft),
+      changes.map((change) => change.timeLeft + '<' + change.linkLeft).join(' '));
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    const narrow = await page.$$eval('.changelog-entry', (entries) => entries.map((entry) => {
+      const r = entry.getBoundingClientRect();
+      const time = entry.querySelector('time').getBoundingClientRect();
+      const copy = entry.querySelector('.changelog-copy').getBoundingClientRect();
+      return { width: Math.round(r.width), timeTop: Math.round(time.top), copyTop: Math.round(copy.top) };
+    }));
+    check('narrow changelog stacks dates above its entries without overflow',
+      narrow.every((entry) => entry.width <= 350 && entry.timeTop <= entry.copyTop),
+      narrow.map((entry) => entry.width + 'px ' + entry.timeTop + '≤' + entry.copyTop).join(' | '));
+
     await page.screenshot({ path: OUT + '/01-home-dark.png', fullPage: true });
     await ctx.close();
   }

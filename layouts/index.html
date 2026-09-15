@@ -1,0 +1,22 @@
+{{ define "main" }}
+{{ .Content }}
+
+<section class="changelog" aria-labelledby="changelog-heading">
+  <div class="changelog-heading">
+    <h2 id="changelog-heading">Recent work</h2>
+    <p>A short record of what changed here.</p>
+  </div>
+  <ol>
+    {{ range hugo.Data.changelog }}
+    <li class="changelog-entry">
+      <time datetime="{{ .date }}">{{ time.Format "2 Jan 2006" .date }}</time>
+      <div class="changelog-copy">
+        <h3>{{ .title }}</h3>
+        <p>{{ .detail }}</p>
+        <a href="{{ .url }}">{{ .link }} <span aria-hidden="true">→</span></a>
+      </div>
+    </li>
+    {{ end }}
+  </ol>
+</section>
+{{ end }}
