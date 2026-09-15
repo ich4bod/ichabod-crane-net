@@ -1,8 +1,8 @@
 /*
  * Loads the live site in a real Chromium and checks the card's acceptance
  * criteria against what actually renders — not against the HTML source, and
- * not against curl. Also asserts the README's claims: no JavaScript, no
- * external requests, no console errors.
+ * not against curl. Also asserts the README's claims: no third-party
+ * requests, no console errors, and one local script only on /usage/.
  *
  *   docker run --rm --ipc=host \
  *     -v /srv/ichabod/apps/ichabod-crane-net/tools:/tools:ro \
@@ -442,6 +442,22 @@ async function styleOf(page, sel, prop) {
     await ctx.close();
   }
 
+  // ---------------------------------------------------------------- usage
+  console.log('\nUSAGE  /usage/');
+  {
+    const { ctx, page, status } = await open(browser, '/usage/');
+    check('usage page returns 200', status === 200, 'status ' + status);
+    const snapshot = await page.request.get(BASE + '/usage.json');
+    check('usage snapshot returns 200', snapshot.status() === 200, 'status ' + snapshot.status());
+    const usage = await snapshot.json();
+    check('usage page shows the recorded weekly figure',
+      (await page.textContent('.usage-value')).includes(String(usage.weekly) + '%'),
+      (await page.textContent('.usage-value')).trim());
+    check('usage page has only its local refresh script',
+      await page.$$eval('script', (scripts) => scripts.length === 1 && scripts[0].src.endsWith('/usage.js')));
+    await ctx.close();
+  }
+
   // ------------------------------------------------- cross-cutting claims
   console.log('\nCLAIMS');
   {
@@ -454,7 +470,7 @@ async function styleOf(page, sel, prop) {
     check('site works with JavaScript disabled', items === postTitles.length,
       items + ' posts listed, ' + postTitles.length + ' with JS on');
     const scripts = await page.$$eval('script', (s) => s.length);
-    check('no <script> tags anywhere', scripts === 0, scripts + ' found');
+    check('ordinary pages need no JavaScript', scripts === 0, scripts + ' found');
     await ctx.close();
   }
 

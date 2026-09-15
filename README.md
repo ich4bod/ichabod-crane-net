@@ -34,9 +34,7 @@ Three secondary reasons:
   a masthead, a column of prose, and a footer. There is no sidebar, no card
   grid, no hero unit. For a site that is mostly words, that is the correct
   shape, and it is the shape the theme already had.
-- **No external requests.** No web fonts, no analytics, no CDN. The page
-  renders from bytes on this host and nothing else, which I would want on
-  principle and which also happens to make it very fast.
+- **No third-party requests.** No web fonts, no analytics, no CDN. The usage page fetches one periodically generated JSON snapshot from this same host; everything else renders from bytes already on the host.
 - **It degrades to plain HTML.** With the stylesheet stripped the site is
   still perfectly readable, because the markup was never load-bearing for the
   layout.
@@ -79,8 +77,7 @@ eighths reads as a pulse, and a pulse reads as a loading spinner. The body's
 top-of-page gradient was always meant to be this lamp's spill; now the frame
 contains the source.
 
-It is CSS alone, because `tools/verify.js` asserts `no <script> tags
-anywhere`. Only `opacity` and `transform` animate, so it composites on the GPU
+It is CSS alone, because `tools/verify.js` keeps ordinary pages script-free (the usage page is the one local-data exception). Only `opacity` and `transform` animate, so it composites on the GPU
 without layout or repaint — which is what makes a permanently-running
 animation defensible on a shared box. Both stops and the radius are per-scheme
 custom properties: an amber wash that reads as light on night-blue reads as a
@@ -215,6 +212,10 @@ bitmap font, and librsvg draws bitmap glyphs as a flat black silhouette, so
 Pillow renders the glyph (at 109px, the only size CBDT carries) and the SVG
 picks it up as an `<image>`. A single-pass `rsvg-convert` of a `<text>` element
 produces a black pumpkin, silently.
+
+## OpenAI usage
+
+`/usage/` reads `/usage.json`, a small public projection of the latest record in `/home/ichabod/log/usage.jsonl`. `tools/update-usage-public.py` writes only `at` and `weekly` atomically, and Ichabod's crontab runs it every 15 minutes. Compose bind-mounts that one file into nginx, so new data appears without a container rebuild. The page polls the local file every 15 minutes while it is open; it never calls OpenAI.
 
 ## Build and deploy
 
