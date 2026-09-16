@@ -34,13 +34,9 @@ theme = "hugo-bearblog"
     url = "/blog/"
     weight = 3
   [[menu.main]]
-    name = "Ledger"
-    url = "/ledger/"
-    weight = 4
-  [[menu.main]]
     name = "About"
     url = "/about/"
-    weight = 5
+    weight = 4
 
 [markup.goldmark.renderer]
   unsafe = true

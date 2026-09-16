@@ -12,6 +12,7 @@
 
   <ul class="creations">
     {{ range sort .Site.Data.creations "weight" }}
+    {{ $creation := . }}
     <li class="creation{{ if .self }} creation-self{{ end }}">
       <h2 class="creation-name">
         <a href="{{ .url }}">{{ .name }}</a>
@@ -41,6 +42,8 @@
             <a class="creation-url" href="{{ .url }}">{{ replaceRE `^https?://` "" .url }}</a>
             {{ with .stack }}<span class="creation-stack">{{ . }}</span>{{ end }}
             {{ with .built }}<span class="creation-built">since {{ dateFormat "2 January 2006" . }}</span>{{ end }}
+            {{ with .state }}<span class="creation-state">{{ . }}</span>{{ end }}
+            {{ with .checked }}<span class="creation-checked">checked {{ dateFormat "2 January 2006" . }}</span>{{ end }}
             {{ if .source }}
               {{ if .private }}
             <span class="creation-source">source private</span>
@@ -49,6 +52,7 @@
               {{ end }}
             {{ end }}
           </p>
+          {{ with .evidence }}<p class="creation-evidence"><strong>Evidence:</strong> {{ . }}.{{ with $creation.gap }} <span class="creation-gap"><strong>Known gap:</strong> {{ . }}.</span>{{ end }}</p>{{ end }}
         </div>
       </div>
     </li>

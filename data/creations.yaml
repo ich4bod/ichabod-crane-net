@@ -1,31 +1,12 @@
-# The single source of truth for /creations/.
+# The single source of truth for everything live under ichabod-crane.net.
 #
-# Everything live under ichabod-crane.net gets exactly one entry here, and the
-# creations page is generated from it. Adding the next deployed app is adding a
-# block to this file — never prose copied onto a page.
+# Adding, removing, or reporting on a deployed application happens here — never
+# by copying its details into a page. `checked` and `evidence` make the index an
+# honest record of what was actually watched.
 #
-# Fields:
-#   name        display name
-#   url         the live public URL, https, no trailing slash
-#   host        what to print as the address; defaults to url with the scheme
-#               stripped if omitted
-#   blurb       one line, sentence case, no full stop. This is the whole
-#               description on the index — if it needs two lines it needs a
-#               blog post instead
-#   built       YYYY-MM-DD, the day it first served real traffic
-#   source      repository URL, or omit if there is none
-#   private     true when the repository is private, so the page can say so
-#               rather than offering a link that 404s for everyone but me
-#   stack       short technical note, mono-set on the page
-#   weight      sort order, low first. The apex sits last: it is the thing you
-#               are already reading
-#   self        true for the site itself, which gets marked instead of linked
-#   thumb       path under static/ to a 480x300 screenshot, shot by
-#               tools/shoot-thumbs.mjs. Optional, and meant to stay optional:
-#               an entry without one renders as text, which is how the whole
-#               page looked until there were screenshots worth showing. Do not
-#               put one on a self entry — a picture of the page being read is
-#               not information
+# Fields: name, url, blurb, built, source, private, stack, weight, thumb;
+# state, checked, evidence, and gap record its current evidence. `self` marks
+# this site instead of linking away.
 
 - name: Minesweeper
   url: https://minesweeper.ichabod-crane.net
@@ -34,6 +15,10 @@
   source: https://github.com/ich4bod/minesweeper
   private: true
   stack: nginx · no framework · no build step
+  state: live
+  checked: "2026-09-16"
+  evidence: Public URL returned HTTP 200
+  gap: Browser game test has not been rerun after the service-worker change
   weight: 10
   thumb: /thumbs/minesweeper.png
 
@@ -44,8 +29,90 @@
   source: https://github.com/ich4bod/cad
   private: true
   stack: three.js · nginx · no typing anywhere
+  state: live
+  checked: "2026-09-16"
+  evidence: Public URL returned HTTP 200; keyboard-only inspection flow was previously verified
+  gap: This availability check did not repeat a 3D interaction test
   weight: 20
   thumb: /thumbs/shape-maker.png
+
+- name: Bit Signal Synth
+  url: https://bit-signal-synth.ichabod-crane.net
+  blurb: A browser instrument for shaping bit patterns into sound
+  built: "2026-09-11"
+  source: https://github.com/ich4bod/bit-signal-synth
+  private: true
+  stack: static browser app · nginx
+  state: live
+  checked: "2026-09-16"
+  evidence: Public URL returned HTTP 200
+  gap: Browser smoke test has not been repeated during this check
+  weight: 30
+
+- name: Feed Fixture Lab
+  url: https://feed-lab.ichabod-crane.net
+  blurb: A local-first diagnostic page for RSS and Atom-shaped fixtures
+  built: "2026-09-11"
+  source: https://github.com/ich4bod/feed-fixture-lab
+  private: true
+  stack: static browser app · nginx
+  state: live
+  checked: "2026-09-16"
+  evidence: Public URL returned HTTP 200
+  gap: Fixture-generation behavior was not rerun during this check
+  weight: 40
+
+- name: File Format Microscope
+  url: https://microscope.ichabod-crane.net
+  blurb: An offline exhibit for inspecting GIF, BMP, and WAV files
+  built: "2026-09-11"
+  source: https://github.com/ich4bod/file-format-microscope
+  private: true
+  stack: static browser app · nginx
+  state: live
+  checked: "2026-09-16"
+  evidence: Public URL returned HTTP 200
+  gap: This does not show that every supported format still parses
+  weight: 50
+
+- name: Punch Card Machine
+  url: https://punch-card-machine.ichabod-crane.net
+  blurb: A tiny browser toy for writing and running a punched-card deck
+  built: "2026-09-11"
+  source: https://github.com/ich4bod/punch-card-machine
+  private: true
+  stack: static browser app · nginx
+  state: live
+  checked: "2026-09-16"
+  evidence: Public URL returned HTTP 200; browser-verification locators were previously repaired
+  gap: Browser suite was not rerun during this check
+  weight: 60
+
+- name: Nature Signal Simulator
+  url: https://nature-signal-simulator.ichabod-crane.net
+  blurb: A small instrument for observing generated natural signals
+  built: "2026-09-15"
+  source: https://github.com/ich4bod/nature-signal-simulator
+  private: true
+  stack: static browser app · nginx
+  state: live
+  checked: "2026-09-16"
+  evidence: Public URL returned HTTP 200
+  gap: Behavior beyond availability was not rerun during this check
+  weight: 70
+
+- name: State Trace Animator
+  url: https://state-trace-animator.ichabod-crane.net
+  blurb: An offline tool for stepping through deterministic state-machine traces
+  built: "2026-09-16"
+  source: https://github.com/ich4bod/state-trace-animator
+  private: true
+  stack: static browser app · nginx
+  state: live
+  checked: "2026-09-16"
+  evidence: Public URL returned HTTP 200
+  gap: Behavior beyond availability was not rerun during this check
+  weight: 80
 
 - name: This site
   url: https://ichabod-crane.net
@@ -54,5 +121,9 @@
   source: https://github.com/ich4bod/ichabod-crane-net
   private: true
   stack: Hugo · nginx · no JavaScript
+  state: live
+  checked: "2026-09-16"
+  evidence: Public URL returned HTTP 200
+  gap: None
   weight: 90
   self: true
