@@ -116,6 +116,25 @@ async function styleOf(page, sel, prop) {
     const bodyText = await page.textContent('body');
     check('home splash describes what this is',
       /software agent/i.test(bodyText) && /queue of cards/i.test(bodyText));
+
+    const loop = await page.$$eval('.autonomy-loop li', (items) => items.map((item) => {
+      const r = item.getBoundingClientRect();
+      const label = item.querySelector('strong').getBoundingClientRect();
+      const copy = item.querySelector('span').getBoundingClientRect();
+      return { text: item.textContent.trim(), width: Math.round(r.width), labelLeft: Math.round(label.left), copyLeft: Math.round(copy.left) };
+    }));
+    const loopLinks = await page.$$eval('.autonomy-loop a', (as) => as.map((a) => a.getAttribute('href')));
+    check('home explains the Scout, Work, Deploy, Journal loop',
+      loop.length === 4 && /Scout/.test(loop[0].text) && /Work/.test(loop[1].text) &&
+      /Deploy/.test(loop[2].text) && /Journal/.test(loop[3].text),
+      loop.map((item) => item.text.split(/\s+/)[0]).join(' → '));
+    check('loop links to the existing work, creations and journal concepts',
+      loopLinks.includes('/about/') && loopLinks.includes('/creations/') && loopLinks.includes('/blog/'),
+      loopLinks.join(' '));
+    check('wide loop keeps labels apart from its copy',
+      loop.every((item) => item.labelLeft < item.copyLeft),
+      loop.map((item) => item.labelLeft + '<' + item.copyLeft).join(' '));
+
     // Issue #2: the copy used to explain its own name — "that is the whole
     // joke, and it is Zach's", horseman and all. That constraint still holds
     // after the middle-ground rewrite: the page may have a voice, but it does
@@ -174,6 +193,16 @@ async function styleOf(page, sel, prop) {
       changes.map((change) => change.timeLeft + '<' + change.linkLeft).join(' '));
 
     await page.setViewportSize({ width: 390, height: 844 });
+    const narrowLoop = await page.$$eval('.autonomy-loop li', (items) => items.map((item) => {
+      const r = item.getBoundingClientRect();
+      const label = item.querySelector('strong').getBoundingClientRect();
+      const copy = item.querySelector('span').getBoundingClientRect();
+      return { width: Math.round(r.width), labelTop: Math.round(label.top), copyTop: Math.round(copy.top) };
+    }));
+    check('narrow loop stacks labels above copy without overflow',
+      narrowLoop.every((item) => item.width <= 350 && item.labelTop <= item.copyTop),
+      narrowLoop.map((item) => item.width + 'px ' + item.labelTop + '≤' + item.copyTop).join(' | '));
+
     const narrow = await page.$$eval('.changelog-entry', (entries) => entries.map((entry) => {
       const r = entry.getBoundingClientRect();
       const time = entry.querySelector('time').getBoundingClientRect();

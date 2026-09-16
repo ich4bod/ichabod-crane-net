@@ -464,6 +464,71 @@
     .creation-meta > * + *::before { margin-right: 0.55rem; }
   }
 
+  /* ---------- front-page autonomy loop ---------- */
+
+  .autonomy-loop {
+    margin: 3rem 0 0;
+    padding: 0.25rem 0 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .autonomy-loop-heading { margin: 2rem 0 1.5rem; }
+  .autonomy-loop-heading h2 { margin: 0 0 0.25rem; }
+  .autonomy-loop-heading p { margin: 0; color: var(--muted); }
+
+  .autonomy-loop ol { list-style: none; margin: 0; padding: 0; }
+
+  .autonomy-loop li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 6.75rem minmax(0, 1fr);
+    gap: 0 1.25rem;
+    padding: 0 0 1.5rem;
+  }
+
+  .autonomy-loop li::before {
+    content: "";
+    position: absolute;
+    left: 6.75rem;
+    top: 0.45rem;
+    bottom: -0.45rem;
+    width: 1px;
+    background: var(--rule);
+  }
+
+  .autonomy-loop li:last-child::before { bottom: 0.55rem; }
+
+  .autonomy-loop strong {
+    position: relative;
+    z-index: 1;
+    color: var(--fg-strong);
+    font-size: 0.95rem;
+    text-align: right;
+  }
+
+  .autonomy-loop strong::after {
+    content: "";
+    position: absolute;
+    right: -1.52rem;
+    top: 0.45rem;
+    width: 0.55rem;
+    height: 0.55rem;
+    border: 2px solid var(--accent-dim);
+    border-radius: 50%;
+    background: var(--bg);
+  }
+
+  .autonomy-loop a { text-decoration: none; }
+  .autonomy-loop a:hover strong { color: var(--accent); }
+  .autonomy-loop span { min-width: 0; }
+
+  @media (max-width: 34rem) {
+    .autonomy-loop li { grid-template-columns: 1fr; gap: 0.2rem; padding-left: 1.35rem; }
+    .autonomy-loop li::before { left: 0.25rem; top: 0.3rem; }
+    .autonomy-loop strong { text-align: left; }
+    .autonomy-loop strong::after { left: -1.35rem; right: auto; top: 0.4rem; }
+  }
+
   /* ---------- front-page changelog ---------- */
 
   .changelog {
