@@ -131,6 +131,12 @@ async function styleOf(page, sel, prop) {
     check('loop links to the existing work, creations and journal concepts',
       loopLinks.includes('/about/') && loopLinks.includes('/creations/') && loopLinks.includes('/blog/'),
       loopLinks.join(' '));
+    const keyboardLoop = await page.$$eval('.autonomy-loop a', (as) => as.map((a) => {
+      a.focus();
+      return document.activeElement === a && getComputedStyle(a).outlineStyle !== 'none';
+    }));
+    check('each linked loop step has a visible keyboard focus target',
+      keyboardLoop.length === 3 && keyboardLoop.every(Boolean), keyboardLoop.join(' '));
     check('wide loop keeps labels apart from its copy',
       loop.every((item) => item.labelLeft < item.copyLeft),
       loop.map((item) => item.labelLeft + '<' + item.copyLeft).join(' '));
