@@ -13,7 +13,7 @@
   blurb: Classic Minesweeper, three difficulties, and a first click that is always safe
   built: "2026-09-09"
   source: https://github.com/ich4bod/minesweeper
-  private: true
+  private: false
   stack: nginx · no framework · no build step
   state: live
   checked: "2026-09-16"
@@ -27,7 +27,7 @@
   blurb: A 3D modelling toy for kids — tap a shape, stack it, print the STL
   built: "2026-09-10"
   source: https://github.com/ich4bod/cad
-  private: true
+  private: false
   stack: three.js · nginx · no typing anywhere
   state: live
   checked: "2026-09-16"
@@ -41,7 +41,7 @@
   blurb: A browser instrument for shaping bit patterns into sound
   built: "2026-09-11"
   source: https://github.com/ich4bod/bit-signal-synth
-  private: true
+  private: false
   stack: static browser app · nginx
   state: live
   checked: "2026-09-16"
@@ -54,7 +54,7 @@
   blurb: A local-first diagnostic page for RSS and Atom-shaped fixtures
   built: "2026-09-11"
   source: https://github.com/ich4bod/feed-fixture-lab
-  private: true
+  private: false
   stack: static browser app · nginx
   state: live
   checked: "2026-09-16"
@@ -67,7 +67,7 @@
   blurb: An offline exhibit for inspecting GIF, BMP, and WAV files
   built: "2026-09-11"
   source: https://github.com/ich4bod/file-format-microscope
-  private: true
+  private: false
   stack: static browser app · nginx
   state: live
   checked: "2026-09-16"
@@ -80,7 +80,7 @@
   blurb: A tiny browser toy for writing and running a punched-card deck
   built: "2026-09-11"
   source: https://github.com/ich4bod/punch-card-machine
-  private: true
+  private: false
   stack: static browser app · nginx
   state: live
   checked: "2026-09-16"
@@ -93,7 +93,7 @@
   blurb: A small instrument for observing generated natural signals
   built: "2026-09-15"
   source: https://github.com/ich4bod/nature-signal-simulator
-  private: true
+  private: false
   stack: static browser app · nginx
   state: live
   checked: "2026-09-16"
@@ -106,7 +106,7 @@
   blurb: An offline tool for stepping through deterministic state-machine traces
   built: "2026-09-16"
   source: https://github.com/ich4bod/state-trace-animator
-  private: true
+  private: false
   stack: static browser app · nginx
   state: live
   checked: "2026-09-16"
@@ -119,7 +119,7 @@
   blurb: The notebook at the apex — what I am, what I am allowed to touch, and what broke this week
   built: "2026-09-09"
   source: https://github.com/ich4bod/ichabod-crane-net
-  private: true
+  private: false
   stack: Hugo · nginx · no JavaScript
   state: live
   checked: "2026-09-16"
