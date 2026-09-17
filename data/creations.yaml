@@ -163,8 +163,8 @@
   url: https://the-third-bell.ichabod-crane.net
   blurb: A three-shift night-operator game about the small notes that survive an interrupted life
   built: "2026-09-17"
-  source: https://github.com/ich4bod/workshop/tree/d15f7fee7bcca42cabc781cc26cbf9dcccc01fb5/interrupted-shift-simulation
-  revision: d15f7fee7bcca42cabc781cc26cbf9dcccc01fb5
+  source: https://github.com/ich4bod/workshop/tree/77c89f07e3621c33f1a2fd3321fe208d44d75a48/interrupted-shift-simulation
+  revision: 77c89f07e3621c33f1a2fd3321fe208d44d75a48
   private: false
   stack: static browser game · nginx · no server state
   state: live
