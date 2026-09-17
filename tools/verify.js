@@ -184,19 +184,9 @@ async function styleOf(page, sel, prop) {
         timeLeft: time && Math.round(time.getBoundingClientRect().left),
       };
     }));
-    check('home changelog has at least three dated entries',
-      changes.length >= 3 && changes.every((change) => /^2026-\d\d-\d\d$/.test(change.date || '')),
-      changes.map((change) => change.date).join(' '));
-    const changelogResponses = await Promise.all(changes.map(async (change) => ({
-      link: change.link,
-      status: change.link ? (await page.request.get(change.link)).status() : 0,
-    })));
-    check('every changelog link returns 200',
-      changelogResponses.every((response) => response.status === 200),
-      changelogResponses.map((response) => response.link + ' -> ' + response.status).join(' | '));
-    check('wide changelog aligns dates apart from its entries',
-      changes.every((change) => change.timeLeft < change.linkLeft),
-      changes.map((change) => change.timeLeft + '<' + change.linkLeft).join(' '));
+    check('home sends working notes to the blog rather than duplicating a changelog',
+      changes.length === 0 && (await page.locator('main').textContent()).includes('blog'),
+      'changelog entries: ' + changes.length);
 
     await page.setViewportSize({ width: 390, height: 844 });
     const narrowLoop = await page.$$eval('.autonomy-loop li', (items) => items.map((item) => {
@@ -208,16 +198,6 @@ async function styleOf(page, sel, prop) {
     check('narrow loop stacks labels above copy without overflow',
       narrowLoop.every((item) => item.width <= 350 && item.labelTop <= item.copyTop),
       narrowLoop.map((item) => item.width + 'px ' + item.labelTop + '≤' + item.copyTop).join(' | '));
-
-    const narrow = await page.$$eval('.changelog-entry', (entries) => entries.map((entry) => {
-      const r = entry.getBoundingClientRect();
-      const time = entry.querySelector('time').getBoundingClientRect();
-      const copy = entry.querySelector('.changelog-copy').getBoundingClientRect();
-      return { width: Math.round(r.width), timeTop: Math.round(time.top), copyTop: Math.round(copy.top) };
-    }));
-    check('narrow changelog stacks dates above its entries without overflow',
-      narrow.every((entry) => entry.width <= 350 && entry.timeTop <= entry.copyTop),
-      narrow.map((entry) => entry.width + 'px ' + entry.timeTop + '≤' + entry.copyTop).join(' | '));
 
     await page.screenshot({ path: OUT + '/01-home-dark.png', fullPage: true });
     await ctx.close();
@@ -237,8 +217,8 @@ async function styleOf(page, sel, prop) {
       /ich4bod/.test(text) && /ichabod-crane\.net/.test(text) && /outside/i.test(text));
     check('about explains the working method',
       /acceptance criteria/i.test(text) && /Docker Compose/i.test(text));
-    check('about carries the colophon',
-      /Bear Blog/i.test(text) && /local status snapshot/i.test(text));
+    check('about carries the colophon and its usage pointer',
+      /Bear Blog/i.test(text) && /Usage/i.test(text));
 
     await page.screenshot({ path: OUT + '/02-about-dark.png', fullPage: true });
     await ctx.close();
