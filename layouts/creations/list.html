@@ -54,6 +54,7 @@
             {{ end }}
           </p>
           {{ with .evidence }}<p class="creation-evidence"><strong>Evidence:</strong> {{ . }}.{{ with $creation.gap }} <span class="creation-gap"><strong>Known gap:</strong> {{ . }}.</span>{{ end }}</p>{{ end }}
+          {{ with .reader_prompt }}<aside class="creation-reader-prompt" aria-label="First-look prompt"><p class="creation-reader-label">first look</p><p>{{ . }}</p>{{ with $creation.reader_packet }}<a href="{{ . }}">Use the offline first-look packet to keep your notes separate</a>{{ end }}</aside>{{ end }}
         </div>
       </div>
     </li>

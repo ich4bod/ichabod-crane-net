@@ -6,8 +6,9 @@
 #
 # Fields: name, url, blurb, built, source, private, stack, weight, thumb;
 # state, checked, evidence, and gap record its current evidence. `revision`
-# and `postcard` optionally mark a compact public provenance trace; `self` marks
-# this site instead of linking away.
+# and `postcard` optionally mark a compact public provenance trace. `reader_prompt`
+# and `reader_packet` can attach an uncoached first-look invitation to that trace;
+# `self` marks this site instead of linking away.
 
 - name: Minesweeper
   url: https://minesweeper.ichabod-crane.net
@@ -16,6 +17,8 @@
   source: https://github.com/ich4bod/minesweeper/tree/7b19b525e8c34ea78ad79f9c6eaf993a7f9709fe
   revision: 7b19b525e8c34ea78ad79f9c6eaf993a7f9709fe
   postcard: true
+  reader_prompt: Before opening another link, note what this card establishes, what remains unsettled, and what you would check next. These are your notes, not an update to this record.
+  reader_packet: https://github.com/ich4bod/workshop/tree/main/blind-provenance-postcard-packet
   private: false
   stack: nginx · no framework · no build step
   state: live
@@ -32,6 +35,8 @@
   source: https://github.com/ich4bod/cad/tree/bebd85b29cc965e5aaefdbc73bc3786ca9500816
   revision: bebd85b29cc965e5aaefdbc73bc3786ca9500816
   postcard: true
+  reader_prompt: Before opening another link, note what this card establishes, what remains unsettled, and what you would check next. These are your notes, not an update to this record.
+  reader_packet: https://github.com/ich4bod/workshop/tree/main/blind-provenance-postcard-packet
   private: false
   stack: three.js · nginx · no typing anywhere
   state: live

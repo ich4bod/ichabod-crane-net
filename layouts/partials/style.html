@@ -412,6 +412,35 @@
     font-size: inherit;
   }
 
+  /* A visitor's first look belongs beside the trace, not in a new explanation
+     or a second list. It is intentionally quieter than the observed record:
+     this asks for notes without telling the reader what to conclude. */
+  .creation-reader-prompt {
+    margin: 1rem 0 0;
+    padding: 0.8rem 0.9rem 0.85rem;
+    border: 1px dashed var(--accent-dim);
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--bg-glow) 50%, transparent);
+  }
+
+  .creation-reader-prompt p { margin: 0; }
+  .creation-reader-prompt p + p { margin-top: 0.35rem; }
+
+  .creation-reader-label {
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .creation-reader-prompt a {
+    display: inline-block;
+    margin-top: 0.65rem;
+    font-size: 0.875rem;
+  }
+
   /* Screenshot beside the words, where there is a screenshot. The row is a
      two-item flex that wraps, so an entry with no thumb is simply a row with
      one item in it and looks exactly as it did before — no separate rule, no

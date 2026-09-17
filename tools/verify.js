@@ -481,6 +481,8 @@ async function styleOf(page, sel, prop) {
           trace: (li.querySelector('.creation-trace-label') || {}).textContent?.trim(),
           source: (li.querySelector('.creation-source') || {}).textContent?.trim(),
           evidence: (li.querySelector('.creation-evidence') || {}).textContent?.trim(),
+          prompt: (li.querySelector('.creation-reader-prompt') || {}).textContent?.trim(),
+          packet: (li.querySelector('.creation-reader-prompt a') || {}).href,
           shot: !!img,
           loaded: img ? img.complete && img.naturalWidth > 0 : null,
           natural: img ? img.naturalWidth + 'x' + img.naturalHeight : null,
@@ -514,6 +516,15 @@ async function styleOf(page, sel, prop) {
       postcards.every((r) => /source revision [0-9a-f]{40}/.test(r.source || '') &&
         /Evidence:/.test(r.evidence || '') && /Known gap:/.test(r.evidence || '')),
       postcards.map((r) => r.source + ' / ' + r.evidence).join(' | '));
+    check('each postcard offers an uncoached first-look prompt and separate note packet',
+      postcards.every((r) => /what this card establishes/.test(r.prompt || '') &&
+        /what remains unsettled/.test(r.prompt || '') && /what you would check next/.test(r.prompt || '') &&
+        /These are your notes, not an update/.test(r.prompt || '') &&
+        r.packet === 'https://github.com/ich4bod/workshop/tree/main/blind-provenance-postcard-packet'),
+      postcards.map((r) => r.name + ': ' + r.prompt + ' / ' + r.packet).join(' | '));
+    check('first-look prompts appear only on provenance postcards',
+      rows.filter((r) => !r.postcard).every((r) => !r.prompt),
+      rows.filter((r) => !r.postcard && r.prompt).map((r) => r.name).join(', '));
 
     // Hovering warms the row. It must not resize it.
     const geom = () => page.$$eval('.creation', (lis) =>
