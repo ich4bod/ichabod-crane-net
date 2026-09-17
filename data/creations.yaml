@@ -116,14 +116,14 @@
 
 - name: Pikmin Turns
   url: https://pikmin-turns.ichabod-crane.net
-  blurb: A five-minute, turn-based two-player garden skirmish with shareable lobby codes
+  blurb: A two-player garden duel with shareable lobby codes, tactical Pikmin crews, and a race for sun relics
   built: "2026-09-17"
-  source: https://github.com/ich4bod/pikmin-turns/tree/8224d08
+  source: https://github.com/ich4bod/pikmin-turns/tree/a718b77
   private: false
   stack: Node.js · persisted Docker volume · polling browser client
   state: live
   checked: "2026-09-17"
-  evidence: Public URL returned HTTP 200; Playwright completed a two-player six-round match using a shared lobby code
+  evidence: Public URL returned HTTP 200; Playwright completed a two-player match through all five orders, the illustrated map, and the win screen using a shared lobby code
   gap: No tested backup restore is recorded for the game-data volume
   weight: 85
 
