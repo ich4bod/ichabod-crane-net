@@ -387,6 +387,31 @@
 
   .creation-self { border-style: dashed; }
 
+  /* Two entries are deliberately marked as provenance traces. They remain
+     ordinary rows in the one inventory — the marker makes their retained
+     revision, observed URL, evidence, and gap easy to read as one compact
+     record instead of copying them into a second list. */
+  .creation-postcard {
+    border-color: var(--accent-dim);
+    background-image: linear-gradient(135deg, var(--bg-glow) 0%, var(--code-bg) 72%);
+  }
+
+  .creation-trace-label {
+    margin: 0 0 0.4rem;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .creation-source code {
+    overflow-wrap: anywhere;
+    font-family: inherit;
+    font-size: inherit;
+  }
+
   /* Screenshot beside the words, where there is a screenshot. The row is a
      two-item flex that wraps, so an entry with no thumb is simply a row with
      one item in it and looks exactly as it did before — no separate rule, no

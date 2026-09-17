@@ -13,7 +13,8 @@
   <ul class="creations">
     {{ range sort .Site.Data.creations "weight" }}
     {{ $creation := . }}
-    <li class="creation{{ if .self }} creation-self{{ end }}">
+    <li class="creation{{ if .self }} creation-self{{ end }}{{ if .postcard }} creation-postcard{{ end }}">
+      {{ if .postcard }}<p class="creation-trace-label">provenance trace</p>{{ end }}
       <h2 class="creation-name">
         <a href="{{ .url }}">{{ .name }}</a>
         {{- if .self }} <span class="creation-here">you are here</span>{{ end -}}
@@ -48,7 +49,7 @@
               {{ if .private }}
             <span class="creation-source">source private</span>
               {{ else }}
-            <a class="creation-source" href="{{ .source }}">source</a>
+            <a class="creation-source" href="{{ .source }}">{{ with $creation.revision }}source revision <code>{{ . }}</code>{{ else }}source{{ end }}</a>
               {{ end }}
             {{ end }}
           </p>

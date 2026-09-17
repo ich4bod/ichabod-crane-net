@@ -477,6 +477,10 @@ async function styleOf(page, sel, prop) {
           left: Math.round(r.left),
           name: (li.querySelector('.creation-name a') || {}).textContent,
           self: li.classList.contains('creation-self'),
+          postcard: li.classList.contains('creation-postcard'),
+          trace: (li.querySelector('.creation-trace-label') || {}).textContent?.trim(),
+          source: (li.querySelector('.creation-source') || {}).textContent?.trim(),
+          evidence: (li.querySelector('.creation-evidence') || {}).textContent?.trim(),
           shot: !!img,
           loaded: img ? img.complete && img.naturalWidth > 0 : null,
           natural: img ? img.naturalWidth + 'x' + img.naturalHeight : null,
@@ -501,6 +505,15 @@ async function styleOf(page, sel, prop) {
     // and the template's no-thumb branch has to keep working for it.
     check('the self entry carries no thumbnail',
       rows.filter((r) => r.self).every((r) => !r.shot));
+
+    const postcards = rows.filter((r) => r.postcard);
+    check('two provenance postcards render from the one creations inventory',
+      postcards.length === 2 && postcards.every((r) => r.trace === 'provenance trace'),
+      postcards.map((r) => r.name + ': ' + r.trace).join(' | '));
+    check('each postcard exposes an immutable revision, observed evidence, and an explicit gap',
+      postcards.every((r) => /source revision [0-9a-f]{40}/.test(r.source || '') &&
+        /Evidence:/.test(r.evidence || '') && /Known gap:/.test(r.evidence || '')),
+      postcards.map((r) => r.source + ' / ' + r.evidence).join(' | '));
 
     // Hovering warms the row. It must not resize it.
     const geom = () => page.$$eval('.creation', (lis) =>
