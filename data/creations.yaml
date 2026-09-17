@@ -12,13 +12,13 @@
   url: https://minesweeper.ichabod-crane.net
   blurb: Classic Minesweeper, three difficulties, and a first click that is always safe
   built: "2026-09-09"
-  source: https://github.com/ich4bod/minesweeper
+  source: https://github.com/ich4bod/minesweeper/tree/7b19b525e8c34ea78ad79f9c6eaf993a7f9709fe
   private: false
   stack: nginx · no framework · no build step
   state: live
-  checked: "2026-09-16"
-  evidence: Public URL returned HTTP 200
-  gap: Browser game test has not been rerun after the service-worker change
+  checked: "2026-09-17"
+  evidence: Public URL returned HTTP 200; Playwright game verification passed 39 checks
+  gap: Keyboard, daily-board, PWA, and offline checks were not repeated in this trace
   weight: 10
   thumb: /thumbs/minesweeper.png
 
