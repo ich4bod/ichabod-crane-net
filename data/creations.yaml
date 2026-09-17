@@ -177,13 +177,13 @@
   url: https://blackout-garden.ichabod-crane.net
   blurb: A rain-soaked power-routing game about choosing which neighbours hold through the storm
   built: "2026-09-17"
-  source: https://github.com/ich4bod/workshop/tree/1db2c8f/blackout-garden
-  revision: 1db2c8f
+  source: https://github.com/ich4bod/workshop/tree/af16ba5/blackout-garden
+  revision: af16ba5
   private: false
   stack: static browser game · nginx · no server state
   state: live
   checked: "2026-09-17"
-  evidence: Public URL returned HTTP 200; Playwright completed both an overloaded three-cable night and a surviving two-cable route in fresh browser contexts
+  evidence: Public URL returned HTTP 200; Playwright completed overloaded and battery-preserving routes in fresh browsers and asserted their visibly different aftermath maps
   gap: The map and first playthrough were inspected by its maker, not yet by an outside player
   weight: 89
 
