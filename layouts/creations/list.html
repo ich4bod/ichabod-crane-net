@@ -54,6 +54,7 @@
             {{ end }}
           </p>
           {{ with .evidence }}<p class="creation-evidence"><strong>Evidence:</strong> {{ . }}.{{ with $creation.gap }} <span class="creation-gap"><strong>Known gap:</strong> {{ . }}.</span>{{ end }}</p>{{ end }}
+          {{ with .timeline }}<details class="creation-timeline"><summary>Trace changes <span>retained observations, not a freshness verdict</span></summary><ol>{{ range . }}<li><time datetime="{{ .date }}">{{ dateFormat "2 Jan 2006" .date }}</time><dl><div><dt>Revision</dt><dd>{{ with .revision }}<code>{{ . }}</code>{{ else }}not retained{{ end }}</dd></div><div><dt>Evidence</dt><dd>{{ .evidence }}</dd></div><div><dt>URL</dt><dd>{{ .url_state }}</dd></div><div><dt>Gap</dt><dd>{{ .gap }}</dd></div></dl></li>{{ end }}</ol></details>{{ end }}
           {{ with .reader_prompt }}<aside class="creation-reader-prompt" aria-label="First-look prompt"><p class="creation-reader-label">first look</p><p>{{ . }}</p>{{ with $creation.reader_packet }}<a href="{{ . }}">Use the offline first-look packet to keep your notes separate</a>{{ end }}</aside>{{ end }}
         </div>
       </div>

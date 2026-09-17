@@ -107,6 +107,19 @@ async function isVisible(page, selector) {
           !!box && box.height > 40, box ? Math.round(box.height) + 'px tall' : 'no box');
       }
 
+      // The two trace cards expose dated retained field changes inside the one
+      // inventory row. Opening them must reveal evidence, URL observations,
+      // and gaps without implying that either trace is a current verdict.
+      const timelines = await page.$$('.creation-timeline');
+      check('two postcard timelines are present', timelines.length === 2, timelines.length + ' timelines');
+      for (const timeline of timelines) await (await timeline.$('summary')).click();
+      const timelineText = await page.$$eval('.creation-timeline', (els) => els.map((el) => el.innerText));
+      check('timelines retain dated revision, evidence, URL, and gap fields', timelineText.length === 2 && timelineText.every((text) => /Revision/.test(text) && /Evidence/.test(text) && /URL/.test(text) && /Gap/.test(text)), timelineText.join(' | ').slice(0, 220));
+      check('timelines state their no-freshness boundary', timelineText.every((text) => /not a freshness verdict/.test(text)), timelineText.join(' | ').slice(0, 220));
+      await page.setViewportSize({width:390,height:844});
+      const narrowTimelines = await page.$$eval('.creation-timeline li', (els) => els.map((el) => ({width:el.getBoundingClientRect().width, scroll:el.scrollWidth})));
+      check('narrow timelines do not overflow their cards', narrowTimelines.every((item) => item.scroll <= item.width + 1), JSON.stringify(narrowTimelines));
+
       // The card names minesweeper specifically.
       const mineEntry = await page.$('ul.creations a[href^="' + MINES + '"]');
       check('minesweeper is on the index', !!mineEntry);

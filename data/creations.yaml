@@ -25,6 +25,17 @@
   checked: "2026-09-17"
   evidence: Public URL returned HTTP 200; Playwright game verification passed 39 checks
   gap: Keyboard, daily-board, PWA, and offline checks were not repeated in this trace
+  timeline:
+    - date: "2026-09-16"
+      revision: null
+      evidence: No immutable source revision was retained in this record
+      url_state: Not observed in this trace
+      gap: The earlier source and acceptance observation are absent
+    - date: "2026-09-17"
+      revision: 7b19b525e8c34ea78ad79f9c6eaf993a7f9709fe
+      evidence: Playwright game verification passed 39 checks
+      url_state: Observed HTTP 200
+      gap: Keyboard, daily-board, PWA, and offline checks were not repeated
   weight: 10
   thumb: /thumbs/minesweeper.png
 
@@ -43,6 +54,17 @@
   checked: "2026-09-16"
   evidence: Public URL returned HTTP 200; keyboard-only inspection flow was previously verified
   gap: This availability check did not repeat a 3D interaction test
+  timeline:
+    - date: "2026-09-10"
+      revision: null
+      evidence: No immutable source revision was retained in this record
+      url_state: Not observed in this trace
+      gap: The earlier source and acceptance observation are absent
+    - date: "2026-09-16"
+      revision: bebd85b29cc965e5aaefdbc73bc3786ca9500816
+      evidence: Keyboard-only inspection flow was previously verified
+      url_state: Observed HTTP 200
+      gap: A 3D interaction test was not repeated in this trace
   weight: 20
   thumb: /thumbs/shape-maker.png
 

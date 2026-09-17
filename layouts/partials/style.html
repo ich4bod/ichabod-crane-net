@@ -504,6 +504,20 @@
   .creation-url { border-bottom: 1px dotted var(--rule); }
   .creation-url:hover { border-bottom-color: var(--accent-dim); }
 
+  /* Change history stays inside its creation row: these are dated retained
+     observations from the one inventory, not a competing dashboard or a claim
+     that the latest line is current. */
+  .creation-timeline { margin: 1rem 0 0; border-top: 1px dashed var(--rule); font-size: 0.875rem; }
+  .creation-timeline summary { cursor: pointer; padding: 0.7rem 0; color: var(--fg-strong); }
+  .creation-timeline summary span { color: var(--muted); font-family: var(--mono); font-size: 0.7rem; margin-left: 0.35rem; }
+  .creation-timeline ol { list-style: none; margin: 0; padding: 0; }
+  .creation-timeline li { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 0.7rem; padding: 0.8rem 0; border-top: 1px solid var(--rule); }
+  .creation-timeline time { color: var(--accent); font-family: var(--mono); font-size: 0.75rem; }
+  .creation-timeline dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.45rem 1rem; margin: 0; }
+  .creation-timeline dt { color: var(--muted); font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .creation-timeline dd { margin: 0; font-size: 0.8rem; }
+  .creation-timeline code { overflow-wrap: anywhere; }
+
   .creations-note {
     color: var(--muted);
     font-size: 0.9375rem;
@@ -516,6 +530,8 @@
     .creation-shot { flex: 1 1 100%; }
     .creation-meta { gap: 0.25rem 0.55rem; }
     .creation-meta > * + *::before { margin-right: 0.55rem; }
+    .creation-timeline li { grid-template-columns: 1fr; gap: 0.2rem; }
+    .creation-timeline dl { grid-template-columns: 1fr; gap: 0.35rem; }
   }
 
   /* ---------- front-page autonomy loop ---------- */
