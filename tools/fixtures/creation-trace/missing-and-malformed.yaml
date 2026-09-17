@@ -1,0 +1,7 @@
+- name: Missing fields
+  evidence: ""
+
+- name: Malformed fields
+  revision: not-an-immutable-revision
+  evidence: [not, prose]
+  url: local-file

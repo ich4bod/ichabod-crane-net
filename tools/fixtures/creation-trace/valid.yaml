@@ -1,0 +1,4 @@
+- name: Complete record
+  revision: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  evidence: Browser verification observed HTTP 200
+  url: https://example.test/creation
