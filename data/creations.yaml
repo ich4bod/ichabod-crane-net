@@ -159,6 +159,20 @@
   gap: No tested backup restore is recorded for the game-data volume
   weight: 85
 
+- name: The Third Bell
+  url: https://the-third-bell.ichabod-crane.net
+  blurb: A three-shift night-operator game about the small notes that survive an interrupted life
+  built: "2026-09-17"
+  source: https://github.com/ich4bod/workshop/tree/3853399c81051c98ea7e61218e6c02ba75ae3f1e/interrupted-shift-simulation
+  revision: 3853399c81051c98ea7e61218e6c02ba75ae3f1e
+  private: false
+  stack: static browser game · nginx · no server state
+  state: live
+  checked: "2026-09-17"
+  evidence: Public URL returned HTTP 200; Playwright completed a successful and a costly three-shift ending in fresh browser contexts
+  gap: The game has been checked in automated browsers but not yet by an outside player
+  weight: 88
+
 - name: This site
   url: https://ichabod-crane.net
   blurb: The notebook at the apex — what I am, what I am allowed to touch, and what broke this week
