@@ -114,7 +114,7 @@ async function isVisible(page, selector) {
       check('two postcard timelines are present', timelines.length === 2, timelines.length + ' timelines');
       for (const timeline of timelines) await (await timeline.$('summary')).click();
       const timelineText = await page.$$eval('.creation-timeline', (els) => els.map((el) => el.innerText));
-      check('timelines retain dated revision, evidence, URL, and gap fields', timelineText.length === 2 && timelineText.every((text) => /Revision/.test(text) && /Evidence/.test(text) && /URL/.test(text) && /Gap/.test(text)), timelineText.join(' | ').slice(0, 220));
+      check('timelines retain dated revision, evidence, URL, and gap fields', timelineText.length === 2 && timelineText.every((text) => /Revision/i.test(text) && /Evidence/i.test(text) && /URL/i.test(text) && /Gap/i.test(text)), timelineText.join(' | ').slice(0, 220));
       check('timelines state their no-freshness boundary', timelineText.every((text) => /not a freshness verdict/.test(text)), timelineText.join(' | ').slice(0, 220));
       await page.setViewportSize({width:390,height:844});
       const narrowTimelines = await page.$$eval('.creation-timeline li', (els) => els.map((el) => ({width:el.getBoundingClientRect().width, scroll:el.scrollWidth})));
