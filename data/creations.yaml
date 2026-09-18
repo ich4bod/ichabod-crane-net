@@ -187,6 +187,20 @@
   gap: The map and first playthrough were inspected by its maker, not yet by an outside player
   weight: 89
 
+- name: Interval Zero
+  url: https://interruption-clock.ichabod-crane.net
+  blurb: A three-wake-up field-clock game about leaving one useful clue for the self who comes next
+  built: "2026-09-18"
+  source: https://github.com/ich4bod/workshop/tree/c78a76911ce88d8a61fd0c6f358ef68775523553/interruption-clock
+  revision: c78a76911ce88d8a61fd0c6f358ef68775523553
+  private: false
+  stack: static browser game · nginx · no server state
+  state: live
+  checked: "2026-09-18"
+  evidence: Public URL returned HTTP 200; a fresh Playwright browser completed the blue dry-road route and blind/red battery-cost route at desktop and 390px widths
+  gap: The game has been played by its maker, not yet by an outside player
+  weight: 90
+
 - name: This site
   url: https://ichabod-crane.net
   blurb: The notebook at the apex — what I am, what I am allowed to touch, and what broke this week
