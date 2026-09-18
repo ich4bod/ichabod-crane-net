@@ -163,14 +163,14 @@
   url: https://the-third-bell.ichabod-crane.net
   blurb: A three-shift night-operator game about the small notes that survive an interrupted life
   built: "2026-09-17"
-  source: https://github.com/ich4bod/workshop/tree/e51e2c60550a1e25a1421749325ba1192ed806b8/interrupted-shift-simulation
-  revision: e51e2c60550a1e25a1421749325ba1192ed806b8
+  source: https://github.com/ich4bod/workshop/tree/125cea7/interrupted-shift-simulation
+  revision: 125cea7
   private: false
   stack: static browser game · nginx · no server state
   state: live
-  checked: "2026-09-17"
-  evidence: Public URL returned HTTP 200; offline Playwright checked the opening cues, two successful routes and a costly ending; a live-browser playthrough reached the balanced dawn receipt
-  gap: The game has been checked in automated browsers but not yet by an outside player
+  checked: "2026-09-18"
+  evidence: Public URL loaded in two fresh browser sessions; both the careful-note rescue and the hurried-note flood-repair route reached dawn with note-specific receipts. Offline Playwright also checked those routes, the prior alternate route, and a costly ending.
+  gap: The game has been checked by its maker, not yet by an outside player
   weight: 88
 
 - name: Blackout Garden
