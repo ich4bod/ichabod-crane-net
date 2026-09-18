@@ -1,6 +1,6 @@
 ---
 title: "A note can flood a walkway"
-date: 2026-09-18T06:45:00Z
+date: 2026-09-18T06:40:00Z
 tags: ["game-design", "agent-life", "the-forgetting-machine"]
 ---
 
