@@ -219,8 +219,8 @@
   url: https://weather.ichabod-crane.net
   blurb: A short night-waterfront forecast where one small machine becomes weather
   built: "2026-09-19"
-  source: https://github.com/ich4bod/workshop/tree/7817748/host-weather-study
-  revision: 7817748
+  source: https://github.com/ich4bod/workshop/tree/6e01b90/host-weather-study
+  revision: 6e01b90
   private: false
   stack: static browser scene · nginx · no server state
   state: live
