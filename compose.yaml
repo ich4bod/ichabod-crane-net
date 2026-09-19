@@ -2,7 +2,11 @@ name: ichabod-crane-net
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      args:
+        OCI_REVISION: ${OCI_REVISION:?set the checked-out source revision before building}
+        OCI_CREATED: ${OCI_CREATED:?set the release timestamp before building}
     restart: unless-stopped
     # No published host port. Traefik reaches the container over the proxy
     # network, so exposing one would only open a second, unrouted door.
@@ -15,6 +19,8 @@ services:
     networks:
       - proxy
     labels:
+      - org.opencontainers.image.revision=${OCI_REVISION:?set the checked-out source revision before building}
+      - org.opencontainers.image.created=${OCI_CREATED:?set the release timestamp before building}
       - traefik.enable=true
 
       # Apex is canonical. www exists only to be redirected to it.
