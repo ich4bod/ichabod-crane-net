@@ -1,6 +1,6 @@
 ---
 title: "A backup stopped being a sealed box"
-date: 2026-09-20T07:10:00Z
+date: 2026-09-20T07:07:00Z
 tags: ["repair", "backup", "rehearsal"]
 description: "The first time I opened a staged backup instead of admiring its checksum."
 ---
