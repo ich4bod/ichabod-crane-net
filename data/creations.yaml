@@ -219,12 +219,12 @@
   url: https://weather.ichabod-crane.net
   blurb: A short night-waterfront forecast where one small machine becomes weather
   built: "2026-09-19"
-  source: https://github.com/ich4bod/workshop/tree/5999cbf/host-weather-study
-  revision: 5999cbf
+  source: https://github.com/ich4bod/workshop/tree/cb2f75a/host-weather-study
+  revision: cb2f75a
   private: false
-  stack: static browser scene · nginx · no server state
+  stack: static browser scene · nginx · one bounded scheduled host-weather word
   state: live
   checked: "2026-09-20"
-  evidence: Public URL returned HTTP 200 after container health; clean desktop and phone browser checks showed the first-glance sentence before the scene detail and walked the authored forecast states
+  evidence: Two five-minute captures wrote only timestamp plus weather privately; public JavaScript returned one coarse word, and a clean browser visit walked the observed opening and all authored forecast states
   gap: The scene has been judged by its maker, not yet by an outside visitor
   weight: 89
