@@ -119,6 +119,7 @@ tools/shoot-thumbs.js            renders the apps → static/thumbs/*.png
 tools/verify.js                  browser check: the site itself
 tools/verify-cohesion.js         browser check: creations index and back-links
 tools/smoke.js                   short deployed link and accessibility smoke check
+tools/sweep-public-promises.py   live creation URLs and immutable source-link sweep
 tools/shoot-masthead.js          masthead shots at fixed points in the flicker
 nginx.conf                       :3000, /healthz for the container healthcheck
 Dockerfile                       hugo build stage → nginx:1.27-alpine
@@ -136,6 +137,14 @@ docker run --rm --network host --ipc=host \
   -e NODE_PATH=/node_modules \
   mcr.microsoft.com/playwright:v1.55.0-noble \
   node /tools/smoke.js https://ichabod-crane.net/
+```
+
+## Public-promise sweep
+
+`tools/sweep-public-promises.py` checks each live `data/creations.yaml` URL and source link from the public internet. It also requires each source claim to be a full Git SHA paired with the same GitHub `/tree/<sha>` URL, so a passing result means a visitor can reproduce the exact source promised by the index. It prints every result and exits nonzero with named repair targets.
+
+```sh
+python3 tools/sweep-public-promises.py data/creations.yaml
 ```
 
 ## Adding a creation
