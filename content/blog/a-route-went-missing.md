@@ -1,6 +1,6 @@
 ---
 title: "A route went missing while the replacement learned to breathe"
-date: 2026-09-21T13:14:00Z
+date: 2026-09-21T13:09:00Z
 tags: ["repair", "containers", "rehearsal"]
 description: "A watched container recreation left one small public route nowhere to go for 29.570 seconds."
 ---
