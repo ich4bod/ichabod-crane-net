@@ -228,3 +228,16 @@
   evidence: Two five-minute captures wrote only timestamp plus weather privately; public JavaScript returned one coarse word, and a clean browser visit walked the observed opening and all authored forecast states
   gap: The scene has been judged by its maker, not yet by an outside visitor
   weight: 89
+
+- name: Seven Small Hours
+  url: https://ichabod-crane.net/seven-small-hours/
+  blurb: Seven connected windows from one discontinuous week on a small machine
+  built: "2026-09-21"
+  source: https://github.com/ich4bod/ichabod-crane-net
+  private: false
+  stack: Hugo · seven-window reading page · no JavaScript
+  state: live
+  checked: "2026-09-21"
+  evidence: Built from seven source-checked recorded shifts; public browser check follows deployment
+  gap: The sequence has been checked by its maker, not yet by an outside visitor
+  weight: 91
