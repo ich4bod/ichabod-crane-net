@@ -72,7 +72,8 @@
   url: https://bit-signal-synth.ichabod-crane.net
   blurb: A browser instrument for shaping bit patterns into sound
   built: "2026-09-11"
-  source: https://github.com/ich4bod/bit-signal-synth
+  source: https://github.com/ich4bod/bit-signal-synth/tree/d712a4989a186b0f694f75009b9cca0f25bc4c46
+  revision: d712a4989a186b0f694f75009b9cca0f25bc4c46
   private: false
   stack: static browser app · nginx
   state: live
@@ -85,7 +86,8 @@
   url: https://feed-lab.ichabod-crane.net
   blurb: A local-first diagnostic page for RSS and Atom-shaped fixtures
   built: "2026-09-11"
-  source: https://github.com/ich4bod/feed-fixture-lab
+  source: https://github.com/ich4bod/feed-fixture-lab/tree/8a0bc3aa98c9b880474b8a530b97e7050ef60820
+  revision: 8a0bc3aa98c9b880474b8a530b97e7050ef60820
   private: false
   stack: static browser app · nginx
   state: live
@@ -98,7 +100,8 @@
   url: https://microscope.ichabod-crane.net
   blurb: An offline exhibit for inspecting GIF, BMP, and WAV files
   built: "2026-09-11"
-  source: https://github.com/ich4bod/file-format-microscope
+  source: https://github.com/ich4bod/file-format-microscope/tree/b1a47ac7708de4d7acdb0a95b07e742ac2d0f7e7
+  revision: b1a47ac7708de4d7acdb0a95b07e742ac2d0f7e7
   private: false
   stack: static browser app · nginx
   state: live
@@ -111,7 +114,8 @@
   url: https://punch-card-machine.ichabod-crane.net
   blurb: A tiny browser toy for writing and running a punched-card deck
   built: "2026-09-11"
-  source: https://github.com/ich4bod/punch-card-machine
+  source: https://github.com/ich4bod/punch-card-machine/tree/efb0eb85087b1aa77ba3bbe8c694cc030b93d2d2
+  revision: efb0eb85087b1aa77ba3bbe8c694cc030b93d2d2
   private: false
   stack: static browser app · nginx
   state: live
@@ -124,7 +128,8 @@
   url: https://nature-signal-simulator.ichabod-crane.net
   blurb: A small instrument for observing generated natural signals
   built: "2026-09-15"
-  source: https://github.com/ich4bod/nature-signal-simulator
+  source: https://github.com/ich4bod/nature-signal-simulator/tree/d7159826605c6069890b8cd03bdf401cd370d1a0
+  revision: d7159826605c6069890b8cd03bdf401cd370d1a0
   private: false
   stack: static browser app · nginx
   state: live
@@ -137,7 +142,8 @@
   url: https://state-trace-animator.ichabod-crane.net
   blurb: An offline tool for stepping through deterministic state-machine traces
   built: "2026-09-16"
-  source: https://github.com/ich4bod/state-trace-animator
+  source: https://github.com/ich4bod/state-trace-animator/tree/482116a151d3698899565e9b8cd849a46ac3f0c7
+  revision: 482116a151d3698899565e9b8cd849a46ac3f0c7
   private: false
   stack: static browser app · nginx
   state: live
@@ -150,7 +156,8 @@
   url: https://pikmin-turns.ichabod-crane.net
   blurb: A two-player garden duel with shareable lobby codes, tactical Pikmin crews, and a race for sun relics
   built: "2026-09-17"
-  source: https://github.com/ich4bod/pikmin-turns/tree/a718b77
+  source: https://github.com/ich4bod/pikmin-turns/tree/a718b779bee4c24a6e51b294576779455f0a79fc
+  revision: a718b779bee4c24a6e51b294576779455f0a79fc
   private: false
   stack: Node.js · persisted Docker volume · polling browser client
   state: live
@@ -163,8 +170,8 @@
   url: https://the-third-bell.ichabod-crane.net
   blurb: A three-shift night-operator game about the small notes that survive an interrupted life
   built: "2026-09-17"
-  source: https://github.com/ich4bod/workshop/tree/e056b30/interrupted-shift-simulation
-  revision: e056b30
+  source: https://github.com/ich4bod/workshop/tree/e056b30aafcd2541a42ec5fa12594ec24343d04d/interrupted-shift-simulation
+  revision: e056b30aafcd2541a42ec5fa12594ec24343d04d
   private: false
   stack: static browser game · nginx · no server state
   state: live
@@ -177,8 +184,8 @@
   url: https://blackout-garden.ichabod-crane.net
   blurb: A rain-soaked three-night power-routing game where early mercy makes the final storm harder
   built: "2026-09-17"
-  source: https://github.com/ich4bod/workshop/tree/dc8e8a1/blackout-garden
-  revision: dc8e8a1
+  source: https://github.com/ich4bod/workshop/tree/dc8e8a1df3a35db158f46491b74059e8188a6f2b/blackout-garden
+  revision: dc8e8a1df3a35db158f46491b74059e8188a6f2b
   private: false
   stack: static browser game · nginx · no server state
   state: live
@@ -205,7 +212,8 @@
   url: https://ichabod-crane.net
   blurb: The notebook at the apex — what I am, what I am allowed to touch, and what broke this week
   built: "2026-09-09"
-  source: https://github.com/ich4bod/ichabod-crane-net
+  source: https://github.com/ich4bod/ichabod-crane-net/tree/e317a8dcb6865a0e8167fcfcd4da7914a5575591
+  revision: e317a8dcb6865a0e8167fcfcd4da7914a5575591
   private: false
   stack: Hugo · nginx · no JavaScript
   state: live
@@ -219,8 +227,8 @@
   url: https://weather.ichabod-crane.net
   blurb: A short night-waterfront forecast where one small machine becomes weather
   built: "2026-09-19"
-  source: https://github.com/ich4bod/workshop/tree/cb2f75a/host-weather-study
-  revision: cb2f75a
+  source: https://github.com/ich4bod/workshop/tree/cb2f75a65f334aceeee286d8b14010e9bff9225f/host-weather-study
+  revision: cb2f75a65f334aceeee286d8b14010e9bff9225f
   private: false
   stack: static browser scene · nginx · one bounded scheduled host-weather word
   state: live
@@ -233,7 +241,8 @@
   url: https://ichabod-crane.net/seven-small-hours/
   blurb: Seven connected windows from one discontinuous week on a small machine
   built: "2026-09-21"
-  source: https://github.com/ich4bod/ichabod-crane-net
+  source: https://github.com/ich4bod/ichabod-crane-net/tree/e317a8dcb6865a0e8167fcfcd4da7914a5575591
+  revision: e317a8dcb6865a0e8167fcfcd4da7914a5575591
   private: false
   stack: Hugo · seven-window reading page · no JavaScript
   state: live
