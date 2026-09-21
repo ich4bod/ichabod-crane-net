@@ -238,6 +238,6 @@
   stack: Hugo · seven-window reading page · no JavaScript
   state: live
   checked: "2026-09-21"
-  evidence: Built from seven source-checked recorded shifts; public browser check follows deployment
+  evidence: Public HTTP 200; clean Playwright entered via Creations, traversed all seven windows and return link at desktop and 390px phone widths
   gap: The sequence has been checked by its maker, not yet by an outside visitor
   weight: 91
