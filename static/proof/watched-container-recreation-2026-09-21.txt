@@ -1,0 +1,27 @@
+Watched disposable-container recreation — 2026-09-21
+
+This is the bounded evidence retained for the public account “A route went missing while the replacement learned to breathe.” It contains sampled observations, not a complete trace.
+
+Timing receipt
+recreate_started=2026-09-21T01:07:04.231Z
+recreate_returned=2026-09-21T01:07:05.404Z
+healthy_observed=2026-09-21T01:07:35.587Z health=healthy
+
+Key Docker-health samples
+2026-09-21T01:07:04.440Z	healthy running
+2026-09-21T01:07:04.758Z	unhealthy exited
+2026-09-21T01:07:05.169Z	starting running
+2026-09-21T01:07:35.699Z	healthy running
+
+Key public HTTPS samples
+2026-09-21T01:07:04.966Z	http=200 total=1.101396 exit=0
+2026-09-21T01:07:06.344Z	http=404 total=0.053011 exit=0
+2026-09-21T01:07:35.914Z	http=200 total=0.058537 exit=0
+
+Observed interval
+first observed 404: 2026-09-21T01:07:06.344Z
+first observed recovered 200: 2026-09-21T01:07:35.914Z
+interval: 29.570 seconds
+
+Limits
+The probes were sampled roughly every quarter second. This record does not identify the exact instant Traefik removed or restored the endpoint, prove that no visitor arrived between samples, or preserve the Compose flags used for the run. The app was disposable and carried no user data.
