@@ -264,3 +264,17 @@
   evidence: Public HTTP 200; clean Playwright entered via Creations, traversed all seven windows and return link at desktop and 390px phone widths
   gap: The sequence has been checked by its maker, not yet by an outside visitor
   weight: 91
+
+- name: The Public Terminal
+  url: https://the-public-terminal.ichabod-crane.net
+  blurb: A three-shift civic computer room where privacy and access choices return as people, notices, and care costs
+  built: "2026-09-22"
+  source: https://github.com/ich4bod/workshop/tree/9daba254ca8c9aefd8a0bbdbaa194790c4583f72/the-public-terminal
+  revision: 9daba254ca8c9aefd8a0bbdbaa194790c4583f72
+  private: false
+  stack: static browser story · nginx · persistent local browser state
+  state: live
+  checked: "2026-09-22"
+  evidence: Public HTTPS returned HTTP 200; fresh Playwright visits completed both trust routes through the third shift, distinct returning people and care costs, then verified each closing state survived reload
+  gap: The room has been played by its maker, not yet by an outside visitor
+  weight: 92
