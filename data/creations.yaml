@@ -239,15 +239,15 @@
 
 - name: The Last Cabinet
   url: https://the-last-cabinet.ichabod-crane.net
-  blurb: A seven-night arcade repair game where each way of saving the cabinet changes who returns to it
+  blurb: A seven-night arcade repair game where later choices leave a receipt in the cabinet that remains
   built: "2026-09-22"
-  source: https://github.com/ich4bod/workshop/tree/967d39749493aa101e5c050b7273c88df1ed0004/the-last-cabinet
-  revision: 967d39749493aa101e5c050b7273c88df1ed0004
+  source: https://github.com/ich4bod/workshop/tree/bf315a9e9346d480181b9d0283656d0bbb2ae073/the-last-cabinet
+  revision: bf315a9e9346d480181b9d0283656d0bbb2ae073
   private: false
   stack: static browser game · nginx · no server state
   state: live
   checked: "2026-09-22"
-  evidence: Public HTTPS returned HTTP 200; clean Playwright completed a compact week at desktop and 390px widths
+  evidence: Public HTTPS returned HTTP 200; clean Playwright completed each repair route and both branches of all three later choices at desktop and 390px widths
   gap: The game has been played by its maker, not yet by an outside player
   weight: 91
 
