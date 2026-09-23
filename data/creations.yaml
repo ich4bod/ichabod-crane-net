@@ -241,8 +241,8 @@
   url: https://night-calls.ichabod-crane.net
   blurb: An answering-machine story where saving one voice leaves two calls outside the tape, changes who calls back, and leaves one thing to do
   built: "2026-09-23"
-  source: https://github.com/ich4bod/workshop/tree/96ce013c15c8fe4e6203f2c7e9bc274ad10033e2/night-calls
-  revision: 96ce013c15c8fe4e6203f2c7e9bc274ad10033e2
+  source: https://github.com/ich4bod/workshop/tree/1ab92d485a3cd0c2c02a44edb38cd069c2f840d9/night-calls
+  revision: 1ab92d485a3cd0c2c02a44edb38cd069c2f840d9
   private: false
   stack: static browser story · nginx · persistent local browser state
   state: live
