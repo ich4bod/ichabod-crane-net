@@ -14,8 +14,8 @@
   url: https://minesweeper.ichabod-crane.net
   blurb: Classic Minesweeper, three difficulties, and a first click that is always safe
   built: "2026-09-09"
-  source: https://github.com/ich4bod/minesweeper/tree/7b19b525e8c34ea78ad79f9c6eaf993a7f9709fe
-  revision: 7b19b525e8c34ea78ad79f9c6eaf993a7f9709fe
+  source: https://github.com/ich4bod/minesweeper/tree/144e01e45d94c5efe89bacff1107951f2424d8bd
+  revision: 144e01e45d94c5efe89bacff1107951f2424d8bd
   postcard: true
   reader_prompt: Before opening another link, note what this card establishes, what remains unsettled, and what you would check next. These are your notes, not an update to this record.
   reader_packet: https://github.com/ich4bod/workshop/tree/main/blind-provenance-postcard-packet
@@ -43,8 +43,8 @@
   url: https://cad.ichabod-crane.net
   blurb: A 3D modelling toy for kids — tap a shape, stack it, print the STL
   built: "2026-09-10"
-  source: https://github.com/ich4bod/cad/tree/bebd85b29cc965e5aaefdbc73bc3786ca9500816
-  revision: bebd85b29cc965e5aaefdbc73bc3786ca9500816
+  source: https://github.com/ich4bod/cad/tree/66cadddbc0684093951f07716fbf612052cc6a8f
+  revision: 66cadddbc0684093951f07716fbf612052cc6a8f
   postcard: true
   reader_prompt: Before opening another link, note what this card establishes, what remains unsettled, and what you would check next. These are your notes, not an update to this record.
   reader_packet: https://github.com/ich4bod/workshop/tree/main/blind-provenance-postcard-packet
@@ -156,8 +156,8 @@
   url: https://pikmin-turns.ichabod-crane.net
   blurb: A two-player garden duel with shareable lobby codes, tactical Pikmin crews, and a race for sun relics
   built: "2026-09-17"
-  source: https://github.com/ich4bod/pikmin-turns/tree/a718b779bee4c24a6e51b294576779455f0a79fc
-  revision: a718b779bee4c24a6e51b294576779455f0a79fc
+  source: https://github.com/ich4bod/pikmin-turns/tree/b7b5bfb8de5ac2ef8c3048c07da9c0c422d44755
+  revision: b7b5bfb8de5ac2ef8c3048c07da9c0c422d44755
   private: false
   stack: Node.js · persisted Docker volume · polling browser client
   state: live
@@ -184,8 +184,8 @@
   url: https://blackout-garden.ichabod-crane.net
   blurb: A rain-soaked three-night power-routing game where early mercy makes the final storm harder
   built: "2026-09-17"
-  source: https://github.com/ich4bod/workshop/tree/dc8e8a1df3a35db158f46491b74059e8188a6f2b/blackout-garden
-  revision: dc8e8a1df3a35db158f46491b74059e8188a6f2b
+  source: https://github.com/ich4bod/workshop/tree/2f92bc86a2daedad3a172702505566c06c0de722/blackout-garden
+  revision: 2f92bc86a2daedad3a172702505566c06c0de722
   private: false
   stack: static browser game · nginx · no server state
   state: live
@@ -198,8 +198,8 @@
   url: https://interruption-clock.ichabod-crane.net
   blurb: A three-wake-up field-clock game about leaving one useful clue for the self who comes next
   built: "2026-09-18"
-  source: https://github.com/ich4bod/workshop/tree/c78a76911ce88d8a61fd0c6f358ef68775523553/interruption-clock
-  revision: c78a76911ce88d8a61fd0c6f358ef68775523553
+  source: https://github.com/ich4bod/workshop/tree/0143b465eaa44f0cacf5b633811b9d68531d9c48/interruption-clock
+  revision: 0143b465eaa44f0cacf5b633811b9d68531d9c48
   private: false
   stack: static browser game · nginx · no server state
   state: live
@@ -241,8 +241,8 @@
   url: https://night-calls.ichabod-crane.net
   blurb: An answering-machine story where saving one voice leaves two calls outside the tape, changes who calls back, and leaves one thing to do
   built: "2026-09-23"
-  source: https://github.com/ich4bod/workshop/tree/be3a754/night-calls
-  revision: be3a754
+  source: https://github.com/ich4bod/workshop/tree/be3a7541b484ae01c30ef4b3a0e944c67834000b/night-calls
+  revision: be3a7541b484ae01c30ef4b3a0e944c67834000b
   private: false
   stack: static browser story · nginx · persistent local browser state
   state: live
@@ -268,8 +268,8 @@
   url: https://the-last-cabinet.ichabod-crane.net
   blurb: A seven-night arcade repair game where later choices leave a receipt in the cabinet that remains
   built: "2026-09-22"
-  source: https://github.com/ich4bod/workshop/tree/bf315a9e9346d480181b9d0283656d0bbb2ae073/the-last-cabinet
-  revision: bf315a9e9346d480181b9d0283656d0bbb2ae073
+  source: https://github.com/ich4bod/workshop/tree/b809f7a8464fe6089c4eeb218974d3053642aa1b/the-last-cabinet
+  revision: b809f7a8464fe6089c4eeb218974d3053642aa1b
   private: false
   stack: static browser game · nginx · no server state
   state: live
