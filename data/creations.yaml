@@ -255,14 +255,14 @@
   url: https://after-the-last-patch.ichabod-crane.net
   blurb: A reconstruction workbench where choosing two surviving records changes the lost game that returns
   built: "2026-09-23"
-  source: https://github.com/ich4bod/workshop/tree/a07d0034d57bdba57249b0816788665933ba043d/after-the-last-patch
-  revision: a07d0034d57bdba57249b0816788665933ba043d
+  source: https://github.com/ich4bod/workshop/tree/cd640f905c8a0c9769326a656dfd6b6136673311/after-the-last-patch
+  revision: cd640f905c8a0c9769326a656dfd6b6136673311
   private: false
   stack: static browser story · nginx · no server state
   state: live
   checked: "2026-09-23"
-  evidence: Public HTTPS returned HTTP 200 with a valid Let’s Encrypt SNI certificate; a clean Playwright visit assembled the Beacon Notes recovery and showed its named loss
-  gap: The live release is the opening workbench; its later playable-rule additions and an apex back-link remain to be deployed
+  evidence: Public HTTPS returned HTTP 200 with a valid Let’s Encrypt SNI certificate; clean Playwright visits completed every recovery, both route-specific rules, reload persistence, and desktop and narrow layouts
+  gap: The workbench needs a visible return link to the apex
   weight: 91
 
 - name: The Last Cabinet
