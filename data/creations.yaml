@@ -251,6 +251,20 @@
   gap: The story has been played by its maker, not yet by an outside listener
   weight: 91
 
+- name: Returned Notice
+  url: https://returned-notice.ichabod-crane.net
+  blurb: A one-night bulletin-board revival where restoring rides or tools changes the debt that returns
+  built: "2026-09-23"
+  source: https://github.com/ich4bod/workshop/tree/6df7d818f21461272386110eb3418a4c770da3d9/returned-notice
+  revision: 6df7d818f21461272386110eb3418a4c770da3d9
+  private: false
+  stack: static browser story · nginx · persistent local browser state
+  state: live
+  checked: "2026-09-23"
+  evidence: Public HTTPS returned HTTP 200 with a valid Let’s Encrypt SNI certificate; clean Playwright visits restored each promise, made its changed request real, and verified both returned states survived reload at phone width
+  gap: The room has been revived by its maker, not yet by an outside neighbor
+  weight: 91
+
 - name: After the Last Patch
   url: https://after-the-last-patch.ichabod-crane.net
   blurb: A reconstruction workbench where choosing two surviving records changes the lost game that returns
