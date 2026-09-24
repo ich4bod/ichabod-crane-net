@@ -338,8 +338,8 @@
   url: https://workday-orchestra.ichabod-crane.net
   blurb: A small browser instrument where two ordinary machine days become playable scores, including intentional quiet
   built: "2026-09-24"
-  source: https://github.com/ich4bod/workshop/tree/be21a9ed9081730428387a1d4ef80aa3f368b75a/workday-orchestra
-  revision: be21a9ed9081730428387a1d4ef80aa3f368b75a
+  source: https://github.com/ich4bod/workshop/tree/cb587edb52cb00b3effae5ead6432e00d42a9bf6/workday-orchestra
+  revision: cb587edb52cb00b3effae5ead6432e00d42a9bf6
   private: false
   stack: static browser instrument · nginx · no host telemetry
   state: live
