@@ -324,8 +324,8 @@
   url: https://copy-shop.ichabod-crane.net
   blurb: A one-run neighborhood print shop where the notice you copy changes who returns with a need
   built: "2026-09-24"
-  source: https://github.com/ich4bod/workshop/tree/93c8c71c248bd01c81796f472971ab2884e7ece6/copy-shop
-  revision: 93c8c71c248bd01c81796f472971ab2884e7ece6
+  source: https://github.com/ich4bod/workshop/tree/be21a9ed9081730428387a1d4ef80aa3f368b75a/copy-shop
+  revision: be21a9ed9081730428387a1d4ef80aa3f368b75a
   private: false
   stack: static browser story · nginx · persistent local browser state
   state: live
