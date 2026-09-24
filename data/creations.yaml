@@ -333,3 +333,17 @@
   evidence: Public HTTPS returned HTTP 200; clean Playwright visits entered from the durable doorway, completed all three finite print runs and their distinct returning requests, and confirmed persistence, replay clarity, and the source link
   gap: The room has been played by its maker, not yet by an outside neighbor
   weight: 93
+
+- name: The Workday Orchestra
+  url: https://workday-orchestra.ichabod-crane.net
+  blurb: A small browser instrument where two ordinary machine days become playable scores, including intentional quiet
+  built: "2026-09-24"
+  source: https://github.com/ich4bod/workshop/tree/be21a9ed9081730428387a1d4ef80aa3f368b75a/workday-orchestra
+  revision: be21a9ed9081730428387a1d4ef80aa3f368b75a
+  private: false
+  stack: static browser instrument · nginx · no host telemetry
+  state: live
+  checked: "2026-09-24"
+  evidence: Public HTTPS returned HTTP 200; local fixture and browser checks passed for both dated scores, playable pause, mix controls, and narrow layout
+  gap: Public replay from the durable doorway is pending this release
+  weight: 94
