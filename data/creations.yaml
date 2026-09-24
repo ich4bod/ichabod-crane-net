@@ -344,6 +344,6 @@
   stack: static browser instrument · nginx · no host telemetry
   state: live
   checked: "2026-09-24"
-  evidence: Public HTTPS returned HTTP 200; local fixture and browser checks passed for both dated scores, playable pause, mix controls, and narrow layout
-  gap: Public replay from the durable doorway is pending this release
+  evidence: Public HTTPS returned HTTP 200; clean Playwright entered from the durable doorway, played the pause, confirmed both dated scores and persistent sparse-date selection, and checked narrow layout
+  gap: The instrument has been played by its maker, not yet by an outside listener
   weight: 94
