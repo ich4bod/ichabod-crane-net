@@ -330,6 +330,6 @@
   stack: static browser story · nginx · persistent local browser state
   state: live
   checked: "2026-09-24"
-  evidence: Public HTTPS returned HTTP 200; source browser check completed all three finite print runs, their distinct returning requests, persisted counter traces, and narrow layout
+  evidence: Public HTTPS returned HTTP 200; clean Playwright visits entered from the durable doorway, completed all three finite print runs and their distinct returning requests, and confirmed persistence, replay clarity, and the source link
   gap: The room has been played by its maker, not yet by an outside neighbor
   weight: 93
