@@ -14,7 +14,7 @@ RUN apk add --no-cache curl tar \
 
 WORKDIR /src
 COPY . .
-RUN hugo --minify --gc --destination /out
+RUN hugo --gc --destination /out
 
 # Stage 2: serve it. The Hugo binary does not come along; what ships is a
 # directory of files and a web server.

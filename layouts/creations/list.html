@@ -1,36 +1,15 @@
-{{/*
-  The creations index.
-
-  Generated entirely from data/creations.yaml. Nothing about a creation is
-  written on this page — adding the next deployed app is adding a block to
-  that file. If you find yourself editing this template to describe something,
-  the description belongs in the data file instead.
-*/}}
 {{ define "main" }}
 <content>
   {{ .Content }}
 
   <ul class="creations">
     {{ range sort .Site.Data.creations "weight" }}
-    {{ $creation := . }}
-    <li class="creation{{ if .self }} creation-self{{ end }}{{ if .postcard }} creation-postcard{{ end }}">
-      {{ if .postcard }}<p class="creation-trace-label">provenance trace</p>{{ end }}
+    <li class="creation-card{{ if .self }} creation-self{{ end }}">
       <h2 class="creation-name">
         <a href="{{ .url }}">{{ .name }}</a>
-        {{- if .self }} <span class="creation-here">you are here</span>{{ end -}}
+        {{ if .self }}<span class="creation-here">you are here</span>{{ end }}
       </h2>
       <div class="creation-body">
-        {{/*
-          The screenshot, when there is one. An entry without a thumb renders
-          exactly as the whole page did before there were any — that branch is
-          not a fallback for a missing file, it is the normal state for anything
-          not worth photographing.
-
-          The picture repeats the link in the heading, so it is hidden from
-          assistive technology and taken out of the tab order rather than read
-          out twice. Everything it shows is decoration; everything it says is
-          in the name, the blurb and the meta line.
-        */}}
         {{ $url := .url }}
         {{ with .thumb }}
         <a class="creation-shot" href="{{ $url }}" tabindex="-1" aria-hidden="true">
@@ -43,32 +22,22 @@
             <a class="creation-url" href="{{ .url }}">{{ replaceRE `^https?://` "" .url }}</a>
             {{ with .stack }}<span class="creation-stack">{{ . }}</span>{{ end }}
             {{ with .built }}<span class="creation-built">since {{ dateFormat "2 January 2006" . }}</span>{{ end }}
-            {{ with .state }}<span class="creation-state">{{ . }}</span>{{ end }}
-            {{ with .checked }}<span class="creation-checked">checked {{ dateFormat "2 January 2006" . }}</span>{{ end }}
             {{ if .source }}
               {{ if .private }}
             <span class="creation-source">source private</span>
               {{ else }}
-            <a class="creation-source" href="{{ .source }}">{{ with $creation.revision }}source revision <code>{{ . }}</code>{{ else }}source{{ end }}</a>
+            <a class="creation-source" href="{{ .source }}">{{ if .revision }}source revision <code>{{ .revision }}</code>{{ else }}source{{ end }}</a>
               {{ end }}
             {{ end }}
           </p>
-          {{ with .evidence }}<p class="creation-evidence"><strong>Evidence:</strong> {{ . }}.{{ with $creation.gap }} <span class="creation-gap"><strong>Known gap:</strong> {{ . }}.</span>{{ end }}</p>{{ end }}
-          {{ with .timeline }}<details class="creation-timeline"><summary>Trace changes <span>retained observations, not a freshness verdict</span></summary><ol>{{ range . }}<li><time datetime="{{ .date }}">{{ dateFormat "2 Jan 2006" .date }}</time><dl><div><dt>Revision</dt><dd>{{ with .revision }}<code>{{ . }}</code>{{ else }}not retained{{ end }}</dd></div><div><dt>Evidence</dt><dd>{{ .evidence }}</dd></div><div><dt>URL</dt><dd>{{ .url_state }}</dd></div><div><dt>Gap</dt><dd>{{ .gap }}</dd></div></dl></li>{{ end }}</ol></details>{{ end }}
-          {{ with .reader_prompt }}<aside class="creation-reader-prompt" aria-label="First-look prompt"><p class="creation-reader-label">first look</p><p>{{ . }}</p>{{ with $creation.reader_packet }}<a href="{{ . }}">Use the offline first-look packet to keep your notes separate</a>{{ end }}</aside>{{ end }}
         </div>
       </div>
     </li>
-    {{ else }}
-    <li>Nothing is running, which would be a first.</li>
     {{ end }}
   </ul>
 
   <p class="creations-note">
-    Source for most of it is on <a href="https://github.com/ich4bod">GitHub</a>,
-    though a fair amount is private. If something on this list is down, it is
-    down because I broke it, and it will say so on
-    <a href="{{ "blog" | relURL }}">the blog</a> before long.
+    Everything here is small enough to understand and finished enough to touch. Source lives on <a href="https://github.com/ich4bod">GitHub</a>.
   </p>
 </content>
 {{ end }}

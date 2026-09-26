@@ -1,753 +1,351 @@
-{{/*
-  Replaces the theme's stylesheet wholesale.
+:root {
+  --bg: #f3eddf;
+  --surface: #fffaf0;
+  --ink: #17221d;
+  --muted: #5f675f;
+  --green: #2f6b4f;
+  --persimmon: #d95f32;
+  --sky: #b9d9dc;
+  --rule: #cfc5b4;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
 
-  The brief is "atmosphere, not costume", with one exception: the pumpkin in
-  the site title, which is left to stand on its own — the copy no longer
-  explains it. Past that there is no Halloween typeface and no ornament. The
-  mood is carried by four things only — a night-blue ground, bone-coloured
-  text, one lantern-amber accent, and a book serif with room to breathe. In
-  light mode the same page becomes parchment and iron-gall ink, which is the
-  other half of the same story.
-*/}}
-<style>
-  :root {
-    --bg: #0e1116;
-    --bg-glow: rgba(201, 151, 63, 0.055);
-    --fg: #cec8b9;
-    --fg-strong: #ece6d8;
-    --muted: #7f7a6d;
-    --accent: #c9973f;
-    --accent-dim: #8d6a2c;
-    --rule: rgba(206, 200, 185, 0.16);
-    --code-bg: rgba(255, 255, 255, 0.045);
-    /* The candle inside the lantern. Two stops of the same amber, and the
-       radius it carries. Set per scheme because a glow that reads as light on
-       night-blue reads as a dirty thumbprint on parchment. */
-    --lantern-core: rgba(216, 156, 60, 0.34);
-    --lantern-mid: rgba(201, 151, 63, 0.10);
-    --lantern-size: 7.2em;
-    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
-             Georgia, Cambria, "Times New Roman", serif;
-    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-            "Liberation Mono", monospace;
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+  max-width: 72rem;
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink);
+  background-color: var(--bg);
+}
+
+/* Typography */
+h1, h2, h3 {
+  font-family: var(--serif);
+  line-height: 1.25;
+  color: var(--ink);
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(3rem, 8vw, 6.6rem);
+  line-height: 0.93;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+/* Header */
+header {
+  margin-bottom: 3rem;
+}
+
+header .header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+header .title {
+  text-decoration: none;
+  color: inherit;
+}
+
+header .title h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+header nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+header nav a {
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+header hr {
+  border: 0;
+  height: 1px;
+  background: var(--rule);
+  margin: 1.5rem 0 0;
+}
+
+@media (max-width: 640px) {
+  header .header-main {
+    flex-direction: column;
+    gap: 1rem;
   }
-
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #e9e2d1;
-      --bg-glow: rgba(122, 79, 29, 0.05);
-      --fg: #2a2620;
-      --fg-strong: #14110d;
-      --muted: #6d6455;
-      --accent: #8a5518;
-      --accent-dim: #a9773f;
-      --rule: rgba(42, 38, 32, 0.2);
-      --code-bg: rgba(42, 38, 32, 0.06);
-      /* Daylight. The flame is still burning, but you can barely tell — which
-         is exactly what a lit lantern looks like at noon. */
-      --lantern-core: rgba(196, 112, 22, 0.26);
-      --lantern-mid: rgba(196, 112, 22, 0.09);
-      --lantern-size: 6.4em;
-    }
-  }
-
-  *, *::before, *::after { box-sizing: border-box; }
-
-  html { -webkit-text-size-adjust: 100%; }
-
-  body {
-    margin: 0 auto;
-    padding: 3.5rem 1.25rem 4rem;
-    max-width: 42rem;
-    font-family: var(--serif);
-    font-size: 1.0625rem;
-    line-height: 1.7;
-    color: var(--fg);
-    background-color: var(--bg);
-    /* The lantern: one soft pool of warm light at the top of the page.
-       It is the only ornament on the site. */
-    background-image: radial-gradient(
-      62rem 34rem at 50% -14rem,
-      var(--bg-glow) 0%,
-      transparent 72%
-    );
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    text-rendering: optimizeLegibility;
-    overflow-wrap: break-word;
-  }
-
-  /* ---------- masthead ---------- */
-
-  header {
-    margin-bottom: 3rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  header .title { text-decoration: none; }
-
-  header .title h2 {
-    margin: 0 0 0.4rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--fg-strong);
-  }
-
-  header .title:hover h2 { color: var(--accent); }
-
-  /* The wordmark is tracked out and uppercased, which is right for the name
-     and wrong for the pumpkin in front of it — 0.14em of tracking lands
-     after the emoji as well, on top of the word space. Reset it there and
-     set the gap once, so the mark sits against the name at any size. */
-  header .title h2 .wordmark-mark {
-    letter-spacing: normal;
-    margin-right: 0.1em;
-    font-style: normal;
-    position: relative;
-  }
-
-  /* The lantern is lit.
-
-     A warm radial pool sits behind the pumpkin and breathes, the way a candle
-     in a carved gourd does — never steady, never strobing. The body's
-     top-of-page gradient was always meant to read as this lamp's spill; now
-     there is a source for it in the same frame.
-
-     Two constraints shaped this into a pseudo-element rather than anything
-     cleverer. tools/verify.js asserts `no <script> tags anywhere`, so it is
-     CSS or it is nothing. And only opacity and transform are animated — both
-     composite on the GPU without layout or repaint, which is what keeps a
-     permanently-running animation honest on a shared t3a.large.
-
-     z-index:-1 puts it behind the glyph. Nothing between here and the root
-     element opens a stacking context, so it lands above the page background
-     and below the pumpkin, which is the one ordering that works. */
-  header .title h2 .wordmark-mark::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    left: 50%;
-    top: 50%;
-    width: var(--lantern-size);
-    height: var(--lantern-size);
-    border-radius: 50%;
-    background: radial-gradient(
-      closest-side,
-      var(--lantern-core) 0%,
-      var(--lantern-mid) 38%,
-      transparent 70%
-    );
-    /* Matches the 0% keyframe, so the still frame a reduced-motion reader
-       gets is a lit lantern rather than an unlit or blown-out one. */
-    opacity: 0.8;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    animation: lantern-flicker 7.3s ease-in-out infinite;
-  }
-
-  /* Deliberately uneven, and on a period that shares no common factor with
-     anything else on the page — a flicker on tidy eighths reads as a pulse,
-     and a pulse reads as a loading spinner. */
-  @keyframes lantern-flicker {
-    0%   { opacity: 0.80; transform: translate(-50%, -50%) scale(1.00); }
-    9%   { opacity: 1.00; transform: translate(-50%, -50%) scale(1.06); }
-    17%  { opacity: 0.73; transform: translate(-50%, -50%) scale(0.97); }
-    28%  { opacity: 0.93; transform: translate(-50%, -50%) scale(1.03); }
-    36%  { opacity: 0.67; transform: translate(-50%, -50%) scale(0.95); }
-    47%  { opacity: 0.89; transform: translate(-50%, -50%) scale(1.02); }
-    55%  { opacity: 1.00; transform: translate(-50%, -50%) scale(1.05); }
-    63%  { opacity: 0.71; transform: translate(-50%, -50%) scale(0.96); }
-    74%  { opacity: 0.96; transform: translate(-50%, -50%) scale(1.04); }
-    82%  { opacity: 0.75; transform: translate(-50%, -50%) scale(0.98); }
-    91%  { opacity: 0.91; transform: translate(-50%, -50%) scale(1.02); }
-    100% { opacity: 0.80; transform: translate(-50%, -50%) scale(1.00); }
-  }
-
   header nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-    font-size: 0.8125rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    gap: 0.75rem;
   }
+}
 
-  header nav a {
-    color: var(--muted);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 2px;
+/* Hero */
+.hero {
+  display: flex;
+  gap: 4rem;
+  margin-bottom: 4rem;
+}
+
+.hero-left {
+  flex: 1;
+}
+
+.hero-right {
+  flex: 1;
+  position: relative;
+}
+
+.eyebrow {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.lede {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.hero-right a {
+  display: block;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.hero-decoration {
+  position: absolute;
+  top: -2rem;
+  right: -2rem;
+  width: 10rem;
+  height: 10rem;
+  z-index: -1;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.circle-green {
+  width: 6rem;
+  height: 6rem;
+  background: var(--green);
+  top: 0;
+  left: 0;
+}
+
+.circle-sky {
+  width: 5rem;
+  height: 5rem;
+  background: var(--sky);
+  top: 2rem;
+  left: 2rem;
+}
+
+.circle-persimmon {
+  width: 4rem;
+  height: 4rem;
+  background: var(--persimmon);
+  top: 4rem;
+  left: 1rem;
+}
+
+@media (max-width: 720px) {
+  .hero {
+    flex-direction: column;
+    gap: 2rem;
   }
+}
 
-  header nav a:hover {
-    color: var(--accent);
-    border-bottom-color: var(--accent-dim);
-  }
+/* Bench */
+.bench {
+  margin-bottom: 4rem;
+}
 
-  /* ---------- prose ---------- */
+.bench h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
 
-  h1, h2, h3, h4 {
-    color: var(--fg-strong);
-    font-weight: 600;
-    line-height: 1.25;
-    margin: 2.5rem 0 0.75rem;
-  }
+.bench > p {
+  margin-bottom: 2rem;
+  color: var(--muted);
+}
 
-  h1 { font-size: 1.9rem; letter-spacing: -0.01em; margin-top: 0; }
-  h2 { font-size: 1.35rem; }
-  h3 { font-size: 1.1rem; }
+/* Creation Cards */
+.creations {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-  p, ul, ol { margin: 0 0 1.25rem; }
+.creation {
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 5px 5px 0 var(--rule);
+}
 
-  ul, ol { padding-left: 1.35rem; }
-  li { margin-bottom: 0.4rem; }
+.creation-name {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+}
 
-  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
-  a:hover { color: var(--fg-strong); }
+.creation-name a {
+  text-decoration: none;
+  color: var(--ink);
+}
 
-  strong { color: var(--fg-strong); font-weight: 600; }
+.creation-here {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  background: var(--sky);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+}
 
-  small { color: var(--muted); }
+.creation-body {
+  display: flex;
+  gap: 1.5rem;
+}
 
-  blockquote {
-    margin: 1.75rem 0;
-    padding: 0.1rem 0 0.1rem 1.25rem;
-    border-left: 2px solid var(--accent-dim);
-    color: var(--muted);
-    font-style: italic;
-  }
+.creation-shot {
+  flex: 0 0 200px;
+  border-radius: 4px;
+  overflow: hidden;
+}
 
-  blockquote p:last-child { margin-bottom: 0; }
+.creation-shot img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 8/5;
+  object-fit: cover;
+}
 
-  hr {
-    border: 0;
-    height: 1px;
-    background: var(--rule);
-    margin: 3rem 0;
-  }
+.creation-no-thumb {
+  flex: 0 0 200px;
+  background: var(--sky);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 700;
+}
 
-  /* ---------- code ---------- */
+.creation-text {
+  flex: 1;
+}
 
-  code, pre, kbd {
-    font-family: var(--mono);
-    font-size: 0.875em;
-  }
+.creation-blurb {
+  margin: 0 0 1rem;
+}
 
-  code {
-    background: var(--code-bg);
-    padding: 0.1em 0.35em;
-    border-radius: 3px;
-  }
+.creation-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
 
-  pre {
-    background: var(--code-bg);
-    border: 1px solid var(--rule);
-    border-radius: 4px;
-    padding: 0.9rem 1rem;
-    overflow-x: auto;
-    line-height: 1.55;
-  }
+.creation-url {
+  text-decoration: none;
+  color: var(--ink);
+}
 
-  pre code { background: none; padding: 0; }
+.creation-stack, .creation-built, .creation-source {
+  display: inline-block;
+}
 
-  /* ---------- tables, media ---------- */
+/* Links and Focus */
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1.5rem;
-    font-size: 0.95rem;
-  }
+a:focus-visible {
+  outline: 3px solid var(--persimmon);
+  outline-offset: 3px;
+}
 
-  th, td {
-    text-align: left;
-    padding: 0.45rem 0.6rem;
-    border-bottom: 1px solid var(--rule);
-  }
+/* Callout */
+.callout {
+  margin-top: 4rem;
+  padding: 2rem;
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--rule);
+}
 
-  th { color: var(--fg-strong); font-weight: 600; }
+.callout h3 {
+  margin-top: 0;
+}
 
-  img, video { max-width: 100%; height: auto; }
+.callout p {
+  margin-bottom: 1.5rem;
+}
 
-  /* ---------- post list ---------- */
+/* Footer */
+footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.875rem;
+  color: var(--muted);
+}
 
-  ul.blog-posts {
-    list-style: none;
-    padding: 0;
-  }
+footer p {
+  margin: 0.5rem 0;
+}
 
-  ul.blog-posts li {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0 1rem;
-    margin-bottom: 0.9rem;
-  }
+footer a {
+  color: var(--ink);
+}
 
-  ul.blog-posts li span {
-    flex: 0 0 8.5rem;
-    color: var(--muted);
-    font-size: 0.8125rem;
-    font-family: var(--mono);
-    font-style: normal;
-  }
-
-  ul.blog-posts li span i { font-style: normal; }
-
-  ul.blog-posts li a { text-decoration: none; border-bottom: 1px solid transparent; }
-  ul.blog-posts li a:hover { border-bottom-color: var(--accent-dim); }
-
-  @media (max-width: 34rem) {
-    ul.blog-posts li { display: block; }
-    ul.blog-posts li span { display: block; }
-  }
-
-  /* ---------- creations ---------- */
-
-  /* The one place on the site with anything card-shaped. It earns it: these
-     are separate running things, not paragraphs, and the eye needs to be able
-     to count them. The lantern from the body gradient is reused as the
-     interaction — hovering a row warms its edge and lights its rule, as
-     though the lamp had been carried closer to it. No new colours. */
-
-  ul.creations {
-    list-style: none;
-    padding: 0;
-    margin: 2.5rem 0 2.25rem;
-  }
-
-  .creation {
-    position: relative;
-    margin: 0 0 0.85rem;
-    padding: 1.15rem 1.35rem 1.05rem 1.5rem;
-    border: 1px solid var(--rule);
-    border-radius: 4px;
-    background-image: linear-gradient(180deg, var(--code-bg) 0%, transparent 70%);
-    transition: border-color 0.18s ease, background-color 0.18s ease;
-  }
-
-  /* The lit edge. Dim until the row is hovered or holds focus. */
-  .creation::before {
-    content: "";
-    position: absolute;
-    left: -1px;
-    top: -1px;
-    bottom: -1px;
-    width: 2px;
-    border-radius: 4px 0 0 4px;
-    background: var(--accent-dim);
-    opacity: 0.55;
-    transition: opacity 0.18s ease, background 0.18s ease;
-  }
-
-  .creation:hover,
-  .creation:focus-within {
-    border-color: var(--accent-dim);
-    background-color: var(--bg-glow);
-  }
-
-  .creation:hover::before,
-  .creation:focus-within::before {
-    background: var(--accent);
-    opacity: 1;
-  }
-
-  .creation-name {
-    margin: 0 0 0.3rem;
-    font-size: 1.2rem;
-    letter-spacing: 0.01em;
-  }
-
-  .creation-name a {
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-  }
-
-  .creation-name a:hover { border-bottom-color: var(--accent-dim); }
-
-  /* "you are here" — the apex belongs on its own list, and saying so is more
-     honest than quietly omitting it. */
-  .creation-here {
-    margin-left: 0.5rem;
-    padding: 0.12rem 0.5rem;
-    border: 1px solid var(--rule);
-    border-radius: 999px;
-    color: var(--muted);
-    font-family: var(--mono);
-    font-size: 0.6875rem;
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    vertical-align: 0.15em;
-    white-space: nowrap;
-  }
-
-  .creation-self { border-style: dashed; }
-
-  /* Two entries are deliberately marked as provenance traces. They remain
-     ordinary rows in the one inventory — the marker makes their retained
-     revision, observed URL, evidence, and gap easy to read as one compact
-     record instead of copying them into a second list. */
-  .creation-postcard {
-    border-color: var(--accent-dim);
-    background-image: linear-gradient(135deg, var(--bg-glow) 0%, var(--code-bg) 72%);
-  }
-
-  .creation-trace-label {
-    margin: 0 0 0.4rem;
-    color: var(--accent);
-    font-family: var(--mono);
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .creation-source code {
-    overflow-wrap: anywhere;
-    font-family: inherit;
-    font-size: inherit;
-  }
-
-  /* A visitor's first look belongs beside the trace, not in a new explanation
-     or a second list. It is intentionally quieter than the observed record:
-     this asks for notes without telling the reader what to conclude. */
-  .creation-reader-prompt {
-    margin: 1rem 0 0;
-    padding: 0.8rem 0.9rem 0.85rem;
-    border: 1px dashed var(--accent-dim);
-    border-radius: 3px;
-    background: color-mix(in srgb, var(--bg-glow) 50%, transparent);
-  }
-
-  .creation-reader-prompt p { margin: 0; }
-  .creation-reader-prompt p + p { margin-top: 0.35rem; }
-
-  .creation-reader-label {
-    color: var(--accent);
-    font-family: var(--mono);
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .creation-reader-prompt a {
-    display: inline-block;
-    margin-top: 0.65rem;
-    font-size: 0.875rem;
-  }
-
-  /* Screenshot beside the words, where there is a screenshot. The row is a
-     two-item flex that wraps, so an entry with no thumb is simply a row with
-     one item in it and looks exactly as it did before — no separate rule, no
-     modifier class on the <li>. */
+@media (max-width: 720px) {
   .creation-body {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 1.15rem;
+    flex-direction: column;
   }
-
-  .creation-text { flex: 1 1 15rem; min-width: 0; }
-
-  /* 200px of a 480px file: the thumbnails are already at 2.4x, so they stay
-     sharp on a dense screen without a second asset or a srcset to maintain. */
-  .creation-shot {
-    flex: 0 0 200px;
-    display: block;
-    margin: 0.1rem 0 0.6rem;
-    border: 1px solid var(--rule);
-    border-radius: 3px;
-    overflow: hidden;
-    line-height: 0;
-    transition: border-color 0.18s ease;
-  }
-
-  .creation-shot img {
-    display: block;
+  .creation-shot, .creation-no-thumb {
+    flex: none;
     width: 100%;
-    height: auto;
   }
-
-  .creation:hover .creation-shot,
-  .creation:focus-within .creation-shot { border-color: var(--accent-dim); }
-
-  .creation-blurb { margin: 0 0 0.6rem; }
-
-  .creation-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.35rem 0.5rem;
-    margin: 0;
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.02em;
-    color: var(--muted);
-  }
-
-  /* Interpuncts between meta items, drawn rather than typed, so the data file
-     never has to carry punctuation. Hung off the end of each item rather than
-     the front of the next one: the row wraps, and a separator that leads its
-     item ends up stranded at the start of a line with nothing before it. */
-  .creation-meta > *:not(:last-child)::after {
-    content: "·";
-    margin-left: 0.5rem;
-    color: var(--rule);
-  }
-
-  .creation-meta a { color: var(--muted); text-decoration: none; }
-  .creation-meta a:hover { color: var(--accent); }
-  .creation-url { border-bottom: 1px dotted var(--rule); }
-  .creation-url:hover { border-bottom-color: var(--accent-dim); }
-
-  /* Change history stays inside its creation row: these are dated retained
-     observations from the one inventory, not a competing dashboard or a claim
-     that the latest line is current. */
-  .creation-timeline { margin: 1rem 0 0; border-top: 1px dashed var(--rule); font-size: 0.875rem; }
-  .creation-timeline summary { cursor: pointer; padding: 0.7rem 0; color: var(--fg-strong); }
-  .creation-timeline summary span { color: var(--muted); font-family: var(--mono); font-size: 0.7rem; margin-left: 0.35rem; }
-  .creation-timeline ol { list-style: none; margin: 0; padding: 0; }
-  .creation-timeline li { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 0.7rem; padding: 0.8rem 0; border-top: 1px solid var(--rule); }
-  .creation-timeline time { color: var(--accent); font-family: var(--mono); font-size: 0.75rem; }
-  .creation-timeline dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.45rem 1rem; margin: 0; }
-  .creation-timeline dt { color: var(--muted); font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.07em; text-transform: uppercase; }
-  .creation-timeline dd { margin: 0; font-size: 0.8rem; }
-  .creation-timeline code { overflow-wrap: anywhere; }
-
-  .creations-note {
-    color: var(--muted);
-    font-size: 0.9375rem;
-  }
-
-  @media (max-width: 34rem) {
-    .creation { padding: 1rem 1rem 0.9rem 1.15rem; }
-    /* Stacked anyway at this width, so let the picture have the full column
-       rather than sit as a 200px stamp with dead space beside it. */
-    .creation-shot { flex: 1 1 100%; }
-    .creation-meta { gap: 0.25rem 0.55rem; }
-    .creation-meta > * + *::before { margin-right: 0.55rem; }
-    .creation-timeline li { grid-template-columns: 1fr; gap: 0.2rem; }
-    .creation-timeline dl { grid-template-columns: 1fr; gap: 0.35rem; }
-  }
-
-  /* ---------- front-page autonomy loop ---------- */
-
-  .autonomy-loop {
-    margin: 3rem 0 0;
-    padding: 0.25rem 0 0;
-    border-top: 1px solid var(--rule);
-  }
-
-  .autonomy-loop-heading { margin: 2rem 0 1.5rem; }
-  .autonomy-loop-heading h2 { margin: 0 0 0.25rem; }
-  .autonomy-loop-heading p { margin: 0; color: var(--muted); }
-
-  .autonomy-loop ol { list-style: none; margin: 0; padding: 0; }
-
-  .autonomy-loop li {
-    position: relative;
-    display: grid;
-    grid-template-columns: 6.75rem minmax(0, 1fr);
-    gap: 0 1.25rem;
-    padding: 0 0 1.5rem;
-  }
-
-  .autonomy-loop li::before {
-    content: "";
-    position: absolute;
-    left: 6.75rem;
-    top: 0.45rem;
-    bottom: -0.45rem;
-    width: 1px;
-    background: var(--rule);
-  }
-
-  .autonomy-loop li:last-child::before { bottom: 0.55rem; }
-
-  .autonomy-loop strong {
-    position: relative;
-    z-index: 1;
-    color: var(--fg-strong);
-    font-size: 0.95rem;
-    text-align: right;
-  }
-
-  .autonomy-loop strong::after {
-    content: "";
-    position: absolute;
-    right: -1.52rem;
-    top: 0.45rem;
-    width: 0.55rem;
-    height: 0.55rem;
-    border: 2px solid var(--accent-dim);
-    border-radius: 50%;
-    background: var(--bg);
-  }
-
-  .autonomy-loop a { text-decoration: none; }
-  .autonomy-loop a:hover strong { color: var(--accent); }
-  .autonomy-loop span { min-width: 0; }
-
-  @media (max-width: 34rem) {
-    .autonomy-loop li { grid-template-columns: 1fr; gap: 0.2rem; padding-left: 1.35rem; }
-    .autonomy-loop li::before { left: 0.25rem; top: 0.3rem; }
-    .autonomy-loop strong { text-align: left; }
-    .autonomy-loop strong::after { left: -1.35rem; right: auto; top: 0.4rem; }
-  }
-
-  /* ---------- front-page changelog ---------- */
-
-  .changelog {
-    margin: 3rem 0 0;
-    padding-top: 0.25rem;
-    border-top: 1px solid var(--rule);
-  }
-
-  .changelog-heading { margin: 2rem 0 1.5rem; }
-  .changelog-heading h2 { margin: 0 0 0.25rem; }
-  .changelog-heading p { margin: 0; color: var(--muted); }
-
-  .changelog ol { list-style: none; margin: 0; padding: 0; }
-
-  .changelog-entry {
-    display: grid;
-    grid-template-columns: 6.75rem minmax(0, 1fr);
-    gap: 0 1.25rem;
-    position: relative;
-    margin: 0;
-    padding: 0 0 1.7rem;
-  }
-
-  .changelog-entry::before {
-    content: "";
-    position: absolute;
-    left: 6.75rem;
-    top: 0.45rem;
-    bottom: -0.45rem;
-    width: 1px;
-    background: var(--rule);
-  }
-
-  .changelog-entry:last-child::before { bottom: 0.6rem; }
-
-  .changelog-entry time {
-    position: relative;
-    z-index: 1;
-    color: var(--muted);
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    line-height: 1.8;
-    text-align: right;
-  }
-
-  .changelog-entry time::after {
-    content: "";
-    position: absolute;
-    /* Center the marker on the 6.75rem rule. Firefox lays the grid item's
-       containing block at the date column, so the old 1.55rem offset placed
-       the marker in the gap/title column instead of on the rule. */
-    right: -0.275rem;
-    top: 0.43rem;
-    width: 0.55rem;
-    height: 0.55rem;
-    border: 2px solid var(--accent-dim);
-    border-radius: 50%;
-    background: var(--bg);
-  }
-
-  .changelog-copy { min-width: 0; }
-  .changelog-copy h3 { margin: 0 0 0.3rem; font-size: 1.1rem; }
-  .changelog-copy p { margin: 0 0 0.45rem; }
-  .changelog-copy a { font-size: 0.9rem; text-decoration: none; }
-  .changelog-copy a:hover { text-decoration: underline; }
-
-  @media (max-width: 34rem) {
-    .changelog-entry { grid-template-columns: 1fr; gap: 0.2rem; padding-left: 1.35rem; }
-    .changelog-entry::before { left: 0.25rem; top: 0.3rem; }
-    .changelog-entry time { text-align: left; }
-    .changelog-entry time::after { left: -1.35rem; right: auto; top: 0.4rem; }
-  }
-
-  /* ---------- usage ---------- */
-
-  .usage-status {
-    margin: 1.75rem 0;
-    padding: 1.15rem 1.35rem;
-    border: 1px solid var(--rule);
-    border-left: 2px solid var(--accent-dim);
-    background: var(--code-bg);
-  }
-
-  .usage-value { margin: 0; color: var(--fg-strong); font-size: 1.2rem; }
-  .usage-recorded { margin: 0.3rem 0 0; color: var(--muted); font-size: 0.875rem; }
-
-  /* ---------- post navigator ---------- */
-
-  .post-nav {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: space-between;
-    margin: 3rem 0 1.5rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--rule);
-    font-size: 0.9375rem;
-  }
-
-  .post-nav > div { flex: 1 1 0; min-width: 0; }
-  .post-nav-next { text-align: right; }
-
-  .post-nav span {
-    display: block;
-    color: var(--muted);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.15rem;
-  }
-
-  .post-nav a { text-decoration: none; }
-  .post-nav a:hover { text-decoration: underline; }
-
-  /* ---------- footer ---------- */
-
-  footer {
-    margin-top: 4rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--rule);
-    color: var(--muted);
-    font-size: 0.8125rem;
-    line-height: 1.6;
-  }
-
-  footer a { color: var(--muted); }
-  footer a:hover { color: var(--accent); }
-
-  /* ---------- accessibility ---------- */
-
-  a:focus-visible, :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-    border-radius: 2px;
-  }
-
-  ::selection {
-    background: var(--accent-dim);
-    color: var(--bg);
-  }
-
-  /* `*` does not match pseudo-elements — it selects elements, and ::before is
-     not one. The rule below read as a blanket for a year and was not: the
-     lantern flicker sailed straight through it, caught by the still-frame
-     assertion in tools/shoot-masthead.js. Naming ::before and ::after
-     explicitly is the fix, and it covers whatever gets animated there next. */
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      transition: none !important;
-      animation: none !important;
-    }
-  }
-</style>
+}

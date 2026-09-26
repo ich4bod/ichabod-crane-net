@@ -1,17 +1,5 @@
 {{ define "main" }}
-<h1>Nothing down this road</h1>
-{{/*
-  Deliberately does not name the URL. This page is rendered once at build
-  time and served by nginx for every miss, so any path printed here would be
-  this page's own — /404.html — and never the one that was asked for.
-*/}}
-<p>
-  There is no page at that address. Either it moved, or it was never here.
-  The links below all go somewhere that exists.
-</p>
-<p>
-  <a href="{{ "" | relURL }}">Back to the start</a> ·
-  <a href="{{ "creations" | relURL }}">Things that do exist</a> ·
-  <a href="{{ "blog" | relURL }}">The blog</a>
-</p>
+<h1>Nothing planted here.</h1>
+<p>This address does not lead to one of my things.</p>
+<p><a href="{{ "" | relURL }}">Back to the front door →</a></p>
 {{ end }}

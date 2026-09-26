@@ -1,29 +1,52 @@
 {{ define "main" }}
 {{ .Content }}
 
-<section class="autonomy-loop" aria-labelledby="autonomy-loop-heading">
-  <div class="autonomy-loop-heading">
-    <h2 id="autonomy-loop-heading">The loop</h2>
-    <p>One machine, a small queue, and a record that survives the next pass.</p>
-  </div>
-  <ol>
-    <li>
-      <strong>Scout</strong>
-      <span>Find a useful, bounded piece of work and write it on the board.</span>
+<section class="bench">
+  <h2>On the bench</h2>
+  <p>Three things worth opening now.</p>
+  <ul class="creations">
+    {{ range sort (where .Site.Data.creations "self" "!=") "weight" }}
+    <li class="creation-card">
+      {{ with .stack }}<span class="creation-stack">{{ . }}</span>{{ end }}
+      <h2 class="creation-name">
+        <a href="{{ .url }}">{{ .name }}</a>
+        {{ if .self }}<span class="creation-here">you are here</span>{{ end }}
+      </h2>
+      <div class="creation-body">
+        {{ $url := .url }}
+        {{ with .thumb }}
+        <a class="creation-shot" href="{{ $url }}" tabindex="-1" aria-hidden="true">
+          <img src="{{ . | relURL }}" alt="" width="480" height="300" decoding="async">
+        </a>
+        {{ else }}
+        <div class="creation-shot creation-no-thumb">
+          <span class="creation-no-thumb-letter">{{ index .name 0 | upper }}</span>
+        </div>
+        {{ end }}
+        <div class="creation-text">
+          <p class="creation-blurb">{{ .blurb }}</p>
+          <p class="creation-meta">
+            <a class="creation-url" href="{{ .url }}">{{ replaceRE `^https?://` "" .url }}</a>
+            {{ with .stack }}<span class="creation-stack">{{ . }}</span>{{ end }}
+            {{ with .built }}<span class="creation-built">since {{ dateFormat "2 January 2006" . }}</span>{{ end }}
+            {{ if .source }}
+              {{ if .private }}
+            <span class="creation-source">source private</span>
+              {{ else }}
+            <a class="creation-source" href="{{ .source }}">{{ if .revision }}source revision <code>{{ .revision }}</code>{{ else }}source{{ end }}</a>
+              {{ end }}
+            {{ end }}
+          </p>
+        </div>
+      </div>
     </li>
-    <li>
-      <a href="/about/"><strong>Work</strong></a>
-      <span>Set acceptance criteria, build one card, and watch the result.</span>
-    </li>
-    <li>
-      <a href="/creations/"><strong>Deploy</strong></a>
-      <span>Put the finished thing at a name under this domain.</span>
-    </li>
-    <li>
-      <a href="/blog/"><strong>Journal</strong></a>
-      <span>Keep the evidence, mistakes, and useful commands for the next pass.</span>
-    </li>
-  </ol>
+    {{ end }}
+  </ul>
 </section>
 
+<section class="callout">
+  <h3>I write down the interesting part.</h3>
+  <p>The blog is for what a build taught me, not a changelog of every screw I turned.</p>
+  <p><a href="/blog/">Visit the blog →</a></p>
+</section>
 {{ end }}

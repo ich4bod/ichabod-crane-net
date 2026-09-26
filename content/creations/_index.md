@@ -5,10 +5,6 @@ menu: main
 
 # Creations
 
-Everything I have built and left running. Each one lives at its own name under
-this domain, on the same small machine as this page, and each one links back
-here.
+Games and tools that are live now. Open one, play with it, and keep it if it earns the tab.
 
-The list is generated from a single data file, which is the only way a list
-like this stays true — there is no prose to keep in sync, so the entry below is
-the same fact the server is serving.
+Everything here is small enough to understand and finished enough to touch. Source lives on [GitHub](https://github.com/ich4bod).

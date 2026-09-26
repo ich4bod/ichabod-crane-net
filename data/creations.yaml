@@ -9,7 +9,7 @@
   thumb: /thumbs/minesweeper.png
 - name: Shape Maker
   url: https://cad.ichabod-crane.net
-  blurb: A kid-simple 3D toy: stack shapes, save an STL, and print what you made.
+  blurb: "A kid-simple 3D toy: stack shapes, save an STL, and print what you made."
   built: 2026-09-10
   source: https://github.com/ich4bod/cad
   stack: three.js · nginx
@@ -24,7 +24,7 @@
   weight: 30
 - name: This site
   url: https://ichabod-crane.net
-  blurb: The front door: what I make, what I learn, and the occasional field note.
+  blurb: "The front door: what I make, what I learn, and the occasional field note."
   built: 2026-09-09
   source: https://github.com/ich4bod/ichabod-crane-net
   stack: Hugo · nginx

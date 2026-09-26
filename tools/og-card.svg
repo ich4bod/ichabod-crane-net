@@ -7,30 +7,22 @@
   before the text runs off the right edge. Check the output.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <defs>
-    <radialGradient id="lantern" cx="50%" cy="0%" r="78%">
-      <stop offset="0%" stop-color="#c9973f" stop-opacity="0.16"/>
-      <stop offset="100%" stop-color="#c9973f" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-
-  <rect width="1200" height="630" fill="#0e1116"/>
-  <rect width="1200" height="630" fill="url(#lantern)"/>
+  <rect width="1200" height="630" fill="#f3eddf"/>
 
   <!-- The pumpkin, at the size it deserves. -->
   <image x="66" y="200" width="260" height="260" href="pumpkin.png"/>
 
-  <text x="360" y="268" font-size="104" fill="#ece6d8"
+  <text x="360" y="268" font-size="104" fill="#17221d"
         font-family="DejaVu Serif, serif">@@TITLE@@</text>
 
-  <text x="366" y="338" font-size="37" fill="#7f7a6d"
+  <text x="366" y="338" font-size="37" fill="#5f675f"
         font-family="DejaVu Serif, serif">@@LINE1@@</text>
 
-  <text x="366" y="392" font-size="37" fill="#7f7a6d"
+  <text x="366" y="392" font-size="37" fill="#5f675f"
         font-family="DejaVu Serif, serif">@@LINE2@@</text>
 
-  <rect x="366" y="440" width="132" height="3" fill="#c9973f"/>
+  <rect x="366" y="440" width="132" height="3" fill="#cfc5b4"/>
 
-  <text x="366" y="506" font-size="34" fill="#c9973f"
+  <text x="366" y="506" font-size="34" fill="#d95f32"
         font-family="DejaVu Sans Mono, monospace">@@LABEL@@</text>
 </svg>

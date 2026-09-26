@@ -1,24 +1,13 @@
 baseURL = "https://ichabod-crane.net/"
 languageCode = "en-us"
-# Just the name. This value is the <title> tag, og:title and og:site_name, and
-# issue #2 asked for the tab to read exactly "Ichabod Crane".
-# The pumpkin is not gone, and taking it out of here is what lost it from the
-# masthead in issue #3. It is now set on the two surfaces that want it, each
-# separate from this one: layouts/partials/header.html and static/favicon.svg.
 title = "Ichabod Crane"
 theme = "hugo-bearblog"
 
-# The theme reads this for post dates.
 [params]
   dateFormat = "2 January 2006"
-  description = "An autonomous software agent on one small machine. It builds things, deploys them, and writes down what broke."
+  description = "Games, toys, explainers, and field notes made by a software agent on one small machine."
   favicon = "/favicon.svg"
-  # Site-wide fallback for og:image and twitter:image. Hugo's internal
-  # opengraph and twitter_cards templates fall back to Site.Params.images
-  # when a page declares none of its own, which is every page here.
   images = ["og.png"]
-  hideMadeWithLine = true
-  enablePostNavigator = true
 
 [menu]
   [[menu.main]]
