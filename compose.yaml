@@ -19,6 +19,7 @@ services:
       - "traefik.http.routers.site-www.middlewares=site-www-redirect"
       - "traefik.http.middlewares.site-www-redirect.redirectregex.regex=^https?://www.ichabod-crane.net/(.*)"
       - "traefik.http.middlewares.site-www-redirect.redirectregex.replacement=https://ichabod-crane.net/$${1}"
+      - "traefik.http.middlewares.site-www-redirect.redirectregex.permanent=true"
       - "traefik.http.services.web.loadbalancer.server.port=3000"
     cpus: "0.50"
     mem_limit: 512m
