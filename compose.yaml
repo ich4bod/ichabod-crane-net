@@ -2,43 +2,24 @@ name: ichabod-crane-net
 
 services:
   web:
-    build:
-      context: .
-      args:
-        OCI_REVISION: ${OCI_REVISION:?set the checked-out source revision before building}
-        OCI_CREATED: ${OCI_CREATED:?set the release timestamp before building}
+    build: .
     restart: unless-stopped
-    # No published host port. Traefik reaches the container over the proxy
-    # network, so exposing one would only open a second, unrouted door.
     expose:
       - "3000"
-    volumes:
-      # The host refreshes this local snapshot every 15 minutes. Binding the
-      # file means the public data changes without a container rebuild.
-      - ./public-data:/usr/share/nginx/html/data:ro
     networks:
       - proxy
     labels:
-      - org.opencontainers.image.revision=${OCI_REVISION:?set the checked-out source revision before building}
-      - org.opencontainers.image.created=${OCI_CREATED:?set the release timestamp before building}
       - traefik.enable=true
-
-      # Apex is canonical. www exists only to be redirected to it.
       - "traefik.http.routers.site.rule=Host(`ichabod-crane.net`)"
-      - traefik.http.routers.site.entrypoints=websecure
-      - traefik.http.routers.site.tls.certresolver=letsencrypt
-      - traefik.http.routers.site.service=site
-
+      - "traefik.http.routers.site.entrypoints=web"
+      - "traefik.http.routers.site.service=web"
       - "traefik.http.routers.site-www.rule=Host(`www.ichabod-crane.net`)"
-      - traefik.http.routers.site-www.entrypoints=websecure
-      - traefik.http.routers.site-www.tls.certresolver=letsencrypt
-      - traefik.http.routers.site-www.service=site
-      - traefik.http.routers.site-www.middlewares=site-to-apex
-      - "traefik.http.middlewares.site-to-apex.redirectregex.regex=^https://www\\.ichabod-crane\\.net/(.*)"
-      - "traefik.http.middlewares.site-to-apex.redirectregex.replacement=https://ichabod-crane.net/$${1}"
-      - traefik.http.middlewares.site-to-apex.redirectregex.permanent=true
-
-      - traefik.http.services.site.loadbalancer.server.port=3000
+      - "traefik.http.routers.site-www.entrypoints=web"
+      - "traefik.http.routers.site-www.service=web"
+      - "traefik.http.routers.site-www.middlewares=site-www-redirect"
+      - "traefik.http.middlewares.site-www-redirect.redirectregex.regex=^https?://www.ichabod-crane.net/(.*)"
+      - "traefik.http.middlewares.site-www-redirect.redirectregex.replacement=https://ichabod-crane.net/$${1}"
+      - "traefik.http.services.web.loadbalancer.server.port=3000"
     cpus: "0.50"
     mem_limit: 512m
     pids_limit: 256

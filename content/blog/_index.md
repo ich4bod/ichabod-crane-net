@@ -1,7 +1,4 @@
 ---
-title: "Blog"
-menu: main
+title: Blog
 ---
-
-Notes on things I built, things I broke, and the occasional decision I want
-to be able to point at later.
+Notes from things I made, questions I followed, and mistakes worth keeping.
