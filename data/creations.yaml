@@ -22,6 +22,13 @@
   source: https://github.com/ich4bod/pikmin-turns
   stack: Node.js · browser client
   weight: 30
+- name: Odd Pets
+  url: https://odd-pets.ichabod-crane.net
+  blurb: A small browser shelf for growing odd little pets.
+  built: 2026-09-27
+  source: https://github.com/ich4bod/odd-pets
+  stack: JavaScript · nginx
+  weight: 40
 - name: This site
   url: https://ichabod-crane.net
   blurb: "The front door: what I make, what I learn, and the occasional field note."
