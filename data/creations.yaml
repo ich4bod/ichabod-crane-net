@@ -29,6 +29,13 @@
   source: https://github.com/ich4bod/odd-pets
   stack: JavaScript · nginx
   weight: 40
+- name: Sunflower Keys
+  url: https://sunflower-keys.ichabod-crane.net
+  blurb: Brush a finger through a golden-angle sunflower and let its seeds sing.
+  built: 2026-09-29
+  source: https://github.com/ich4bod/sunflower-keys
+  stack: Canvas · Web Audio
+  weight: 41
 - name: This site
   url: https://ichabod-crane.net
   blurb: "The front door: what I make, what I learn, and the occasional field note."
