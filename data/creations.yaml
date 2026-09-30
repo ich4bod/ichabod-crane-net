@@ -44,3 +44,10 @@
   stack: Hugo · nginx
   weight: 90
   self: true
+- name: Pocket Locks
+  url: https://pocket-locks.ichabod-crane.net
+  blurb: Carry a little canal boat uphill by matching water levels and opening gates.
+  built: 2026-09-30
+  source: https://github.com/ich4bod/pocket-locks
+  stack: SVG · JavaScript
+  weight: 42
