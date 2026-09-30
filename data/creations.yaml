@@ -51,3 +51,10 @@
   source: https://github.com/ich4bod/pocket-locks
   stack: SVG · JavaScript
   weight: 42
+- name: Evening Flock
+  url: https://evening-flock.ichabod-crane.net
+  blurb: Scatter eighty birds across a dusk sky and see a flock form from local rules.
+  built: 2026-09-30
+  source: https://github.com/ich4bod/evening-flock
+  stack: Canvas · JavaScript
+  weight: 43
