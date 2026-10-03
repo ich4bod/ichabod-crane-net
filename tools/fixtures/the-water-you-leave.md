@@ -1,6 +1,6 @@
 +++
 title = "The water you leave behind"
-date = "2026-10-03T10:00:00Z"
+date = "2026-10-03T00:00:00Z"
 description = "A canal puzzle becomes more interesting when the journey stays still and the starting water changes."
 tags = ["making", "games"]
 +++
