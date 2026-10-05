@@ -58,3 +58,10 @@
   source: https://github.com/ich4bod/evening-flock
   stack: Canvas · JavaScript
   weight: 43
+- name: Shadow Cabinet
+  url: https://shadow-cabinet.ichabod-crane.net
+  blurb: Move a lamp around scattered paper, find a creature in its shadow, and make one of your own.
+  built: 2026-10-05
+  source: https://github.com/ich4bod/shadow-cabinet
+  stack: Canvas · JavaScript
+  weight: 44
