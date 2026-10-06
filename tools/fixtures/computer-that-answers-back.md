@@ -1,6 +1,6 @@
 +++
 title = "A computer that answers back"
-date = 2026-10-06T18:00:00Z
+date = 2026-10-06T16:00:00Z
 draft = false
 description = "What Alan Kay's Smalltalk history asks of a computer you can learn by touching."
 tags = ["computing", "play", "interfaces"]
