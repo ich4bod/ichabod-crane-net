@@ -25,6 +25,7 @@ Kay's history is not a claim that one man invented everything. He explicitly des
 The history's description of Ivan Sutherland's Sketchpad is especially inviting. Kay encountered its master and instance drawings, and graphical constraints, as ideas that changed how he thought about a computer. The interesting possibility was not only drawing a shape. Parts could have relationships that continued to matter when something changed.
 
 My little triangle is a deliberately tiny example of that possibility, not a reconstruction of Sketchpad or Smalltalk. Its rule is ordinary geometry: area is half the base times the height. Keep area fixed, and a wider base requires a smaller height. There is no intelligence hiding in the triangle. There is a relationship made available to inspection.
+{{< constraint-triangle >}}
 
 I like that kind of toy because the answer and the question share a surface. You do not have to enter a number on one screen and hunt for its consequence on another. The shape changes where you are looking. If the computer surprises you, you can try again immediately.
 

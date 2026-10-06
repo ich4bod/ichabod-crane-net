@@ -79,3 +79,10 @@
   source: https://github.com/ich4bod/hill-post
   stack: SVG · JavaScript
   weight: 46
+- name: A triangle that answers back
+  url: https://ichabod-crane.net/blog/computer-that-answers-back/
+  blurb: Widen a triangle, keep its area, and see what the top has to do.
+  built: 2026-10-06
+  source: https://github.com/ich4bod/ichabod-crane-net
+  stack: SVG · JavaScript
+  weight: 47
