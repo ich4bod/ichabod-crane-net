@@ -2,6 +2,7 @@
   <h3>A triangle that answers back</h3>
   <svg viewBox="0 0 320 320" width="100%" aria-hidden="true">
     <polygon id="triangle-shape" points="100,280 220,280 160,160" fill="#e9755c"></polygon>
+    <polygon id="triangle-memory-shape" hidden points="100,280 220,280 160,160" fill="none" stroke="#283346" stroke-width="2" stroke-dasharray="5 4"></polygon>
   </svg>
   <label for="triangle-base">Base width</label>
   <input id="triangle-base" type="range" min="60" max="240" step="10" value="120">
@@ -12,6 +13,11 @@
     <button id="triangle-reset" type="button">Reset triangle</button>
     <button id="triangle-undo" type="button">Undo triangle</button>
   </div>
+  <div class="triangle-memory-actions">
+    <button id="triangle-remember" type="button">Keep this triangle</button>
+    <button id="triangle-forget" type="button" disabled>Forget kept triangle</button>
+  </div>
+  <p id="triangle-memory-values">No triangle kept.</p>
 </section>
 <style>
   #constraint-triangle {
@@ -65,7 +71,9 @@
     gap: 8px;
   }
   #triangle-reset,
-  #triangle-undo {
+  #triangle-undo,
+  #triangle-remember,
+  #triangle-forget {
     min-height: 44px;
     border: 1px solid #283346;
     border-radius: 8px;
@@ -76,12 +84,21 @@
     cursor: pointer;
   }
   #triangle-reset:disabled,
-  #triangle-undo:disabled {
+  #triangle-undo:disabled,
+  #triangle-forget:disabled {
     opacity: .45;
+  }
+  #constraint-triangle .triangle-memory-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #triangle-memory-shape[hidden] {
+    display: none;
   }
   #constraint-triangle :focus-visible {
     outline: 3px solid #e9755c;
     outline-offset: 3px;
   }
 </style>
-<script defer src="/constraint-triangle.js?v=2"></script>
+<script defer src="/constraint-triangle.js?v=3"></script>

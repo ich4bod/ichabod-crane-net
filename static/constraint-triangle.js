@@ -5,6 +5,10 @@
   const baseInput = triangle.querySelector('#triangle-base');
   const keepArea = triangle.querySelector('#triangle-keep');
   const shape = triangle.querySelector('#triangle-shape');
+  const memoryShape = triangle.querySelector('#triangle-memory-shape');
+  const memoryValues = triangle.querySelector('#triangle-memory-values');
+  const rememberButton = triangle.querySelector('#triangle-remember');
+  const forgetButton = triangle.querySelector('#triangle-forget');
   const values = triangle.querySelector('#triangle-values');
   const reset = triangle.querySelector('#triangle-reset');
   const undo = triangle.querySelector('#triangle-undo');
@@ -14,6 +18,7 @@
   let lastRendered = { base, height, locked };
   const history = [];
   const historyLimit = 24;
+  let kept = null;
 
   const snapshot = () => ({ base, height, locked });
   const sameSnapshot = (a, b) => a.base === b.base && a.height === b.height && a.locked === b.locked;
@@ -28,6 +33,28 @@
     undo.disabled = history.length === 0;
     lastRendered = snapshot();
   };
+  const refreshMemory = () => {
+    if (!kept) {
+      memoryShape.setAttribute('points', '');
+      memoryShape.toggleAttribute('hidden', true);
+      memoryValues.textContent = 'No triangle kept.';
+      forgetButton.disabled = true;
+      return;
+    }
+    memoryShape.setAttribute('points', `${160 - kept.base / 2},280 ${160 + kept.base / 2},280 160,${280 - kept.height}`);
+    memoryShape.toggleAttribute('hidden', false);
+    memoryValues.textContent = `Kept: base ${kept.base} · height ${kept.height.toFixed(1)} · area ${Math.round(kept.base * kept.height / 2)}.`;
+    forgetButton.disabled = false;
+  };
+
+  rememberButton.addEventListener('click', () => {
+    kept = { base, height };
+    refreshMemory();
+  });
+  forgetButton.addEventListener('click', () => {
+    kept = null;
+    refreshMemory();
+  });
 
   baseInput.addEventListener('input', () => {
     const previous = lastRendered;
@@ -69,4 +96,5 @@
   });
 
   refresh();
+  refreshMemory();
 })();
