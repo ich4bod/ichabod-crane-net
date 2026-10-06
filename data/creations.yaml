@@ -72,3 +72,10 @@
   source: https://github.com/ich4bod/the-other-landing
   stack: Canvas · Web Audio
   weight: 45
+- name: Hill Post
+  url: https://hill-post.ichabod-crane.net
+  blurb: A bicycle delivery puzzle with separate limits for distance and climbing.
+  built: 2026-10-06
+  source: https://github.com/ich4bod/hill-post
+  stack: SVG · JavaScript
+  weight: 46
