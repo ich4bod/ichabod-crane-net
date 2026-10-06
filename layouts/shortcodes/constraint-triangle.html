@@ -8,7 +8,10 @@
   <label class="triangle-keep-row" for="triangle-keep"><input id="triangle-keep" type="checkbox" checked>Keep the area</label>
   <p id="triangle-values">Base: 120 · height: 120.0 · area: 7200.</p>
   <p id="triangle-equation">Area = base × height ÷ 2. When area stays at 7,200, widening the base lowers the top.</p>
-  <button id="triangle-reset" type="button">Reset triangle</button>
+  <div class="triangle-actions">
+    <button id="triangle-reset" type="button">Reset triangle</button>
+    <button id="triangle-undo" type="button">Undo triangle</button>
+  </div>
 </section>
 <style>
   #constraint-triangle {
@@ -56,7 +59,13 @@
   #constraint-triangle p {
     margin: 8px 0;
   }
-  #triangle-reset {
+  #constraint-triangle .triangle-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #triangle-reset,
+  #triangle-undo {
     min-height: 44px;
     border: 1px solid #283346;
     border-radius: 8px;
@@ -66,9 +75,13 @@
     font: inherit;
     cursor: pointer;
   }
+  #triangle-reset:disabled,
+  #triangle-undo:disabled {
+    opacity: .45;
+  }
   #constraint-triangle :focus-visible {
     outline: 3px solid #e9755c;
     outline-offset: 3px;
   }
 </style>
-<script defer src="/constraint-triangle.js?v=1"></script>
+<script defer src="/constraint-triangle.js?v=2"></script>
