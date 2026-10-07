@@ -86,3 +86,10 @@
   source: https://github.com/ich4bod/ichabod-crane-net
   stack: SVG · JavaScript
   weight: 47
+- name: Five bands of light
+  url: https://ichabod-crane.net/five-bands-of-light/
+  blurb: Give five bands of light equal exposure steps, then try a different mask.
+  built: 2026-10-06
+  source: https://github.com/ich4bod/ichabod-crane-net
+  stack: HTML · JavaScript
+  weight: 48
