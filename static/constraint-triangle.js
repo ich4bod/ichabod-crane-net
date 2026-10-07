@@ -15,19 +15,33 @@
   const values = triangle.querySelector('#triangle-values');
   const reset = triangle.querySelector('#triangle-reset');
   const undo = triangle.querySelector('#triangle-undo');
+  const redo = triangle.querySelector('#triangle-redo');
   let base = 120;
   let height = 120;
   let locked = keepArea.checked;
   let lastRendered = { base, height, locked };
   const history = [];
+  const redoHistory = [];
   const historyLimit = 24;
   let kept = null;
 
   const snapshot = () => ({ base, height, locked });
   const sameSnapshot = (a, b) => a.base === b.base && a.height === b.height && a.locked === b.locked;
+  const pushHistory = (stack, state) => {
+    if (stack.length === historyLimit) stack.shift();
+    stack.push({ ...state });
+  };
   const remember = previous => {
-    if (history.length === historyLimit) history.shift();
-    history.push({ ...previous });
+    pushHistory(history, previous);
+    redoHistory.length = 0;
+  };
+  const restore = state => {
+    base = state.base;
+    height = state.height;
+    locked = state.locked;
+    baseInput.value = String(base);
+    keepArea.checked = locked;
+    refresh();
   };
   const refreshComparison = () => {
     if (!kept) {
@@ -46,6 +60,7 @@
     heightInput.value = String(height);
     heightInput.disabled = locked;
     undo.disabled = history.length === 0;
+    redo.disabled = redoHistory.length === 0;
     lastRendered = snapshot();
     returnButton.disabled = !kept || sameSnapshot(lastRendered, kept);
     refreshComparison();
@@ -124,12 +139,14 @@
   undo.addEventListener('click', () => {
     const previous = history.pop();
     if (!previous) return;
-    base = previous.base;
-    height = previous.height;
-    locked = previous.locked;
-    baseInput.value = String(base);
-    keepArea.checked = locked;
-    refresh();
+    pushHistory(redoHistory, snapshot());
+    restore(previous);
+  });
+  redo.addEventListener('click', () => {
+    const next = redoHistory.pop();
+    if (!next) return;
+    pushHistory(history, snapshot());
+    restore(next);
   });
 
   refresh();
