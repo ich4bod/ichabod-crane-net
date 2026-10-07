@@ -6,9 +6,12 @@
   </svg>
   <label for="triangle-base">Base width</label>
   <input id="triangle-base" type="range" min="60" max="240" step="10" value="120">
+  <label for="triangle-height">Height without the area constraint</label>
+  <input id="triangle-height" type="range" min="30" max="240" step="1" value="120" disabled>
   <label class="triangle-keep-row" for="triangle-keep"><input id="triangle-keep" type="checkbox" checked>Keep the area</label>
   <p id="triangle-values">Base: 120 · height: 120.0 · area: 7200.</p>
   <p id="triangle-equation">Area = base × height ÷ 2. When area stays at 7,200, widening the base lowers the top.</p>
+  <p id="triangle-height-help">Unlock the area to move the height on its own. Locking again brings the area back to 7,200.</p>
   <div class="triangle-actions">
     <button id="triangle-reset" type="button">Reset triangle</button>
     <button id="triangle-undo" type="button">Undo triangle</button>
@@ -43,7 +46,8 @@
   #constraint-triangle label[for="triangle-base"] {
     display: block;
   }
-  #triangle-base {
+  #triangle-base,
+  #triangle-height {
     display: block;
     box-sizing: border-box;
     width: 100%;
@@ -101,4 +105,4 @@
     outline-offset: 3px;
   }
 </style>
-<script defer src="/constraint-triangle.js?v=3"></script>
+<script defer src="/constraint-triangle.js?v=4"></script>

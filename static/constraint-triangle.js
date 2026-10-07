@@ -3,6 +3,7 @@
   if (!triangle) return;
 
   const baseInput = triangle.querySelector('#triangle-base');
+  const heightInput = triangle.querySelector('#triangle-height');
   const keepArea = triangle.querySelector('#triangle-keep');
   const shape = triangle.querySelector('#triangle-shape');
   const memoryShape = triangle.querySelector('#triangle-memory-shape');
@@ -30,6 +31,8 @@
     const area = base * height / 2;
     shape.setAttribute('points', `${160 - base / 2},280 ${160 + base / 2},280 160,${280 - height}`);
     values.textContent = `Base: ${base} · height: ${height.toFixed(1)} · area: ${Math.round(area)}.`;
+    heightInput.value = String(height);
+    heightInput.disabled = locked;
     undo.disabled = history.length === 0;
     lastRendered = snapshot();
   };
@@ -61,6 +64,13 @@
     base = Number(baseInput.value);
     locked = keepArea.checked;
     if (locked) height = 14400 / base;
+    const current = snapshot();
+    if (!sameSnapshot(previous, current)) remember(previous);
+    refresh();
+  });
+  heightInput.addEventListener('input', () => {
+    const previous = lastRendered;
+    height = Number(heightInput.value);
     const current = snapshot();
     if (!sameSnapshot(previous, current)) remember(previous);
     refresh();
