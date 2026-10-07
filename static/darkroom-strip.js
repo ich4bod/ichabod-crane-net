@@ -8,6 +8,7 @@
   const workingList = strip.querySelector('#working-strip');
   const keptList = strip.querySelector('#kept-strip');
   const keptInfo = strip.querySelector('#strip-kept-info');
+  const bandComparison = strip.querySelector('#strip-band-comparison');
   const keepButton = strip.querySelector('#strip-keep');
   const returnButton = strip.querySelector('#strip-return');
   const forgetButton = strip.querySelector('#strip-forget');
@@ -86,6 +87,21 @@
     } else {
       keptInfo.textContent = 'No strip kept.';
     }
+    if (kept === null) {
+      bandComparison.textContent = 'Keep a strip to compare this band.';
+    } else {
+      const index = Number(bandSelect.value);
+      const current = totals[index];
+      const reference = kept.totals[index];
+      const amounts = `Band ${index + 1}: current ${current.toFixed(2)} seconds · kept ${reference.toFixed(2)} seconds`;
+      if (current === 0 || reference === 0) {
+        bandComparison.textContent = `${amounts} · stop difference unavailable at zero light.`;
+      } else {
+        let difference = Math.log2(current / reference);
+        if (Object.is(difference, -0)) difference = 0;
+        bandComparison.textContent = `${amounts} · difference ${difference.toFixed(2)} stops.`;
+      }
+    }
     keepButton.disabled = totals.every(seconds => seconds === 0);
     scaleButton.disabled = totals.every(seconds => seconds === 0);
     returnButton.disabled = kept === null || (stage === 0 && kept.totals.every((seconds, index) => seconds === totals[index]));
@@ -112,6 +128,7 @@
 
   baseSelect.addEventListener('change', resetForSpacingChange);
   stepSelect.addEventListener('change', resetForSpacingChange);
+  bandSelect.addEventListener('change', render);
   exposeButton.addEventListener('click', () => {
     if (stage >= 5) return;
     commitChange(() => {

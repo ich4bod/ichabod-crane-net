@@ -60,6 +60,8 @@
     <button id="strip-forget" type="button">Forget kept strip</button>
   </div>
   <p id="strip-kept-info">No strip kept.</p>
+  <p id="strip-band-comparison">Keep a strip to compare this band.</p>
+  <p id="strip-band-comparison-help">Positive differences mean more light now; negative differences mean less. This compares exposure, not print darkness.</p>
   <p id="strip-return-help">Return only the kept light amounts. The current spacing stays selected, and the mask sequence begins again. Undo brings back the interrupted strip.</p>
   <ol id="kept-strip" aria-label="Kept exposures" hidden>
     <li data-band="0"><span></span><meter min="0" value="0" max="32"></meter></li>
@@ -170,4 +172,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=11"></script>
+<script defer src="/darkroom-strip.js?v=12"></script>
