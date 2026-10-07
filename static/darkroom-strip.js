@@ -12,6 +12,7 @@
   const forgetButton = strip.querySelector('#strip-forget');
   const stageText = strip.querySelector('#strip-stage');
   const exposeButton = strip.querySelector('#strip-expose');
+  const finishButton = strip.querySelector('#strip-finish');
   const clearButton = strip.querySelector('#strip-clear');
   const bandSelect = strip.querySelector('#strip-band');
   const burnButton = strip.querySelector('#strip-burn');
@@ -90,6 +91,7 @@
       stageText.textContent = 'All five target exposures have been added.';
     }
     exposeButton.disabled = stage === 5;
+    finishButton.disabled = stage === 5;
     clearButton.disabled = stage === 0 && totals.every(seconds => seconds === 0);
     strip.querySelector('#strip-undo').disabled = past.length === 0;
     strip.querySelector('#strip-redo').disabled = future.length === 0;
@@ -115,6 +117,21 @@
       const addition = targets[stage] - (stage ? targets[stage - 1] : 0);
       for (let index = stage; index < 5; index += 1) totals[index] += addition;
       stage += 1;
+    });
+  });
+  finishButton.addEventListener('click', () => {
+    if (stage >= 5) return;
+    commitChange(() => {
+      const base = Number(baseSelect.value);
+      const step = stepSelect.value;
+      const targets = Array.from({ length: 5 }, (_, index) => step === 'seconds'
+        ? base * (index + 1)
+        : base * 2 ** (index * Number(step)));
+      for (let mask = stage; mask < 5; mask += 1) {
+        const addition = targets[mask] - (mask ? targets[mask - 1] : 0);
+        for (let index = mask; index < 5; index += 1) totals[index] += addition;
+      }
+      stage = 5;
     });
   });
   clearButton.addEventListener('click', () => {
