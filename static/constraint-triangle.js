@@ -6,6 +6,10 @@
   const heightInput = triangle.querySelector('#triangle-height');
   const keepArea = triangle.querySelector('#triangle-keep');
   const shape = triangle.querySelector('#triangle-shape');
+  const baseRuler = triangle.querySelector('#triangle-base-ruler');
+  const heightRuler = triangle.querySelector('#triangle-height-ruler');
+  const baseLabel = triangle.querySelector('#triangle-base-label');
+  const heightLabel = triangle.querySelector('#triangle-height-label');
   const memoryShape = triangle.querySelector('#triangle-memory-shape');
   const memoryValues = triangle.querySelector('#triangle-memory-values');
   const comparison = triangle.querySelector('#triangle-comparison');
@@ -56,6 +60,12 @@
   const refresh = () => {
     const area = base * height / 2;
     shape.setAttribute('points', `${160 - base / 2},280 ${160 + base / 2},280 160,${280 - height}`);
+    baseRuler.setAttribute('x1', String(160 - base / 2));
+    baseRuler.setAttribute('x2', String(160 + base / 2));
+    heightRuler.setAttribute('y2', String(280 - height));
+    baseLabel.textContent = `base ${base}`;
+    heightLabel.setAttribute('y', String(280 - height / 2));
+    heightLabel.textContent = `height ${height.toFixed(1)}`;
     values.textContent = `Base: ${base} · height: ${height.toFixed(1)} · area: ${Math.round(area)}.`;
     heightInput.value = String(height);
     heightInput.disabled = locked;

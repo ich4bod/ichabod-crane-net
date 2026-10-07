@@ -3,6 +3,10 @@
   <svg viewBox="0 0 320 320" width="100%" aria-hidden="true">
     <polygon id="triangle-shape" points="100,280 220,280 160,160" fill="#e9755c"></polygon>
     <polygon id="triangle-memory-shape" hidden points="100,280 220,280 160,160" fill="none" stroke="#283346" stroke-width="2" stroke-dasharray="5 4"></polygon>
+    <line id="triangle-base-ruler" x1="100" y1="294" x2="220" y2="294" stroke="#283346" stroke-width="1.5" pointer-events="none"></line>
+    <line id="triangle-height-ruler" x1="160" y1="280" x2="160" y2="160" stroke="#283346" stroke-width="1.5" stroke-dasharray="4 3" pointer-events="none"></line>
+    <text id="triangle-base-label" x="160" y="314" text-anchor="middle" font-size="14" font-family="system-ui, sans-serif" fill="#283346" pointer-events="none">base 120</text>
+    <text id="triangle-height-label" x="166" y="220" text-anchor="start" font-size="14" font-family="system-ui, sans-serif" fill="#283346" pointer-events="none">height 120.0</text>
   </svg>
   <label for="triangle-base">Base width</label>
   <input id="triangle-base" type="range" min="60" max="240" step="10" value="120">
@@ -12,6 +16,7 @@
   <p id="triangle-values">Base: 120 · height: 120.0 · area: 7200.</p>
   <p id="triangle-equation">Area = base × height ÷ 2. When area stays at 7,200, widening the base lowers the top.</p>
   <p id="triangle-height-help">Unlock the area to move the height on its own. Locking again brings the area back to 7,200.</p>
+  <p id="triangle-ruler-help">The bottom ruler is width. The dashed line is height, measured straight down to the base.</p>
   <div class="triangle-actions">
     <button id="triangle-reset" type="button">Reset triangle</button>
     <button id="triangle-undo" type="button">Undo triangle</button>
@@ -113,4 +118,4 @@
     outline-offset: 3px;
   }
 </style>
-<script defer src="/constraint-triangle.js?v=7"></script>
+<script defer src="/constraint-triangle.js?v=8"></script>
