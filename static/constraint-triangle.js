@@ -6,6 +6,8 @@
   const heightInput = triangle.querySelector('#triangle-height');
   const keepArea = triangle.querySelector('#triangle-keep');
   const shape = triangle.querySelector('#triangle-shape');
+  const rectangle = triangle.querySelector('#triangle-rectangle');
+  const rectangleArea = triangle.querySelector('#triangle-rectangle-area');
   const baseRuler = triangle.querySelector('#triangle-base-ruler');
   const heightRuler = triangle.querySelector('#triangle-height-ruler');
   const baseLabel = triangle.querySelector('#triangle-base-label');
@@ -85,6 +87,11 @@
   const refresh = () => {
     const area = base * height / 2;
     shape.setAttribute('points', `${160 - base / 2},280 ${160 + base / 2},280 160,${280 - height}`);
+    rectangle.setAttribute('x', String(160 - base / 2));
+    rectangle.setAttribute('y', String(280 - height));
+    rectangle.setAttribute('width', String(base));
+    rectangle.setAttribute('height', String(height));
+    rectangleArea.textContent = `Bounding rectangle: ${Math.round(base * height)} square units · triangle: ${Math.round(area)} square units.`;
     baseRuler.setAttribute('x1', String(160 - base / 2));
     baseRuler.setAttribute('x2', String(160 + base / 2));
     heightRuler.setAttribute('y2', String(280 - height));
