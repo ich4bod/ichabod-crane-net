@@ -17,8 +17,27 @@
   const burnButton = strip.querySelector('#strip-burn');
   const dodgeButton = strip.querySelector('#strip-dodge');
   const totals = [0, 0, 0, 0, 0];
+  const past = [];
+  const future = [];
   let kept = null;
   let stage = 0;
+  const snapshot = () => ({ totals: [...totals], stage });
+  const pushHistory = (history, state) => {
+    history.push(state);
+    if (history.length > 24) history.shift();
+  };
+  const commitChange = change => {
+    const before = snapshot();
+    change();
+    pushHistory(past, before);
+    future.length = 0;
+    render();
+  };
+  const restore = state => {
+    totals.splice(0, totals.length, ...state.totals);
+    stage = state.stage;
+    render();
+  };
   const render = () => {
     const base = Number(baseSelect.value);
     const step = Number(stepSelect.value);
@@ -65,29 +84,47 @@
     }
     exposeButton.disabled = stage === 5;
     clearButton.disabled = stage === 0 && totals.every(seconds => seconds === 0);
-  };
-  const clear = () => {
-    totals.fill(0);
-    stage = 0;
-    render();
+    strip.querySelector('#strip-undo').disabled = past.length === 0;
+    strip.querySelector('#strip-redo').disabled = future.length === 0;
   };
   const resetForSpacingChange = () => {
-    clear();
+    totals.fill(0);
+    stage = 0;
+    past.length = 0;
+    future.length = 0;
+    render();
   };
 
   baseSelect.addEventListener('change', resetForSpacingChange);
   stepSelect.addEventListener('change', resetForSpacingChange);
   exposeButton.addEventListener('click', () => {
     if (stage >= 5) return;
-    const base = Number(baseSelect.value);
-    const step = Number(stepSelect.value);
-    const targets = Array.from({ length: 5 }, (_, index) => base * 2 ** (index * step));
-    const addition = targets[stage] - (stage ? targets[stage - 1] : 0);
-    for (let index = stage; index < 5; index += 1) totals[index] += addition;
-    stage += 1;
-    render();
+    commitChange(() => {
+      const base = Number(baseSelect.value);
+      const step = Number(stepSelect.value);
+      const targets = Array.from({ length: 5 }, (_, index) => base * 2 ** (index * step));
+      const addition = targets[stage] - (stage ? targets[stage - 1] : 0);
+      for (let index = stage; index < 5; index += 1) totals[index] += addition;
+      stage += 1;
+    });
   });
-  clearButton.addEventListener('click', clear);
+  clearButton.addEventListener('click', () => {
+    if (stage === 0 && totals.every(seconds => seconds === 0)) return;
+    commitChange(() => {
+      totals.fill(0);
+      stage = 0;
+    });
+  });
+  strip.querySelector('#strip-undo').addEventListener('click', () => {
+    if (!past.length) return;
+    pushHistory(future, snapshot());
+    restore(past.pop());
+  });
+  strip.querySelector('#strip-redo').addEventListener('click', () => {
+    if (!future.length) return;
+    pushHistory(past, snapshot());
+    restore(future.pop());
+  });
   keepButton.addEventListener('click', () => {
     if (totals.every(seconds => seconds === 0)) return;
     kept = {
@@ -103,16 +140,18 @@
     render();
   });
   burnButton.addEventListener('click', () => {
-    const selectedBand = Number(bandSelect.value);
-    totals[selectedBand] += Number(baseSelect.value);
-    render();
+    commitChange(() => {
+      const selectedBand = Number(bandSelect.value);
+      totals[selectedBand] += Number(baseSelect.value);
+    });
   });
   dodgeButton.addEventListener('click', () => {
-    const selectedBand = Number(bandSelect.value);
-    for (let index = 0; index < totals.length; index += 1) {
-      if (index !== selectedBand) totals[index] += Number(baseSelect.value);
-    }
-    render();
+    commitChange(() => {
+      const selectedBand = Number(bandSelect.value);
+      for (let index = 0; index < totals.length; index += 1) {
+        if (index !== selectedBand) totals[index] += Number(baseSelect.value);
+      }
+    });
   });
   render();
 })();
