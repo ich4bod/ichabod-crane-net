@@ -18,6 +18,7 @@
   const rememberButton = triangle.querySelector('#triangle-remember');
   const returnButton = triangle.querySelector('#triangle-return');
   const matchAreaButton = triangle.querySelector('#triangle-match-area');
+  const matchWidthButton = triangle.querySelector('#triangle-match-width');
   const forgetButton = triangle.querySelector('#triangle-forget');
   const values = triangle.querySelector('#triangle-values');
   const reset = triangle.querySelector('#triangle-reset');
@@ -52,15 +53,24 @@
     keepArea.checked = locked;
     refresh();
   };
-  const matchAreaHeight = (state, memory) => {
+  const matchAreaCandidate = (state, memory, dimension) => {
     if (!memory || state.locked) return null;
-    const candidate = memory.base * memory.height / state.base;
-    return Number.isFinite(candidate) && candidate >= 30 && candidate <= 240 && candidate !== state.height
+    const candidate = dimension === 'base'
+      ? memory.base * memory.height / state.height
+      : memory.base * memory.height / state.base;
+    const minimum = dimension === 'base' ? 60 : 30;
+    const maximum = dimension === 'base' ? 240 : 240;
+    return Number.isFinite(candidate) && candidate >= minimum && candidate <= maximum
+      && (dimension !== 'base' || candidate % 10 === 0) && candidate !== state[dimension]
       ? candidate
       : null;
   };
+  const matchAreaHeight = (state, memory) => matchAreaCandidate(state, memory, 'height');
+  const matchAreaWidth = (state, memory) => matchAreaCandidate(state, memory, 'base');
   const refreshMatchArea = () => {
-    matchAreaButton.disabled = matchAreaHeight(snapshot(), kept) === null;
+    const state = snapshot();
+    matchAreaButton.disabled = matchAreaHeight(state, kept) === null;
+    matchWidthButton.disabled = matchAreaWidth(state, kept) === null;
   };
   const tradeCandidate = (state, factor) => {
     const candidate = { base: state.base * factor, height: state.height / factor };
@@ -146,6 +156,14 @@
     if (candidate === null) return;
     remember(lastRendered);
     height = candidate;
+    refresh();
+  });
+  matchWidthButton.addEventListener('click', () => {
+    const candidate = matchAreaWidth(snapshot(), kept);
+    if (candidate === null) return;
+    remember(lastRendered);
+    base = candidate;
+    baseInput.value = String(base);
     refresh();
   });
   forgetButton.addEventListener('click', () => {
