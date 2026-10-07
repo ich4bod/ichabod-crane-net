@@ -9,6 +9,7 @@
   const keptList = strip.querySelector('#kept-strip');
   const keptInfo = strip.querySelector('#strip-kept-info');
   const keepButton = strip.querySelector('#strip-keep');
+  const returnButton = strip.querySelector('#strip-return');
   const forgetButton = strip.querySelector('#strip-forget');
   const stageText = strip.querySelector('#strip-stage');
   const exposeButton = strip.querySelector('#strip-expose');
@@ -87,6 +88,7 @@
     }
     keepButton.disabled = totals.every(seconds => seconds === 0);
     scaleButton.disabled = totals.every(seconds => seconds === 0);
+    returnButton.disabled = kept === null || (stage === 0 && kept.totals.every((seconds, index) => seconds === totals[index]));
     forgetButton.disabled = kept === null;
     if (stage < 5) {
       const addition = targets[stage] - (stage ? targets[stage - 1] : 0);
@@ -163,6 +165,15 @@
       step: stepSelect.value,
     };
     render();
+  });
+  returnButton.addEventListener('click', () => {
+    if (kept === null) return;
+    const candidate = { totals: [...kept.totals], stage: 0 };
+    if (candidate.stage === stage && candidate.totals.every((seconds, index) => seconds === totals[index])) return;
+    commitChange(() => {
+      totals.splice(0, totals.length, ...candidate.totals);
+      stage = candidate.stage;
+    });
   });
   forgetButton.addEventListener('click', () => {
     if (kept === null) return;

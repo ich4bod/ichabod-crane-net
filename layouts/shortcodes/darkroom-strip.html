@@ -56,9 +56,11 @@
   <h2>Keep a comparison</h2>
   <div class="strip-actions">
     <button id="strip-keep" type="button">Keep this strip</button>
+    <button id="strip-return" type="button">Return to kept light</button>
     <button id="strip-forget" type="button">Forget kept strip</button>
   </div>
   <p id="strip-kept-info">No strip kept.</p>
+  <p id="strip-return-help">Return only the kept light amounts. The current spacing stays selected, and the mask sequence begins again. Undo brings back the interrupted strip.</p>
   <ol id="kept-strip" aria-label="Kept exposures" hidden>
     <li data-band="0"><span></span><meter min="0" value="0" max="32"></meter></li>
     <li data-band="1"><span></span><meter min="0" value="0" max="32"></meter></li>
@@ -168,4 +170,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=10"></script>
+<script defer src="/darkroom-strip.js?v=11"></script>
