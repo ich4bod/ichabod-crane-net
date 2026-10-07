@@ -21,6 +21,8 @@
   const reset = triangle.querySelector('#triangle-reset');
   const undo = triangle.querySelector('#triangle-undo');
   const redo = triangle.querySelector('#triangle-redo');
+  const widenButton = triangle.querySelector('#triangle-widen');
+  const narrowButton = triangle.querySelector('#triangle-narrow');
   let base = 120;
   let height = 120;
   let locked = keepArea.checked;
@@ -58,6 +60,18 @@
   const refreshMatchArea = () => {
     matchAreaButton.disabled = matchAreaHeight(snapshot(), kept) === null;
   };
+  const tradeCandidate = (state, factor) => {
+    const candidate = { base: state.base * factor, height: state.height / factor };
+    return candidate.base >= 60 && candidate.base <= 240 && candidate.base % 10 === 0
+      && candidate.height >= 30 && candidate.height <= 240
+      ? candidate
+      : null;
+  };
+  const refreshTradeButtons = () => {
+    const state = snapshot();
+    widenButton.disabled = tradeCandidate(state, 2) === null;
+    narrowButton.disabled = tradeCandidate(state, 0.5) === null;
+  };
   const refreshComparison = () => {
     if (!kept) {
       comparison.textContent = 'Keep a triangle to compare dimensions.';
@@ -83,6 +97,7 @@
     undo.disabled = history.length === 0;
     redo.disabled = redoHistory.length === 0;
     lastRendered = snapshot();
+    refreshTradeButtons();
     returnButton.disabled = !kept || sameSnapshot(lastRendered, kept);
     refreshMatchArea();
     refreshComparison();
@@ -130,6 +145,18 @@
     kept = null;
     refreshMemory();
   });
+  const trade = factor => {
+    const candidate = tradeCandidate(snapshot(), factor);
+    if (candidate === null) return;
+    remember(lastRendered);
+    base = candidate.base;
+    height = candidate.height;
+    baseInput.value = String(base);
+    keepArea.checked = locked;
+    refresh();
+  };
+  widenButton.addEventListener('click', () => trade(2));
+  narrowButton.addEventListener('click', () => trade(0.5));
 
   baseInput.addEventListener('input', () => {
     const previous = lastRendered;

@@ -21,6 +21,8 @@
     <button id="triangle-reset" type="button">Reset triangle</button>
     <button id="triangle-undo" type="button">Undo triangle</button>
     <button id="triangle-redo" type="button" disabled>Redo triangle</button>
+    <button id="triangle-widen" type="button" disabled>Double width, half height</button>
+    <button id="triangle-narrow" type="button" disabled>Half width, double height</button>
   </div>
   <div class="triangle-memory-actions">
     <button id="triangle-remember" type="button">Keep this triangle</button>
@@ -32,6 +34,7 @@
   <p id="triangle-comparison">Keep a triangle to compare dimensions.</p>
   <p id="triangle-comparison-help">Ratios compare this shape with the kept outline. Doubling the width need not double the area.</p>
   <p id="triangle-match-help">Keep this width and adjust only the unlocked height to match the kept area. A match outside the height range is unavailable.</p>
+  <p id="triangle-trade-help">Each move trades width for height without changing this triangle’s area. At the range limits, a move may not fit.</p>
 </section>
 <style>
   #constraint-triangle {
@@ -88,6 +91,8 @@
   #triangle-reset,
   #triangle-undo,
   #triangle-redo,
+  #triangle-widen,
+  #triangle-narrow,
   #triangle-remember,
   #triangle-return,
   #triangle-forget,
@@ -104,6 +109,8 @@
   #triangle-reset:disabled,
   #triangle-undo:disabled,
   #triangle-redo:disabled,
+  #triangle-widen:disabled,
+  #triangle-narrow:disabled,
   #triangle-return:disabled,
   #triangle-forget:disabled,
   #triangle-match-area:disabled {
@@ -122,4 +129,4 @@
     outline-offset: 3px;
   }
 </style>
-<script defer src="/constraint-triangle.js?v=9"></script>
+<script defer src="/constraint-triangle.js?v=10"></script>
