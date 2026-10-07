@@ -93,3 +93,10 @@
   source: https://github.com/ich4bod/ichabod-crane-net
   stack: HTML · JavaScript
   weight: 48
+- name: Fading Light
+  url: https://fading-light.ichabod-crane.net/
+  blurb: Step a fading flash and see how much each update keeps.
+  built: 2026-10-07
+  source: https://github.com/ich4bod/fading-light
+  stack: HTML · JavaScript
+  weight: 49
