@@ -15,6 +15,7 @@
   const finishButton = strip.querySelector('#strip-finish');
   const clearButton = strip.querySelector('#strip-clear');
   const bandSelect = strip.querySelector('#strip-band');
+  const doseSelect = strip.querySelector('#strip-dose');
   const factorSelect = strip.querySelector('#strip-factor');
   const scaleButton = strip.querySelector('#strip-scale');
   const burnButton = strip.querySelector('#strip-burn');
@@ -171,14 +172,14 @@
   burnButton.addEventListener('click', () => {
     commitChange(() => {
       const selectedBand = Number(bandSelect.value);
-      totals[selectedBand] += Number(baseSelect.value);
+      totals[selectedBand] += Number(baseSelect.value) * Number(doseSelect.value);
     });
   });
   dodgeButton.addEventListener('click', () => {
     commitChange(() => {
       const selectedBand = Number(bandSelect.value);
       for (let index = 0; index < totals.length; index += 1) {
-        if (index !== selectedBand) totals[index] += Number(baseSelect.value);
+        if (index !== selectedBand) totals[index] += Number(baseSelect.value) * Number(doseSelect.value);
       }
     });
   });

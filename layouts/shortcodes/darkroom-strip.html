@@ -33,11 +33,18 @@
     <option value="3">Band 4</option>
     <option value="4">Band 5</option>
   </select>
+  <label for="strip-dose">Extra light per press</label>
+  <select id="strip-dose">
+    <option value="0.25">A quarter of the first exposure</option>
+    <option value="0.5">Half the first exposure</option>
+    <option value="1" selected>One first exposure</option>
+    <option value="2">Two first exposures</option>
+  </select>
   <div class="strip-actions">
     <button id="strip-burn" type="button">Add light here</button>
     <button id="strip-dodge" type="button">Add light everywhere else</button>
   </div>
-  <p>Each press adds one first-exposure amount. ‘Here’ gives extra light to one band; ‘everywhere else’ holds that band back. These are timing demonstrations, not paper-density predictions.</p>
+  <p>Each press adds the selected amount of extra light. ‘Here’ gives it to one band; ‘everywhere else’ holds that band back. These are timing demonstrations, not paper-density predictions.</p>
   <label for="strip-factor">Whole-strip factor</label>
   <select id="strip-factor">
     <option value="0.5">Half as much light</option>
@@ -161,4 +168,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=9"></script>
+<script defer src="/darkroom-strip.js?v=10"></script>
