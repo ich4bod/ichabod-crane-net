@@ -26,6 +26,8 @@
   const redo = triangle.querySelector('#triangle-redo');
   const widenButton = triangle.querySelector('#triangle-widen');
   const narrowButton = triangle.querySelector('#triangle-narrow');
+  const proportionInput = triangle.querySelector('#triangle-proportion');
+  const applyProportionButton = triangle.querySelector('#triangle-apply-proportion');
   let base = 120;
   let height = 120;
   let locked = keepArea.checked;
@@ -64,6 +66,16 @@
       && (dimension !== 'base' || candidate % 10 === 0) && candidate !== state[dimension]
       ? candidate
       : null;
+  };
+  const proportionCandidate = (state, ratio) => {
+    if (state.locked) return null;
+    const candidate = state.base / ratio;
+    return Number.isFinite(candidate) && candidate >= 30 && candidate <= 240 && candidate !== state.height
+      ? candidate
+      : null;
+  };
+  const refreshProportion = () => {
+    applyProportionButton.disabled = proportionCandidate(snapshot(), Number(proportionInput.value)) === null;
   };
   const matchAreaHeight = (state, memory) => matchAreaCandidate(state, memory, 'height');
   const matchAreaWidth = (state, memory) => matchAreaCandidate(state, memory, 'base');
@@ -115,6 +127,7 @@
     redo.disabled = redoHistory.length === 0;
     lastRendered = snapshot();
     refreshTradeButtons();
+    refreshProportion();
     returnButton.disabled = !kept || sameSnapshot(lastRendered, kept);
     refreshMatchArea();
     refreshComparison();
@@ -150,6 +163,14 @@
     keepArea.checked = locked;
     refresh();
     refreshMemory();
+  });
+  proportionInput.addEventListener('change', refreshProportion);
+  applyProportionButton.addEventListener('click', () => {
+    const candidate = proportionCandidate(snapshot(), Number(proportionInput.value));
+    if (candidate === null) return;
+    remember(lastRendered);
+    height = candidate;
+    refresh();
   });
   matchAreaButton.addEventListener('click', () => {
     const candidate = matchAreaHeight(snapshot(), kept);

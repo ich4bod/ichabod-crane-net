@@ -40,6 +40,16 @@
   <p id="triangle-match-help">Keep this width and adjust only the unlocked height to match the kept area. A match outside the height range is unavailable.</p>
   <p id="triangle-match-width-help">Keep this height and change only the unlocked width to match the kept area. The required width must fit the range and the ten-unit steps.</p>
   <p id="triangle-trade-help">Each move trades width for height without changing this triangle’s area. At the range limits, a move may not fit.</p>
+  <div class="triangle-proportion-actions">
+    <label for="triangle-proportion">Width compared with height</label>
+    <select id="triangle-proportion">
+      <option value="0.5">Half as wide as tall</option>
+      <option value="1" selected>Equal width and height</option>
+      <option value="2">Twice as wide as tall</option>
+    </select>
+    <button id="triangle-apply-proportion" type="button">Apply this proportion</button>
+  </div>
+  <p id="triangle-proportion-help">Keep the width and change the unlocked height. Unlike the width-height trade, this changes area.</p>
 </section>
 <style>
   #constraint-triangle {
@@ -102,7 +112,8 @@
   #triangle-return,
   #triangle-forget,
   #triangle-match-area,
-  #triangle-match-width {
+  #triangle-match-width,
+  #triangle-apply-proportion {
     min-height: 44px;
     border: 1px solid #283346;
     border-radius: 8px;
@@ -120,13 +131,27 @@
   #triangle-return:disabled,
   #triangle-forget:disabled,
   #triangle-match-area:disabled,
-  #triangle-match-width:disabled {
+  #triangle-match-width:disabled,
+  #triangle-apply-proportion:disabled {
     opacity: .45;
   }
-  #constraint-triangle .triangle-memory-actions {
+  #constraint-triangle .triangle-memory-actions,
+  #constraint-triangle .triangle-proportion-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+  }
+  #constraint-triangle .triangle-proportion-actions label {
+    flex: 1 1 100%;
+  }
+  #triangle-proportion {
+    box-sizing: border-box;
+    flex: 1 1 12rem;
+    min-height: 44px;
+    max-width: 100%;
+  }
+  #triangle-apply-proportion {
+    min-height: 44px;
   }
   #triangle-memory-shape[hidden] {
     display: none;
@@ -136,4 +161,4 @@
     outline-offset: 3px;
   }
 </style>
-<script defer src="/constraint-triangle.js?v=12"></script>
+<script defer src="/constraint-triangle.js?v=13"></script>
