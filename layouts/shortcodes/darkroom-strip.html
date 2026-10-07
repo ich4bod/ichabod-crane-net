@@ -38,6 +38,14 @@
     <button id="strip-dodge" type="button">Add light everywhere else</button>
   </div>
   <p>Each press adds one first-exposure amount. ‘Here’ gives extra light to one band; ‘everywhere else’ holds that band back. These are timing demonstrations, not paper-density predictions.</p>
+  <label for="strip-factor">Whole-strip factor</label>
+  <select id="strip-factor">
+    <option value="0.5">Half as much light</option>
+    <option value="1.4142135623730951">Half a stop more</option>
+    <option value="2" selected>Twice as much light</option>
+  </select>
+  <button id="strip-scale" type="button">Apply to the whole strip</button>
+  <p id="strip-scale-help">Multiply every band’s accumulated light by the same factor. The covered bands stay covered. This is a new timing experiment, not taking light back from a real print.</p>
   <h2>Keep a comparison</h2>
   <div class="strip-actions">
     <button id="strip-keep" type="button">Keep this strip</button>
@@ -153,4 +161,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=8"></script>
+<script defer src="/darkroom-strip.js?v=9"></script>

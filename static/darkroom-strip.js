@@ -15,6 +15,8 @@
   const finishButton = strip.querySelector('#strip-finish');
   const clearButton = strip.querySelector('#strip-clear');
   const bandSelect = strip.querySelector('#strip-band');
+  const factorSelect = strip.querySelector('#strip-factor');
+  const scaleButton = strip.querySelector('#strip-scale');
   const burnButton = strip.querySelector('#strip-burn');
   const dodgeButton = strip.querySelector('#strip-dodge');
   const totals = [0, 0, 0, 0, 0];
@@ -83,6 +85,7 @@
       keptInfo.textContent = 'No strip kept.';
     }
     keepButton.disabled = totals.every(seconds => seconds === 0);
+    scaleButton.disabled = totals.every(seconds => seconds === 0);
     forgetButton.disabled = kept === null;
     if (stage < 5) {
       const addition = targets[stage] - (stage ? targets[stage - 1] : 0);
@@ -177,6 +180,14 @@
       for (let index = 0; index < totals.length; index += 1) {
         if (index !== selectedBand) totals[index] += Number(baseSelect.value);
       }
+    });
+  });
+  scaleButton.addEventListener('click', () => {
+    if (totals.every(seconds => seconds === 0)) return;
+    const factor = Number(factorSelect.value);
+    const candidate = totals.map(seconds => seconds * factor);
+    commitChange(() => {
+      totals.splice(0, totals.length, ...candidate);
     });
   });
   render();
