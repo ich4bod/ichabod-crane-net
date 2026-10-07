@@ -23,6 +23,20 @@
   <p>These bars measure exposure time, not the darkness of photographic paper. The light is assumed constant; this does not predict a print.</p>
   <h2>Build the strip</h2>
   <p>Expose every uncovered band, then cover the leftmost one. Each press adds only the time needed for the next target.</p>
+  <h2>Give one place more light</h2>
+  <label for="strip-band">Band to work on</label>
+  <select id="strip-band">
+    <option value="0">Band 1</option>
+    <option value="1">Band 2</option>
+    <option value="2" selected>Band 3</option>
+    <option value="3">Band 4</option>
+    <option value="4">Band 5</option>
+  </select>
+  <div class="strip-actions">
+    <button id="strip-burn" type="button">Add light here</button>
+    <button id="strip-dodge" type="button">Add light everywhere else</button>
+  </div>
+  <p>Each press adds one first-exposure amount. ‘Here’ gives extra light to one band; ‘everywhere else’ holds that band back. These are timing demonstrations, not paper-density predictions.</p>
   <p id="strip-stage"></p>
   <ol id="working-strip" aria-label="Working exposures">
     <li data-band="0"><span></span><meter min="0" value="0" max="32"></meter></li>
@@ -129,4 +143,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=3"></script>
+<script defer src="/darkroom-strip.js?v=4"></script>

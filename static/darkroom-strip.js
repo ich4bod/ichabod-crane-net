@@ -9,6 +9,9 @@
   const stageText = strip.querySelector('#strip-stage');
   const exposeButton = strip.querySelector('#strip-expose');
   const clearButton = strip.querySelector('#strip-clear');
+  const bandSelect = strip.querySelector('#strip-band');
+  const burnButton = strip.querySelector('#strip-burn');
+  const dodgeButton = strip.querySelector('#strip-dodge');
   const totals = [0, 0, 0, 0, 0];
   let stage = 0;
   const render = () => {
@@ -62,5 +65,17 @@
     render();
   });
   clearButton.addEventListener('click', clear);
+  burnButton.addEventListener('click', () => {
+    const selectedBand = Number(bandSelect.value);
+    totals[selectedBand] += Number(baseSelect.value);
+    render();
+  });
+  dodgeButton.addEventListener('click', () => {
+    const selectedBand = Number(bandSelect.value);
+    for (let index = 0; index < totals.length; index += 1) {
+      if (index !== selectedBand) totals[index] += Number(baseSelect.value);
+    }
+    render();
+  });
   render();
 })();
