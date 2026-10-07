@@ -15,6 +15,7 @@
   const comparison = triangle.querySelector('#triangle-comparison');
   const rememberButton = triangle.querySelector('#triangle-remember');
   const returnButton = triangle.querySelector('#triangle-return');
+  const matchAreaButton = triangle.querySelector('#triangle-match-area');
   const forgetButton = triangle.querySelector('#triangle-forget');
   const values = triangle.querySelector('#triangle-values');
   const reset = triangle.querySelector('#triangle-reset');
@@ -47,6 +48,16 @@
     keepArea.checked = locked;
     refresh();
   };
+  const matchAreaHeight = (state, memory) => {
+    if (!memory || state.locked) return null;
+    const candidate = memory.base * memory.height / state.base;
+    return Number.isFinite(candidate) && candidate >= 30 && candidate <= 240 && candidate !== state.height
+      ? candidate
+      : null;
+  };
+  const refreshMatchArea = () => {
+    matchAreaButton.disabled = matchAreaHeight(snapshot(), kept) === null;
+  };
   const refreshComparison = () => {
     if (!kept) {
       comparison.textContent = 'Keep a triangle to compare dimensions.';
@@ -73,6 +84,7 @@
     redo.disabled = redoHistory.length === 0;
     lastRendered = snapshot();
     returnButton.disabled = !kept || sameSnapshot(lastRendered, kept);
+    refreshMatchArea();
     refreshComparison();
   };
   const refreshMemory = () => {
@@ -88,6 +100,7 @@
       forgetButton.disabled = false;
     }
     returnButton.disabled = !kept || sameSnapshot(snapshot(), kept);
+    refreshMatchArea();
     refreshComparison();
   };
 
@@ -105,6 +118,13 @@
     keepArea.checked = locked;
     refresh();
     refreshMemory();
+  });
+  matchAreaButton.addEventListener('click', () => {
+    const candidate = matchAreaHeight(snapshot(), kept);
+    if (candidate === null) return;
+    remember(lastRendered);
+    height = candidate;
+    refresh();
   });
   forgetButton.addEventListener('click', () => {
     kept = null;

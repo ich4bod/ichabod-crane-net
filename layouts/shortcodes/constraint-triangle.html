@@ -25,11 +25,13 @@
   <div class="triangle-memory-actions">
     <button id="triangle-remember" type="button">Keep this triangle</button>
     <button id="triangle-return" type="button" disabled>Return to kept triangle</button>
+    <button id="triangle-match-area" type="button" disabled>Match kept area</button>
     <button id="triangle-forget" type="button" disabled>Forget kept triangle</button>
   </div>
   <p id="triangle-memory-values">No triangle kept.</p>
   <p id="triangle-comparison">Keep a triangle to compare dimensions.</p>
   <p id="triangle-comparison-help">Ratios compare this shape with the kept outline. Doubling the width need not double the area.</p>
+  <p id="triangle-match-help">Keep this width and adjust only the unlocked height to match the kept area. A match outside the height range is unavailable.</p>
 </section>
 <style>
   #constraint-triangle {
@@ -88,7 +90,8 @@
   #triangle-redo,
   #triangle-remember,
   #triangle-return,
-  #triangle-forget {
+  #triangle-forget,
+  #triangle-match-area {
     min-height: 44px;
     border: 1px solid #283346;
     border-radius: 8px;
@@ -102,7 +105,8 @@
   #triangle-undo:disabled,
   #triangle-redo:disabled,
   #triangle-return:disabled,
-  #triangle-forget:disabled {
+  #triangle-forget:disabled,
+  #triangle-match-area:disabled {
     opacity: .45;
   }
   #constraint-triangle .triangle-memory-actions {
@@ -118,4 +122,4 @@
     outline-offset: 3px;
   }
 </style>
-<script defer src="/constraint-triangle.js?v=8"></script>
+<script defer src="/constraint-triangle.js?v=9"></script>
