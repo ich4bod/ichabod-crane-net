@@ -37,6 +37,19 @@
     <button id="strip-dodge" type="button">Add light everywhere else</button>
   </div>
   <p>Each press adds one first-exposure amount. ‘Here’ gives extra light to one band; ‘everywhere else’ holds that band back. These are timing demonstrations, not paper-density predictions.</p>
+  <h2>Keep a comparison</h2>
+  <div class="strip-actions">
+    <button id="strip-keep" type="button">Keep this strip</button>
+    <button id="strip-forget" type="button">Forget kept strip</button>
+  </div>
+  <p id="strip-kept-info">No strip kept.</p>
+  <ol id="kept-strip" aria-label="Kept exposures" hidden>
+    <li data-band="0"><span></span><meter min="0" value="0" max="32"></meter></li>
+    <li data-band="1"><span></span><meter min="0" value="0" max="32"></meter></li>
+    <li data-band="2"><span></span><meter min="0" value="0" max="32"></meter></li>
+    <li data-band="3"><span></span><meter min="0" value="0" max="32"></meter></li>
+    <li data-band="4"><span></span><meter min="0" value="0" max="32"></meter></li>
+  </ol>
   <p id="strip-stage"></p>
   <ol id="working-strip" aria-label="Working exposures">
     <li data-band="0"><span></span><meter min="0" value="0" max="32"></meter></li>
@@ -95,41 +108,33 @@
   #darkroom-strip p {
     margin: 8px 0;
   }
-  #target-strip {
+  #target-strip,
+  #working-strip,
+  #kept-strip {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 6px;
     padding: 0;
     list-style: none;
   }
-  #target-strip li {
+  #target-strip li,
+  #working-strip li,
+  #kept-strip li {
     min-width: 0;
     padding: 6px 0;
   }
-  #target-strip span {
+  #target-strip span,
+  #working-strip span,
+  #kept-strip span {
     display: block;
     font: 12px/1.4 system-ui, sans-serif;
   }
   #target-strip meter,
-  #working-strip meter {
+  #working-strip meter,
+  #kept-strip meter {
     width: 100%;
     height: 18px;
     accent-color: #e9755c;
-  }
-  #working-strip {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 6px;
-    padding: 0;
-    list-style: none;
-  }
-  #working-strip li {
-    min-width: 0;
-    padding: 6px 0;
-  }
-  #working-strip span {
-    display: block;
-    font: 12px/1.4 system-ui, sans-serif;
   }
   #working-strip li[data-covered="true"] meter {
     opacity: .45;
@@ -143,4 +148,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=4"></script>
+<script defer src="/darkroom-strip.js?v=5"></script>

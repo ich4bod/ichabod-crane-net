@@ -6,6 +6,10 @@
   const stepSelect = strip.querySelector('#strip-step');
   const list = strip.querySelector('#target-strip');
   const workingList = strip.querySelector('#working-strip');
+  const keptList = strip.querySelector('#kept-strip');
+  const keptInfo = strip.querySelector('#strip-kept-info');
+  const keepButton = strip.querySelector('#strip-keep');
+  const forgetButton = strip.querySelector('#strip-forget');
   const stageText = strip.querySelector('#strip-stage');
   const exposeButton = strip.querySelector('#strip-expose');
   const clearButton = strip.querySelector('#strip-clear');
@@ -13,12 +17,16 @@
   const burnButton = strip.querySelector('#strip-burn');
   const dodgeButton = strip.querySelector('#strip-dodge');
   const totals = [0, 0, 0, 0, 0];
+  let kept = null;
   let stage = 0;
   const render = () => {
     const base = Number(baseSelect.value);
     const step = Number(stepSelect.value);
     const targets = Array.from({ length: 5 }, (_, index) => base * 2 ** (index * step));
     const maximum = targets[4];
+    const comparisonMaximum = kept
+      ? Math.max(maximum, ...totals, ...kept.totals)
+      : Math.max(maximum, ...totals);
     list.querySelectorAll('li[data-band]').forEach((item, index) => {
       const seconds = targets[index];
       item.querySelector('span').textContent = `Band ${index + 1}: ${seconds.toFixed(2)} seconds.`;
@@ -31,9 +39,24 @@
       item.querySelector('span').textContent = `Band ${index + 1}: ${seconds.toFixed(2)} seconds.`;
       const meter = item.querySelector('meter');
       meter.value = seconds;
-      meter.max = Math.max(targets[4], ...totals);
+      meter.max = comparisonMaximum;
       item.dataset.covered = String(index < stage);
     });
+    keptList.hidden = kept === null;
+    if (kept) {
+      keptInfo.textContent = `Kept: first exposure ${kept.base} seconds · step ${kept.step} stop.`;
+      keptList.querySelectorAll('li[data-band]').forEach((item, index) => {
+        const seconds = kept.totals[index];
+        item.querySelector('span').textContent = `Band ${index + 1}: ${seconds.toFixed(2)} seconds.`;
+        const meter = item.querySelector('meter');
+        meter.value = seconds;
+        meter.max = comparisonMaximum;
+      });
+    } else {
+      keptInfo.textContent = 'No strip kept.';
+    }
+    keepButton.disabled = totals.every(seconds => seconds === 0);
+    forgetButton.disabled = kept === null;
     if (stage < 5) {
       const addition = targets[stage] - (stage ? targets[stage - 1] : 0);
       stageText.textContent = `Next: add ${addition.toFixed(2)} seconds to bands ${stage + 1}–5.`;
@@ -65,6 +88,20 @@
     render();
   });
   clearButton.addEventListener('click', clear);
+  keepButton.addEventListener('click', () => {
+    if (totals.every(seconds => seconds === 0)) return;
+    kept = {
+      totals: [...totals],
+      base: Number(baseSelect.value),
+      step: Number(stepSelect.value),
+    };
+    render();
+  });
+  forgetButton.addEventListener('click', () => {
+    if (kept === null) return;
+    kept = null;
+    render();
+  });
   burnButton.addEventListener('click', () => {
     const selectedBand = Number(bandSelect.value);
     totals[selectedBand] += Number(baseSelect.value);
