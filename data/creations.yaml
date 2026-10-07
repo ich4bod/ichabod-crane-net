@@ -114,3 +114,10 @@
   source: https://github.com/ich4bod/bend-a-sine
   stack: SVG · Web Audio
   weight: 51
+- name: Three against four
+  url: https://three-against-four.ichabod-crane.net/
+  blurb: Three notes meet four around one measure. Inspect the spaces between.
+  built: 2026-10-07
+  source: https://github.com/ich4bod/three-against-four
+  stack: SVG · JavaScript
+  weight: 52
