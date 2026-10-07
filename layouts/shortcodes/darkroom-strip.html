@@ -22,93 +22,99 @@
     <li data-band="4"><span>Band 5: 32.00 seconds.</span><meter min="0" value="32" max="32">32 seconds</meter></li>
   </ol>
   <p>These bars measure exposure time, not the darkness of photographic paper. The light is assumed constant; this does not predict a print.</p>
-  <h2>Build the strip</h2>
-  <p>Expose every uncovered band, then cover the leftmost one. Each press adds only the time needed for the next target.</p>
-  <h2>Give one place more light</h2>
-  <label for="strip-band">Band to work on</label>
-  <select id="strip-band">
-    <option value="0">Band 1</option>
-    <option value="1">Band 2</option>
-    <option value="2" selected>Band 3</option>
-    <option value="3">Band 4</option>
-    <option value="4">Band 5</option>
-  </select>
-  <label for="strip-dose">Extra light per press</label>
-  <select id="strip-dose">
-    <option value="0.25">A quarter of the first exposure</option>
-    <option value="0.5">Half the first exposure</option>
-    <option value="1" selected>One first exposure</option>
-    <option value="2">Two first exposures</option>
-  </select>
-  <div class="strip-actions">
-    <button id="strip-burn" type="button">Add light here</button>
-    <button id="strip-dodge" type="button">Add light everywhere else</button>
-  </div>
-  <p>Each press adds the selected amount of extra light. ‘Here’ gives it to one band; ‘everywhere else’ holds that band back. These are timing demonstrations, not paper-density predictions.</p>
-  <label for="strip-factor">Whole-strip factor</label>
-  <select id="strip-factor">
-    <option value="0.5">Half as much light</option>
-    <option value="1.4142135623730951">Half a stop more</option>
-    <option value="2" selected>Twice as much light</option>
-  </select>
-  <button id="strip-scale" type="button">Apply to the whole strip</button>
-  <p id="strip-scale-help">Multiply every band’s accumulated light by the same factor. The covered bands stay covered. This is a new timing experiment, not taking light back from a real print.</p>
-  <h2>Keep a comparison</h2>
-  <div class="strip-actions">
-    <button id="strip-keep" type="button">Keep this strip</button>
-    <button id="strip-return" type="button">Return to kept light</button>
-    <button id="strip-forget" type="button">Forget kept strip</button>
-  </div>
-  <p id="strip-kept-info">No strip kept.</p>
-  <p id="strip-band-comparison">Keep a strip to compare this band.</p>
-  <p id="strip-band-comparison-help">Positive differences mean more light now; negative differences mean less. This compares exposure, not print darkness.</p>
-  <p id="strip-return-help">Return only the kept light amounts. The current spacing stays selected, and the mask sequence begins again. Undo brings back the interrupted strip.</p>
-  <ol id="kept-strip" aria-label="Kept exposures" hidden>
-    <li data-band="0"><span></span><meter min="0" value="0" max="32"></meter></li>
-    <li data-band="1"><span></span><meter min="0" value="0" max="32"></meter></li>
-    <li data-band="2"><span></span><meter min="0" value="0" max="32"></meter></li>
-    <li data-band="3"><span></span><meter min="0" value="0" max="32"></meter></li>
-    <li data-band="4"><span></span><meter min="0" value="0" max="32"></meter></li>
-  </ol>
-  <p id="strip-stage"></p>
-  <ol id="working-strip" aria-label="Working exposures">
-    <li data-band="0"><span></span><meter min="0" value="0" max="32"></meter></li>
-    <li data-band="1"><span></span><meter min="0" value="0" max="32"></meter></li>
-    <li data-band="2"><span></span><meter min="0" value="0" max="32"></meter></li>
-    <li data-band="3"><span></span><meter min="0" value="0" max="32"></meter></li>
-    <li data-band="4"><span></span><meter min="0" value="0" max="32"></meter></li>
-  </ol>
-  <p id="strip-cover-help">Dim bars are covered. Their earlier exposure stays put.</p>
-  <details id="strip-target-reader">
-    <summary>Compare light with the targets</summary>
-    <ol id="strip-target-differences">
-      <li data-band="0">Band 1: 8.00 seconds short of target.</li>
-      <li data-band="1">Band 2: 11.31 seconds short of target.</li>
-      <li data-band="2">Band 3: 16.00 seconds short of target.</li>
-      <li data-band="3">Band 4: 22.63 seconds short of target.</li>
-      <li data-band="4">Band 5: 32.00 seconds short of target.</li>
+  <section id="strip-build-group">
+    <h2>Build the strip</h2>
+    <p>Expose every uncovered band, then cover the leftmost one. Each press adds only the time needed for the next target.</p>
+    <p id="strip-stage"></p>
+    <ol id="working-strip" aria-label="Working exposures">
+      <li data-band="0"><span></span><meter min="0" value="0" max="32"></meter></li>
+      <li data-band="1"><span></span><meter min="0" value="0" max="32"></meter></li>
+      <li data-band="2"><span></span><meter min="0" value="0" max="32"></meter></li>
+      <li data-band="3"><span></span><meter min="0" value="0" max="32"></meter></li>
+      <li data-band="4"><span></span><meter min="0" value="0" max="32"></meter></li>
     </ol>
-    <p id="strip-difference-help">A shortfall can take more light. Extra light cannot be removed by another exposure; Undo changes the experiment.</p>
-  </details>
-  <details id="strip-neighbor-ratios">
-    <summary>Compare neighboring bands</summary>
-    <ol id="strip-neighbor-ratio-list">
-      <li>Bands 1 → 2: stop difference unavailable at zero light.</li>
-      <li>Bands 2 → 3: stop difference unavailable at zero light.</li>
-      <li>Bands 3 → 4: stop difference unavailable at zero light.</li>
-      <li>Bands 4 → 5: stop difference unavailable at zero light.</li>
+    <p id="strip-cover-help">Dim bars are covered. Their earlier exposure stays put.</p>
+    <details id="strip-target-reader">
+      <summary>Compare light with the targets</summary>
+      <ol id="strip-target-differences">
+        <li data-band="0">Band 1: 8.00 seconds short of target.</li>
+        <li data-band="1">Band 2: 11.31 seconds short of target.</li>
+        <li data-band="2">Band 3: 16.00 seconds short of target.</li>
+        <li data-band="3">Band 4: 22.63 seconds short of target.</li>
+        <li data-band="4">Band 5: 32.00 seconds short of target.</li>
+      </ol>
+      <p id="strip-difference-help">A shortfall can take more light. Extra light cannot be removed by another exposure; Undo changes the experiment.</p>
+    </details>
+    <details id="strip-neighbor-ratios">
+      <summary>Compare neighboring bands</summary>
+      <ol id="strip-neighbor-ratio-list">
+        <li>Bands 1 → 2: stop difference unavailable at zero light.</li>
+        <li>Bands 2 → 3: stop difference unavailable at zero light.</li>
+        <li>Bands 3 → 4: stop difference unavailable at zero light.</li>
+        <li>Bands 4 → 5: stop difference unavailable at zero light.</li>
+      </ol>
+    </details>
+    <p id="strip-neighbor-ratio-help">These are the gaps in the light already added, not the gaps between the targets. Local light can change their order.</p>
+    <div class="strip-actions">
+      <button id="strip-expose" type="button">Expose next band</button>
+      <button id="strip-finish" type="button">Expose all remaining bands</button>
+      <button id="strip-clear" type="button">Clear this strip</button>
+      <button id="strip-undo" type="button">Undo strip change</button>
+      <button id="strip-redo" type="button">Redo strip change</button>
+    </div>
+    <p id="strip-finish-help">This adds each remaining mask exposure in order. Extra local light stays extra; Undo reverses the whole press.</p>
+    <p>Changing either spacing control starts an empty strip. There is no clock and no lamp connection.</p>
+  </section>
+  <section id="strip-local-group">
+    <h2>Give one place more light</h2>
+    <label for="strip-band">Band to work on</label>
+    <select id="strip-band">
+      <option value="0">Band 1</option>
+      <option value="1">Band 2</option>
+      <option value="2" selected>Band 3</option>
+      <option value="3">Band 4</option>
+      <option value="4">Band 5</option>
+    </select>
+    <label for="strip-dose">Extra light per press</label>
+    <select id="strip-dose">
+      <option value="0.25">A quarter of the first exposure</option>
+      <option value="0.5">Half the first exposure</option>
+      <option value="1" selected>One first exposure</option>
+      <option value="2">Two first exposures</option>
+    </select>
+    <div class="strip-actions">
+      <button id="strip-burn" type="button">Add light here</button>
+      <button id="strip-dodge" type="button">Add light everywhere else</button>
+    </div>
+    <p>Each press adds the selected amount of extra light. ‘Here’ gives it to one band; ‘everywhere else’ holds that band back. These are timing demonstrations, not paper-density predictions.</p>
+    <label for="strip-factor">Whole-strip factor</label>
+    <select id="strip-factor">
+      <option value="0.5">Half as much light</option>
+      <option value="1.4142135623730951">Half a stop more</option>
+      <option value="2" selected>Twice as much light</option>
+    </select>
+    <button id="strip-scale" type="button">Apply to the whole strip</button>
+    <p id="strip-scale-help">Multiply every band’s accumulated light by the same factor. The covered bands stay covered. This is a new timing experiment, not taking light back from a real print.</p>
+  </section>
+  <section id="strip-memory-group">
+    <h2>Keep a comparison</h2>
+    <div class="strip-actions">
+      <button id="strip-keep" type="button">Keep this strip</button>
+      <button id="strip-return" type="button">Return to kept light</button>
+      <button id="strip-forget" type="button">Forget kept strip</button>
+    </div>
+    <p id="strip-kept-info">No strip kept.</p>
+    <ol id="kept-strip" aria-label="Kept exposures" hidden>
+      <li data-band="0"><span></span><meter min="0" value="0" max="32"></meter></li>
+      <li data-band="1"><span></span><meter min="0" value="0" max="32"></meter></li>
+      <li data-band="2"><span></span><meter min="0" value="0" max="32"></meter></li>
+      <li data-band="3"><span></span><meter min="0" value="0" max="32"></meter></li>
+      <li data-band="4"><span></span><meter min="0" value="0" max="32"></meter></li>
     </ol>
-  </details>
-  <p id="strip-neighbor-ratio-help">These are the gaps in the light already added, not the gaps between the targets. Local light can change their order.</p>
-  <div class="strip-actions">
-    <button id="strip-expose" type="button">Expose next band</button>
-    <button id="strip-finish" type="button">Expose all remaining bands</button>
-    <button id="strip-clear" type="button">Clear this strip</button>
-    <button id="strip-undo" type="button">Undo strip change</button>
-    <button id="strip-redo" type="button">Redo strip change</button>
-  </div>
-  <p id="strip-finish-help">This adds each remaining mask exposure in order. Extra local light stays extra; Undo reverses the whole press.</p>
-  <p>Changing either spacing control starts an empty strip. There is no clock and no lamp connection.</p>
+    <p id="strip-band-comparison">Keep a strip to compare this band.</p>
+    <p id="strip-band-comparison-help">Positive differences mean more light now; negative differences mean less. This compares exposure, not print darkness.</p>
+    <p id="strip-return-help">Return only the kept light amounts. The current spacing stays selected, and the mask sequence begins again. Undo brings back the interrupted strip.</p>
+  </section>
 </section>
 <style>
   #darkroom-strip {
