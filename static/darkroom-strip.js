@@ -5,6 +5,7 @@
   const baseSelect = strip.querySelector('#strip-base');
   const stepSelect = strip.querySelector('#strip-step');
   const list = strip.querySelector('#target-strip');
+  const differenceList = strip.querySelector('#strip-target-differences');
   const workingList = strip.querySelector('#working-strip');
   const keptList = strip.querySelector('#kept-strip');
   const keptInfo = strip.querySelector('#strip-kept-info');
@@ -63,6 +64,12 @@
       const meter = item.querySelector('meter');
       meter.value = seconds;
       meter.max = maximum;
+    });
+    differenceList.querySelectorAll('li[data-band]').forEach((item, index) => {
+      const difference = targets[index] - totals[index];
+      const amount = Math.abs(difference).toFixed(2);
+      const state = difference > 0 ? 'short of target' : difference < 0 ? 'beyond target' : 'at target';
+      item.textContent = `Band ${index + 1}: ${amount} seconds ${state}.`;
     });
     workingList.querySelectorAll('li[data-band]').forEach((item, index) => {
       const seconds = totals[index];
@@ -129,6 +136,8 @@
   baseSelect.addEventListener('change', resetForSpacingChange);
   stepSelect.addEventListener('change', resetForSpacingChange);
   bandSelect.addEventListener('change', render);
+  doseSelect.addEventListener('change', render);
+  factorSelect.addEventListener('change', render);
   exposeButton.addEventListener('click', () => {
     if (stage >= 5) return;
     commitChange(() => {

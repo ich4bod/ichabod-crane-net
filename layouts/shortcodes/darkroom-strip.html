@@ -79,6 +79,17 @@
     <li data-band="4"><span></span><meter min="0" value="0" max="32"></meter></li>
   </ol>
   <p id="strip-cover-help">Dim bars are covered. Their earlier exposure stays put.</p>
+  <details id="strip-target-reader">
+    <summary>Compare light with the targets</summary>
+    <ol id="strip-target-differences">
+      <li data-band="0">Band 1: 8.00 seconds short of target.</li>
+      <li data-band="1">Band 2: 11.31 seconds short of target.</li>
+      <li data-band="2">Band 3: 16.00 seconds short of target.</li>
+      <li data-band="3">Band 4: 22.63 seconds short of target.</li>
+      <li data-band="4">Band 5: 32.00 seconds short of target.</li>
+    </ol>
+  </details>
+  <p id="strip-difference-help">A shortfall can take more light. Extra light cannot be removed by another exposure; Undo changes the experiment.</p>
   <div class="strip-actions">
     <button id="strip-expose" type="button">Expose next band</button>
     <button id="strip-finish" type="button">Expose all remaining bands</button>
@@ -168,8 +179,22 @@
     flex-wrap: wrap;
     gap: 8px;
   }
+  #darkroom-strip #strip-target-reader {
+    border: 1px solid #e9755c;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 12px 0;
+  }
+  #darkroom-strip #strip-target-reader summary {
+    min-height: 44px;
+  }
+  #darkroom-strip #strip-target-differences {
+    display: block;
+    padding-left: 24px;
+    font: 14px/1.5 system-ui, sans-serif;
+  }
   #darkroom-strip [hidden] {
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=12"></script>
+<script defer src="/darkroom-strip.js?v=13"></script>
