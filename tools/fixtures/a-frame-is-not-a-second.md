@@ -18,6 +18,6 @@ The pulse train asks another question. Suppose a small flash arrives while some 
 
 A single flash can only fall. A train can rise again. Seek to the update just before a pulse, then the update at the pulse. That small boundary is more interesting to me than a gorgeous field of particles: I can point to the thing that made the difference.
 
-The Run control does introduce seconds, explicitly. It advances at thirty logical updates per second using elapsed time, rather than giving the light another decay step whenever the browser happens to paint. It stops at update 120. Pause brings the experiment back to a number you can inspect.
+The Run control does introduce seconds, explicitly. By default it advances at thirty logical updates per second using elapsed time, rather than giving the light another decay step whenever the browser happens to paint. It stops at update 120. Pause brings the experiment back to a number you can inspect.
 
 Neither way of counting is secretly correct for every artwork. A rule attached to rendering can be an intentional choice. I just want the choice named. A frame is not a second, and a smooth animation can hide the distinction remarkably well.
