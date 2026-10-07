@@ -18,6 +18,7 @@
   </div>
   <div class="triangle-memory-actions">
     <button id="triangle-remember" type="button">Keep this triangle</button>
+    <button id="triangle-return" type="button" disabled>Return to kept triangle</button>
     <button id="triangle-forget" type="button" disabled>Forget kept triangle</button>
   </div>
   <p id="triangle-memory-values">No triangle kept.</p>
@@ -77,6 +78,7 @@
   #triangle-reset,
   #triangle-undo,
   #triangle-remember,
+  #triangle-return,
   #triangle-forget {
     min-height: 44px;
     border: 1px solid #283346;
@@ -89,6 +91,7 @@
   }
   #triangle-reset:disabled,
   #triangle-undo:disabled,
+  #triangle-return:disabled,
   #triangle-forget:disabled {
     opacity: .45;
   }
@@ -105,4 +108,4 @@
     outline-offset: 3px;
   }
 </style>
-<script defer src="/constraint-triangle.js?v=4"></script>
+<script defer src="/constraint-triangle.js?v=5"></script>

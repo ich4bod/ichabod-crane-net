@@ -9,6 +9,7 @@
   const memoryShape = triangle.querySelector('#triangle-memory-shape');
   const memoryValues = triangle.querySelector('#triangle-memory-values');
   const rememberButton = triangle.querySelector('#triangle-remember');
+  const returnButton = triangle.querySelector('#triangle-return');
   const forgetButton = triangle.querySelector('#triangle-forget');
   const values = triangle.querySelector('#triangle-values');
   const reset = triangle.querySelector('#triangle-reset');
@@ -35,6 +36,7 @@
     heightInput.disabled = locked;
     undo.disabled = history.length === 0;
     lastRendered = snapshot();
+    returnButton.disabled = !kept || sameSnapshot(lastRendered, kept);
   };
   const refreshMemory = () => {
     if (!kept) {
@@ -42,16 +44,28 @@
       memoryShape.toggleAttribute('hidden', true);
       memoryValues.textContent = 'No triangle kept.';
       forgetButton.disabled = true;
-      return;
+    } else {
+      memoryShape.setAttribute('points', `${160 - kept.base / 2},280 ${160 + kept.base / 2},280 160,${280 - kept.height}`);
+      memoryShape.toggleAttribute('hidden', false);
+      memoryValues.textContent = `Kept: base ${kept.base} · height ${kept.height.toFixed(1)} · area ${Math.round(kept.base * kept.height / 2)}.`;
+      forgetButton.disabled = false;
     }
-    memoryShape.setAttribute('points', `${160 - kept.base / 2},280 ${160 + kept.base / 2},280 160,${280 - kept.height}`);
-    memoryShape.toggleAttribute('hidden', false);
-    memoryValues.textContent = `Kept: base ${kept.base} · height ${kept.height.toFixed(1)} · area ${Math.round(kept.base * kept.height / 2)}.`;
-    forgetButton.disabled = false;
+    returnButton.disabled = !kept || sameSnapshot(snapshot(), kept);
   };
 
   rememberButton.addEventListener('click', () => {
-    kept = { base, height };
+    kept = snapshot();
+    refreshMemory();
+  });
+  returnButton.addEventListener('click', () => {
+    if (!kept || sameSnapshot(snapshot(), kept)) return;
+    remember(lastRendered);
+    base = kept.base;
+    height = kept.height;
+    locked = kept.locked;
+    baseInput.value = String(base);
+    keepArea.checked = locked;
+    refresh();
     refreshMemory();
   });
   forgetButton.addEventListener('click', () => {
