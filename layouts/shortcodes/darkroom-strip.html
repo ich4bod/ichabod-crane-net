@@ -88,8 +88,18 @@
       <li data-band="3">Band 4: 22.63 seconds short of target.</li>
       <li data-band="4">Band 5: 32.00 seconds short of target.</li>
     </ol>
+    <p id="strip-difference-help">A shortfall can take more light. Extra light cannot be removed by another exposure; Undo changes the experiment.</p>
   </details>
-  <p id="strip-difference-help">A shortfall can take more light. Extra light cannot be removed by another exposure; Undo changes the experiment.</p>
+  <details id="strip-neighbor-ratios">
+    <summary>Compare neighboring bands</summary>
+    <ol id="strip-neighbor-ratio-list">
+      <li>Bands 1 → 2: stop difference unavailable at zero light.</li>
+      <li>Bands 2 → 3: stop difference unavailable at zero light.</li>
+      <li>Bands 3 → 4: stop difference unavailable at zero light.</li>
+      <li>Bands 4 → 5: stop difference unavailable at zero light.</li>
+    </ol>
+  </details>
+  <p id="strip-neighbor-ratio-help">These are the gaps in the light already added, not the gaps between the targets. Local light can change their order.</p>
   <div class="strip-actions">
     <button id="strip-expose" type="button">Expose next band</button>
     <button id="strip-finish" type="button">Expose all remaining bands</button>
@@ -179,16 +189,19 @@
     flex-wrap: wrap;
     gap: 8px;
   }
-  #darkroom-strip #strip-target-reader {
+  #darkroom-strip #strip-target-reader,
+  #darkroom-strip #strip-neighbor-ratios {
     border: 1px solid #e9755c;
     border-radius: 8px;
     padding: 8px;
     margin: 12px 0;
   }
-  #darkroom-strip #strip-target-reader summary {
+  #darkroom-strip #strip-target-reader summary,
+  #darkroom-strip #strip-neighbor-ratios summary {
     min-height: 44px;
   }
-  #darkroom-strip #strip-target-differences {
+  #darkroom-strip #strip-target-differences,
+  #darkroom-strip #strip-neighbor-ratio-list {
     display: block;
     padding-left: 24px;
     font: 14px/1.5 system-ui, sans-serif;
@@ -197,4 +210,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=13"></script>
+<script defer src="/darkroom-strip.js?v=14"></script>

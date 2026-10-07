@@ -6,6 +6,7 @@
   const stepSelect = strip.querySelector('#strip-step');
   const list = strip.querySelector('#target-strip');
   const differenceList = strip.querySelector('#strip-target-differences');
+  const neighborRatioList = strip.querySelector('#strip-neighbor-ratio-list');
   const workingList = strip.querySelector('#working-strip');
   const keptList = strip.querySelector('#kept-strip');
   const keptInfo = strip.querySelector('#strip-kept-info');
@@ -70,6 +71,17 @@
       const amount = Math.abs(difference).toFixed(2);
       const state = difference > 0 ? 'short of target' : difference < 0 ? 'beyond target' : 'at target';
       item.textContent = `Band ${index + 1}: ${amount} seconds ${state}.`;
+    });
+    neighborRatioList.querySelectorAll('li').forEach((item, index) => {
+      const first = totals[index];
+      const second = totals[index + 1];
+      if (first === 0 || second === 0) {
+        item.textContent = `Bands ${index + 1} → ${index + 2}: stop difference unavailable at zero light.`;
+        return;
+      }
+      const difference = Math.log2(second / first);
+      const amount = difference.toFixed(2);
+      item.textContent = `Bands ${index + 1} → ${index + 2}: ${amount === '-0.00' ? '0.00' : amount} stops.`;
     });
     workingList.querySelectorAll('li[data-band]').forEach((item, index) => {
       const seconds = totals[index];
