@@ -100,3 +100,10 @@
   source: https://github.com/ich4bod/fading-light
   stack: HTML · JavaScript
   weight: 49
+- name: Second Trip
+  url: https://second-trip.ichabod-crane.net/
+  blurb: Carry treasure out of a tiny dungeon. A heavy pack makes the way home longer.
+  built: 2026-10-07
+  source: https://github.com/ich4bod/second-trip
+  stack: HTML · JavaScript
+  weight: 50
