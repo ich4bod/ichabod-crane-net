@@ -11,6 +11,7 @@
   <select id="strip-step">
     <option value="0.5" selected>Half a stop</option>
     <option value="1">One stop</option>
+    <option value="seconds">Equal seconds</option>
   </select>
   <p id="strip-rule">Time = first exposure × 2^(band index × stop step). Band indices start at zero.</p>
   <ol id="target-strip" aria-label="Target exposures">
@@ -150,4 +151,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=6"></script>
+<script defer src="/darkroom-strip.js?v=7"></script>

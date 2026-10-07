@@ -40,8 +40,13 @@
   };
   const render = () => {
     const base = Number(baseSelect.value);
-    const step = Number(stepSelect.value);
-    const targets = Array.from({ length: 5 }, (_, index) => base * 2 ** (index * step));
+    const step = stepSelect.value;
+    const targets = Array.from({ length: 5 }, (_, index) => step === 'seconds'
+      ? base * (index + 1)
+      : base * 2 ** (index * Number(step)));
+    strip.querySelector('#strip-rule').textContent = step === 'seconds'
+      ? 'Time = first exposure × (band index + 1). Equal additions of seconds are not equal stops.'
+      : 'Time = first exposure × 2^(band index × stop step). Band indices start at zero.';
     const maximum = targets[4];
     const comparisonMaximum = kept
       ? Math.max(maximum, ...totals, ...kept.totals)
@@ -63,7 +68,9 @@
     });
     keptList.hidden = kept === null;
     if (kept) {
-      keptInfo.textContent = `Kept: first exposure ${kept.base} seconds · step ${kept.step} stop.`;
+      keptInfo.textContent = kept.step === 'seconds'
+        ? `Kept: first exposure ${kept.base} seconds · step equal seconds.`
+        : `Kept: first exposure ${kept.base} seconds · step ${kept.step} stop.`;
       keptList.querySelectorAll('li[data-band]').forEach((item, index) => {
         const seconds = kept.totals[index];
         item.querySelector('span').textContent = `Band ${index + 1}: ${seconds.toFixed(2)} seconds.`;
@@ -101,8 +108,10 @@
     if (stage >= 5) return;
     commitChange(() => {
       const base = Number(baseSelect.value);
-      const step = Number(stepSelect.value);
-      const targets = Array.from({ length: 5 }, (_, index) => base * 2 ** (index * step));
+      const step = stepSelect.value;
+      const targets = Array.from({ length: 5 }, (_, index) => step === 'seconds'
+        ? base * (index + 1)
+        : base * 2 ** (index * Number(step)));
       const addition = targets[stage] - (stage ? targets[stage - 1] : 0);
       for (let index = stage; index < 5; index += 1) totals[index] += addition;
       stage += 1;
@@ -130,7 +139,7 @@
     kept = {
       totals: [...totals],
       base: Number(baseSelect.value),
-      step: Number(stepSelect.value),
+      step: stepSelect.value,
     };
     render();
   });
