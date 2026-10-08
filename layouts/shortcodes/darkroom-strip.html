@@ -103,6 +103,8 @@
       <label for="strip-mask-4"><input id="strip-mask-4" type="checkbox" value="4" checked>Band 5</label>
     </fieldset>
     <button id="strip-mask-expose" type="button">Expose checked bands</button>
+    <button id="strip-mask-finish" type="button" aria-describedby="strip-mask-finish-help">Add missing light to checked bands</button>
+    <p id="strip-mask-finish-help">Each checked band receives only what its own target still needs. Extra light is left alone; unchecked bands and the successive mask stay put. Undo reverses the whole press.</p>
     <button id="strip-mask-invert" type="button" aria-describedby="strip-mask-invert-help">Use the opposite checked bands</button>
     <p id="strip-mask-invert-help">Checked becomes unchecked, and unchecked becomes checked. No light is added until you press an exposure button.</p>
     <p id="strip-mask-help">Checked bands receive the selected extra-light amount. The successive left-to-right mask stays where it was.</p>
@@ -261,4 +263,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=19"></script>
+<script defer src="/darkroom-strip.js?v=20"></script>

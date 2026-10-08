@@ -29,11 +29,13 @@
   const finishBandButton = strip.querySelector('#strip-finish-band');
   const maskChecks = Array.from({ length: 5 }, (_, index) => strip.querySelector(`#strip-mask-${index}`));
   const maskExposeButton = strip.querySelector('#strip-mask-expose');
+  const maskFinishButton = strip.querySelector('#strip-mask-finish');
   const maskInvertButton = strip.querySelector('#strip-mask-invert');
   const mask = [true, true, true, true, true];
   const updateMask = () => {
     maskChecks.forEach((check, index) => { mask[index] = check.checked; });
     maskExposeButton.disabled = !mask.some(Boolean);
+    maskFinishButton.disabled = maskFinishCandidate() === null;
   };
   const totals = [0, 0, 0, 0, 0];
   const past = [];
@@ -46,6 +48,15 @@
     return Array.from({ length: 5 }, (_, index) => step === 'seconds'
       ? base * (index + 1)
       : base * 2 ** (index * Number(step)));
+  };
+  const maskFinishCandidate = () => {
+    const targets = targetsForSpacing();
+    const deltas = totals.map((seconds, index) => mask[index]
+      ? Math.max(0, targets[index] - seconds)
+      : 0);
+    if (!deltas.some(delta => Number.isFinite(delta) && delta > 0)) return null;
+    const candidate = totals.map((seconds, index) => seconds + deltas[index]);
+    return candidate.every(Number.isFinite) ? candidate : null;
   };
   const missingBandLight = () => {
     const index = Number(bandSelect.value);
@@ -204,6 +215,14 @@
       for (let index = 0; index < totals.length; index += 1) {
         if (mask[index]) totals[index] += addition;
       }
+    });
+  });
+  maskFinishButton.addEventListener('click', () => {
+    updateMask();
+    const candidate = maskFinishCandidate();
+    if (candidate === null) return;
+    commitChange(() => {
+      totals.splice(0, totals.length, ...candidate);
     });
   });
   finishBandButton.addEventListener('click', () => {
