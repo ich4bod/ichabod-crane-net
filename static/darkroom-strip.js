@@ -24,6 +24,13 @@
   const scaleButton = strip.querySelector('#strip-scale');
   const burnButton = strip.querySelector('#strip-burn');
   const dodgeButton = strip.querySelector('#strip-dodge');
+  const maskChecks = Array.from({ length: 5 }, (_, index) => strip.querySelector(`#strip-mask-${index}`));
+  const maskExposeButton = strip.querySelector('#strip-mask-expose');
+  const mask = [true, true, true, true, true];
+  const updateMask = () => {
+    maskChecks.forEach((check, index) => { mask[index] = check.checked; });
+    maskExposeButton.disabled = !mask.some(Boolean);
+  };
   const totals = [0, 0, 0, 0, 0];
   const past = [];
   const future = [];
@@ -121,6 +128,7 @@
         bandComparison.textContent = `${amounts} · difference ${difference.toFixed(2)} stops.`;
       }
     }
+    updateMask();
     keepButton.disabled = totals.every(seconds => seconds === 0);
     scaleButton.disabled = totals.every(seconds => seconds === 0);
     returnButton.disabled = kept === null || (stage === 0 && kept.totals.every((seconds, index) => seconds === totals[index]));
@@ -150,6 +158,17 @@
   bandSelect.addEventListener('change', render);
   doseSelect.addEventListener('change', render);
   factorSelect.addEventListener('change', render);
+  maskChecks.forEach(check => check.addEventListener('change', updateMask));
+  maskExposeButton.addEventListener('click', () => {
+    updateMask();
+    if (!mask.some(Boolean)) return;
+    const addition = Number(baseSelect.value) * Number(doseSelect.value);
+    commitChange(() => {
+      for (let index = 0; index < totals.length; index += 1) {
+        if (mask[index]) totals[index] += addition;
+      }
+    });
+  });
   exposeButton.addEventListener('click', () => {
     if (stage >= 5) return;
     commitChange(() => {

@@ -87,6 +87,16 @@
       <button id="strip-dodge" type="button">Add light everywhere else</button>
     </div>
     <p>Each press adds the selected amount of extra light. ‘Here’ gives it to one band; ‘everywhere else’ holds that band back. These are timing demonstrations, not paper-density predictions.</p>
+    <fieldset id="strip-custom-mask">
+      <legend>Bands to expose</legend>
+      <label for="strip-mask-0"><input id="strip-mask-0" type="checkbox" value="0" checked>Band 1</label>
+      <label for="strip-mask-1"><input id="strip-mask-1" type="checkbox" value="1" checked>Band 2</label>
+      <label for="strip-mask-2"><input id="strip-mask-2" type="checkbox" value="2" checked>Band 3</label>
+      <label for="strip-mask-3"><input id="strip-mask-3" type="checkbox" value="3" checked>Band 4</label>
+      <label for="strip-mask-4"><input id="strip-mask-4" type="checkbox" value="4" checked>Band 5</label>
+    </fieldset>
+    <button id="strip-mask-expose" type="button">Expose checked bands</button>
+    <p id="strip-mask-help">Checked bands receive the selected extra-light amount. The successive left-to-right mask stays where it was.</p>
     <label for="strip-factor">Whole-strip factor</label>
     <select id="strip-factor">
       <option value="0.5">Half as much light</option>
@@ -195,6 +205,28 @@
     flex-wrap: wrap;
     gap: 8px;
   }
+  #darkroom-strip #strip-custom-mask {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
+    margin: 12px 0;
+    padding: 8px;
+    border: 1px solid #e9755c;
+    border-radius: 8px;
+  }
+  #darkroom-strip #strip-custom-mask label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+  }
+  #darkroom-strip #strip-custom-mask input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: #e9755c;
+  }
   #darkroom-strip #strip-target-reader,
   #darkroom-strip #strip-neighbor-ratios {
     border: 1px solid #e9755c;
@@ -216,4 +248,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=14"></script>
+<script defer src="/darkroom-strip.js?v=15"></script>
