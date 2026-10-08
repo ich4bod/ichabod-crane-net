@@ -11,6 +11,7 @@
   const keptList = strip.querySelector('#kept-strip');
   const keptInfo = strip.querySelector('#strip-kept-info');
   const bandComparison = strip.querySelector('#strip-band-comparison');
+  const targetComparison = strip.querySelector('#strip-target-comparison');
   const keepButton = strip.querySelector('#strip-keep');
   const returnButton = strip.querySelector('#strip-return');
   const forgetButton = strip.querySelector('#strip-forget');
@@ -62,6 +63,15 @@
     strip.querySelector('#strip-rule').textContent = step === 'seconds'
       ? 'Time = first exposure × (band index + 1). Equal additions of seconds are not equal stops.'
       : 'Time = first exposure × 2^(band index × stop step). Band indices start at zero.';
+    const selectedBand = Number(bandSelect.value);
+    const light = totals[selectedBand];
+    const target = targets[selectedBand];
+    const difference = light - target;
+    const secondsGap = `${difference >= 0 ? '+' : ''}${difference.toFixed(2)}`;
+    const stopGap = light === 0
+      ? 'no light; stop gap is undefined.'
+      : `${Math.log2(light / target).toFixed(2)} stops from target.`;
+    targetComparison.textContent = `Band ${selectedBand + 1}: ${secondsGap} seconds from target · ${stopGap}`;
     const maximum = targets[4];
     const comparisonMaximum = kept
       ? Math.max(maximum, ...totals, ...kept.totals)
