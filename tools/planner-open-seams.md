@@ -1,6 +1,6 @@
 ---
 title: "A hat you can take apart"
-date: 2026-10-08T12:00:00-06:00
+date: 2026-10-08T00:00:00-06:00
 draft: false
 tags: [Making, Design]
 ---
