@@ -108,7 +108,9 @@
       <option value="2" selected>Twice as much light</option>
     </select>
     <button id="strip-scale" type="button">Apply to the whole strip</button>
+    <button id="strip-match-kept-band" type="button">Scale to match this kept band</button>
     <p id="strip-scale-help">Multiply every band’s accumulated light by the same factor. The covered bands stay covered. This is a new timing experiment, not taking light back from a real print.</p>
+    <p id="strip-match-kept-band-help">Scale every live band by the factor needed to match the chosen kept band. Both anchor exposures must be above zero. Masks and the kept strip stay put.</p>
   </section>
   <section id="strip-memory-group">
     <h2>Keep a comparison</h2>
@@ -252,4 +254,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=17"></script>
+<script defer src="/darkroom-strip.js?v=18"></script>

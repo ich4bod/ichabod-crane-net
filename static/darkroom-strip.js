@@ -23,6 +23,7 @@
   const doseSelect = strip.querySelector('#strip-dose');
   const factorSelect = strip.querySelector('#strip-factor');
   const scaleButton = strip.querySelector('#strip-scale');
+  const matchKeptBandButton = strip.querySelector('#strip-match-kept-band');
   const burnButton = strip.querySelector('#strip-burn');
   const dodgeButton = strip.querySelector('#strip-dodge');
   const finishBandButton = strip.querySelector('#strip-finish-band');
@@ -50,6 +51,15 @@
     const delta = targetsForSpacing()[index] - totals[index];
     return Number.isFinite(delta) && delta > 0 ? { index, delta } : null;
   };
+  const matchingKeptBandLight = () => {
+    const index = Number(bandSelect.value);
+    if (kept === null || !(totals[index] > 0) || !(kept.totals[index] > 0)) return null;
+    const factor = kept.totals[index] / totals[index];
+    const candidate = totals.map(seconds => seconds * factor);
+    if (candidate.some(seconds => !Number.isFinite(seconds))
+      || candidate.every((seconds, index) => seconds === totals[index])) return null;
+    return candidate;
+  };
   const snapshot = () => ({ totals: [...totals], stage });
   const pushHistory = (history, state) => {
     history.push(state);
@@ -71,6 +81,7 @@
     const step = stepSelect.value;
     const targets = targetsForSpacing();
     finishBandButton.disabled = missingBandLight() === null;
+    matchKeptBandButton.disabled = matchingKeptBandLight() === null;
     strip.querySelector('#strip-rule').textContent = step === 'seconds'
       ? 'Time = first exposure × (band index + 1). Equal additions of seconds are not equal stops.'
       : 'Time = first exposure × 2^(band index × stop step). Band indices start at zero.';
@@ -269,6 +280,13 @@
       for (let index = 0; index < totals.length; index += 1) {
         if (index !== selectedBand) totals[index] += Number(baseSelect.value) * Number(doseSelect.value);
       }
+    });
+  });
+  matchKeptBandButton.addEventListener('click', () => {
+    const candidate = matchingKeptBandLight();
+    if (candidate === null) return;
+    commitChange(() => {
+      totals.splice(0, totals.length, ...candidate);
     });
   });
   scaleButton.addEventListener('click', () => {
