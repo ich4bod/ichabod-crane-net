@@ -25,6 +25,7 @@
   const scaleButton = strip.querySelector('#strip-scale');
   const burnButton = strip.querySelector('#strip-burn');
   const dodgeButton = strip.querySelector('#strip-dodge');
+  const finishBandButton = strip.querySelector('#strip-finish-band');
   const maskChecks = Array.from({ length: 5 }, (_, index) => strip.querySelector(`#strip-mask-${index}`));
   const maskExposeButton = strip.querySelector('#strip-mask-expose');
   const mask = [true, true, true, true, true];
@@ -37,6 +38,18 @@
   const future = [];
   let kept = null;
   let stage = 0;
+  const targetsForSpacing = () => {
+    const base = Number(baseSelect.value);
+    const step = stepSelect.value;
+    return Array.from({ length: 5 }, (_, index) => step === 'seconds'
+      ? base * (index + 1)
+      : base * 2 ** (index * Number(step)));
+  };
+  const missingBandLight = () => {
+    const index = Number(bandSelect.value);
+    const delta = targetsForSpacing()[index] - totals[index];
+    return Number.isFinite(delta) && delta > 0 ? { index, delta } : null;
+  };
   const snapshot = () => ({ totals: [...totals], stage });
   const pushHistory = (history, state) => {
     history.push(state);
@@ -55,11 +68,9 @@
     render();
   };
   const render = () => {
-    const base = Number(baseSelect.value);
     const step = stepSelect.value;
-    const targets = Array.from({ length: 5 }, (_, index) => step === 'seconds'
-      ? base * (index + 1)
-      : base * 2 ** (index * Number(step)));
+    const targets = targetsForSpacing();
+    finishBandButton.disabled = missingBandLight() === null;
     strip.querySelector('#strip-rule').textContent = step === 'seconds'
       ? 'Time = first exposure × (band index + 1). Equal additions of seconds are not equal stops.'
       : 'Time = first exposure × 2^(band index × stop step). Band indices start at zero.';
@@ -179,14 +190,17 @@
       }
     });
   });
+  finishBandButton.addEventListener('click', () => {
+    const candidate = missingBandLight();
+    if (candidate === null) return;
+    commitChange(() => {
+      totals[candidate.index] += candidate.delta;
+    });
+  });
   exposeButton.addEventListener('click', () => {
     if (stage >= 5) return;
     commitChange(() => {
-      const base = Number(baseSelect.value);
-      const step = stepSelect.value;
-      const targets = Array.from({ length: 5 }, (_, index) => step === 'seconds'
-        ? base * (index + 1)
-        : base * 2 ** (index * Number(step)));
+      const targets = targetsForSpacing();
       const addition = targets[stage] - (stage ? targets[stage - 1] : 0);
       for (let index = stage; index < 5; index += 1) totals[index] += addition;
       stage += 1;
@@ -195,11 +209,7 @@
   finishButton.addEventListener('click', () => {
     if (stage >= 5) return;
     commitChange(() => {
-      const base = Number(baseSelect.value);
-      const step = stepSelect.value;
-      const targets = Array.from({ length: 5 }, (_, index) => step === 'seconds'
-        ? base * (index + 1)
-        : base * 2 ** (index * Number(step)));
+      const targets = targetsForSpacing();
       for (let mask = stage; mask < 5; mask += 1) {
         const addition = targets[mask] - (mask ? targets[mask - 1] : 0);
         for (let index = mask; index < 5; index += 1) totals[index] += addition;

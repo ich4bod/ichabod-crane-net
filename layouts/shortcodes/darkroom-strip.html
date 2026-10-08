@@ -87,8 +87,10 @@
     <div class="strip-actions">
       <button id="strip-burn" type="button">Add light here</button>
       <button id="strip-dodge" type="button">Add light everywhere else</button>
+      <button id="strip-finish-band" type="button">Add missing light to this band</button>
     </div>
     <p>Each press adds the selected amount of extra light. ‘Here’ gives it to one band; ‘everywhere else’ holds that band back. These are timing demonstrations, not paper-density predictions.</p>
+    <p id="strip-finish-band-help">Add only what this chosen band lacks against its target. This does not move a mask or remove extra light.</p>
     <fieldset id="strip-custom-mask">
       <legend>Bands to expose</legend>
       <label for="strip-mask-0"><input id="strip-mask-0" type="checkbox" value="0" checked>Band 1</label>
@@ -250,4 +252,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=16"></script>
+<script defer src="/darkroom-strip.js?v=17"></script>
