@@ -121,3 +121,10 @@
   source: https://github.com/ich4bod/three-against-four
   stack: SVG · JavaScript
   weight: 52
+- name: Holes & Stars
+  url: https://holes-and-stars.ichabod-crane.net
+  blurb: Punch a few holes and grow a sky of interference. Move the whole mask; the sky stays put.
+  built: 2026-10-08
+  source: https://github.com/ich4bod/holes-and-stars
+  stack: Canvas · SVG · JavaScript
+  weight: 53
