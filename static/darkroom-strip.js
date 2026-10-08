@@ -29,6 +29,7 @@
   const finishBandButton = strip.querySelector('#strip-finish-band');
   const maskChecks = Array.from({ length: 5 }, (_, index) => strip.querySelector(`#strip-mask-${index}`));
   const maskExposeButton = strip.querySelector('#strip-mask-expose');
+  const maskInvertButton = strip.querySelector('#strip-mask-invert');
   const mask = [true, true, true, true, true];
   const updateMask = () => {
     maskChecks.forEach((check, index) => { mask[index] = check.checked; });
@@ -191,6 +192,10 @@
   doseSelect.addEventListener('change', render);
   factorSelect.addEventListener('change', render);
   maskChecks.forEach(check => check.addEventListener('change', updateMask));
+  maskInvertButton.addEventListener('click', () => {
+    maskChecks.forEach(check => { check.checked = !check.checked; });
+    updateMask();
+  });
   maskExposeButton.addEventListener('click', () => {
     updateMask();
     if (!mask.some(Boolean)) return;
