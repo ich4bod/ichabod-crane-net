@@ -82,8 +82,11 @@
       <option value="1" selected>One first exposure</option>
       <option value="2">Two first exposures</option>
     </select>
-    <p id="strip-target-comparison">Band 3: -16.00 seconds from target · no light; stop gap is undefined.</p>
-    <p id="strip-target-help">Seconds compare an addition. Stops compare a proportion of the target. These are light-time differences, not paper-density differences.</p>
+    <details id="strip-band-target">
+      <summary>Compare this band with its target</summary>
+      <p id="strip-target-comparison">Band 3: -16.00 seconds from target · no light; stop gap is undefined.</p>
+      <p id="strip-target-help">Seconds compare an addition. Stops compare a proportion of the target. These are light-time differences, not paper-density differences.</p>
+    </details>
     <div class="strip-actions">
       <button id="strip-burn" type="button">Add light here</button>
       <button id="strip-dodge" type="button">Add light everywhere else</button>
@@ -234,14 +237,16 @@
     accent-color: #e9755c;
   }
   #darkroom-strip #strip-target-reader,
-  #darkroom-strip #strip-neighbor-ratios {
+  #darkroom-strip #strip-neighbor-ratios,
+  #darkroom-strip #strip-band-target {
     border: 1px solid #e9755c;
     border-radius: 8px;
     padding: 8px;
     margin: 12px 0;
   }
   #darkroom-strip #strip-target-reader summary,
-  #darkroom-strip #strip-neighbor-ratios summary {
+  #darkroom-strip #strip-neighbor-ratios summary,
+  #darkroom-strip #strip-band-target summary {
     min-height: 44px;
   }
   #darkroom-strip #strip-target-differences,
