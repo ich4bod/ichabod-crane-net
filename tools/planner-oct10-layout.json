@@ -1,0 +1,274 @@
+{
+  "slug": "ichabod-crane-net",
+  "controls": [
+    [
+      "strip-base",
+      "select"
+    ],
+    [
+      "strip-step",
+      "select"
+    ],
+    [
+      "strip-expose",
+      "button"
+    ],
+    [
+      "strip-finish",
+      "button"
+    ],
+    [
+      "strip-clear",
+      "button"
+    ],
+    [
+      "strip-undo",
+      "button"
+    ],
+    [
+      "strip-redo",
+      "button"
+    ],
+    [
+      "strip-band",
+      "select"
+    ],
+    [
+      "strip-dose",
+      "select"
+    ],
+    [
+      "strip-burn",
+      "button"
+    ],
+    [
+      "strip-dodge",
+      "button"
+    ],
+    [
+      "strip-finish-band",
+      "button"
+    ],
+    [
+      "strip-mask-0",
+      "input"
+    ],
+    [
+      "strip-mask-1",
+      "input"
+    ],
+    [
+      "strip-mask-2",
+      "input"
+    ],
+    [
+      "strip-mask-3",
+      "input"
+    ],
+    [
+      "strip-mask-4",
+      "input"
+    ],
+    [
+      "strip-mask-expose",
+      "button"
+    ],
+    [
+      "strip-mask-finish",
+      "button"
+    ],
+    [
+      "strip-mask-half",
+      "button"
+    ],
+    [
+      "strip-mask-double",
+      "button"
+    ],
+    [
+      "strip-mask-invert",
+      "button"
+    ],
+    [
+      "strip-mask-left",
+      "button"
+    ],
+    [
+      "strip-mask-right",
+      "button"
+    ],
+    [
+      "strip-factor",
+      "select"
+    ],
+    [
+      "strip-scale",
+      "button"
+    ],
+    [
+      "strip-match-kept-band",
+      "button"
+    ],
+    [
+      "strip-keep",
+      "button"
+    ],
+    [
+      "strip-return",
+      "button"
+    ],
+    [
+      "strip-forget",
+      "button"
+    ]
+  ],
+  "copy": [
+    {
+      "selector": "#strip-cover-help",
+      "text": "Dim bars are covered. Their earlier exposure stays put."
+    },
+    {
+      "selector": "#strip-difference-help",
+      "text": "A shortfall can take more light. Extra light cannot be removed by another exposure; Undo changes the experiment."
+    },
+    {
+      "selector": "#strip-neighbor-ratio-help",
+      "text": "These are the gaps in the light already added, not the gaps between the targets. Local light can change their order."
+    },
+    {
+      "selector": "#strip-finish-help",
+      "text": "This adds each remaining mask exposure in order. Extra local light stays extra; Undo reverses the whole press."
+    },
+    {
+      "selector": "#strip-target-help",
+      "text": "Seconds compare an addition. Stops compare a proportion of the target. These are light-time differences, not paper-density differences."
+    },
+    {
+      "selector": "#strip-finish-band-help",
+      "text": "Add only what this chosen band lacks against its target. This does not move a mask or remove extra light."
+    },
+    {
+      "selector": "#strip-mask-finish-help",
+      "text": "Each checked band receives only what its own target still needs. Extra light is left alone; unchecked bands and the successive mask stay put. Undo reverses the whole press."
+    },
+    {
+      "selector": "#strip-mask-scale-help",
+      "text": "Change only the checked bands’ accumulated light. This is a new timing experiment, not taking light back from a real print. Undo reverses the whole press."
+    },
+    {
+      "selector": "#strip-mask-invert-help",
+      "text": "Checked becomes unchecked, and unchecked becomes checked. No light is added until you press an exposure button."
+    },
+    {
+      "selector": "#strip-mask-shift-help",
+      "text": "Move the choices, not the light. Checks wrap from one end to the other; no exposure or Undo step is added."
+    },
+    {
+      "selector": "#strip-mask-help",
+      "text": "Checked bands receive the selected extra-light amount. The successive left-to-right mask stays where it was."
+    },
+    {
+      "selector": "#strip-scale-help",
+      "text": "Multiply every band’s accumulated light by the same factor. The covered bands stay covered. This is a new timing experiment, not taking light back from a real print."
+    },
+    {
+      "selector": "#strip-match-kept-band-help",
+      "text": "Scale every live band by the factor needed to match the chosen kept band. Both anchor exposures must be above zero. Masks and the kept strip stay put."
+    },
+    {
+      "selector": "#strip-band-comparison-help",
+      "text": "Positive differences mean more light now; negative differences mean less. This compares exposure, not print darkness."
+    },
+    {
+      "selector": "#strip-return-help",
+      "text": "Return only the kept light amounts. The current spacing stays selected, and the mask sequence begins again. Undo brings back the interrupted strip."
+    }
+  ],
+  "cases": [
+    {
+      "slug": "ichabod-crane-net",
+      "lane": 13,
+      "mode": "lighttools",
+      "title": "Five bands of light — Separate checked-band experiments from whole-strip scaling",
+      "depends": "nothing",
+      "goal": "Choosing a band and adding light stays direct. A checked mask and a whole-strip multiplier are visibly different optional experiments, each with its own controls and help.",
+      "steps": "Within #strip-local-group after the one-band actions/help add two closed sibling details #strip-mask-tools and #strip-scale-tools. Mask gets #strip-custom-mask plus every existing mask action/helper through #strip-mask-help, including712 left/right and713 half/double; keep #strip-mask-scaling-help as its original inner details. Scale gets label for strip-factor, #strip-factor, #strip-scale, #strip-match-kept-band and their two help paragraphs. Keep #strip-band, #strip-dose, #strip-band-target and one-band burn/dodge/finish/help outside both. Leave successive-mask build/history and memory sections unchanged. HTML shortcode and scoped inline style only; static/darkroom-strip.js behavior is out of scope.",
+      "groups": [
+        {
+          "id": "strip-mask-tools",
+          "summary": "Work with checked bands",
+          "members": [
+            "#strip-custom-mask",
+            "#strip-mask-expose",
+            "#strip-mask-finish",
+            "#strip-mask-half",
+            "#strip-mask-double",
+            "#strip-mask-invert",
+            "#strip-mask-left",
+            "#strip-mask-right",
+            "#strip-mask-help"
+          ]
+        },
+        {
+          "id": "strip-scale-tools",
+          "summary": "Scale the whole strip",
+          "members": [
+            "#strip-factor",
+            "#strip-scale",
+            "#strip-match-kept-band",
+            "#strip-scale-help",
+            "#strip-match-kept-band-help"
+          ]
+        }
+      ],
+      "outside": [
+        "#strip-band",
+        "#strip-dose",
+        "#strip-burn",
+        "#strip-dodge",
+        "#strip-finish-band",
+        "#strip-undo",
+        "#strip-expose"
+      ],
+      "message": "checked-band experiments and whole-strip scaling keep separate doors and unchanged light history"
+    },
+    {
+      "slug": "ichabod-crane-net",
+      "lane": 13,
+      "mode": "memory",
+      "title": "Five bands of light — Let the current strip lead its kept comparison",
+      "depends": "nothing",
+      "goal": "A current exposure plan can be read and changed without passing through its saved comparison. Saving and returning light remain one optional experiment, not a second working strip.",
+      "steps": "Wrap intact #strip-memory-group in closed details #strip-memory-drawer in its existing position after #strip-local-group. Preserve the group id/heading, all kept exposures/readers/help and all three controls, with existing hidden rules. Do not move #strip-undo or #strip-redo into memory; both remain in the build group. The kept strip can be visible only when its own hidden state and the drawer both permit it. No JS/state/history change. HTML shortcode and scoped inline styles only.",
+      "groups": [
+        {
+          "id": "strip-memory-drawer",
+          "summary": "Keep one strip for comparison",
+          "members": [
+            "#strip-memory-group",
+            "#strip-keep",
+            "#strip-return",
+            "#strip-forget",
+            "#strip-kept-info",
+            "#kept-strip",
+            "#strip-band-comparison",
+            "#strip-return-help"
+          ]
+        }
+      ],
+      "outside": [
+        "#working-strip",
+        "#strip-undo",
+        "#strip-redo",
+        "#strip-expose"
+      ],
+      "orders": [
+        [
+          "#strip-local-group",
+          "#strip-memory-drawer"
+        ]
+      ],
+      "message": "current exposures lead one optional kept-strip drawer while Undo stays with the working strip"
+    }
+  ]
+}
