@@ -30,6 +30,8 @@
   const maskChecks = Array.from({ length: 5 }, (_, index) => strip.querySelector(`#strip-mask-${index}`));
   const maskExposeButton = strip.querySelector('#strip-mask-expose');
   const maskFinishButton = strip.querySelector('#strip-mask-finish');
+  const maskHalfButton = strip.querySelector('#strip-mask-half');
+  const maskDoubleButton = strip.querySelector('#strip-mask-double');
   const maskInvertButton = strip.querySelector('#strip-mask-invert');
   const maskLeftButton = strip.querySelector('#strip-mask-left');
   const maskRightButton = strip.querySelector('#strip-mask-right');
@@ -39,6 +41,8 @@
     maskChecks.forEach((check, index) => { mask[index] = check.checked; });
     maskExposeButton.disabled = !mask.some(Boolean);
     maskFinishButton.disabled = maskFinishCandidate() === null;
+    maskHalfButton.disabled = maskScaleCandidate(0.5) === null;
+    maskDoubleButton.disabled = maskScaleCandidate(2) === null;
     const shifted = rotatedMask(1);
     const uniform = shifted.every(Boolean) || shifted.every(checked => !checked);
     maskLeftButton.disabled = uniform;
@@ -64,6 +68,12 @@
     if (!deltas.some(delta => Number.isFinite(delta) && delta > 0)) return null;
     const candidate = totals.map((seconds, index) => seconds + deltas[index]);
     return candidate.every(Number.isFinite) ? candidate : null;
+  };
+  const maskScaleCandidate = factor => {
+    const candidate = totals.map((seconds, index) => mask[index] ? seconds * factor : seconds);
+    if (!candidate.every(Number.isFinite)
+      || !candidate.some((seconds, index) => seconds !== totals[index])) return null;
+    return candidate;
   };
   const missingBandLight = () => {
     const index = Number(bandSelect.value);
@@ -238,6 +248,16 @@
     if (candidate === null) return;
     commitChange(() => {
       totals.splice(0, totals.length, ...candidate);
+    });
+  });
+  [[maskHalfButton, 0.5], [maskDoubleButton, 2]].forEach(([button, factor]) => {
+    button.addEventListener('click', () => {
+      updateMask();
+      const candidate = maskScaleCandidate(factor);
+      if (candidate === null) return;
+      commitChange(() => {
+        totals.splice(0, totals.length, ...candidate);
+      });
     });
   });
   finishBandButton.addEventListener('click', () => {

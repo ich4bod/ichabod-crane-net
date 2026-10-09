@@ -105,6 +105,14 @@
     <button id="strip-mask-expose" type="button">Expose checked bands</button>
     <button id="strip-mask-finish" type="button" aria-describedby="strip-mask-finish-help">Add missing light to checked bands</button>
     <p id="strip-mask-finish-help">Each checked band receives only what its own target still needs. Extra light is left alone; unchecked bands and the successive mask stay put. Undo reverses the whole press.</p>
+    <div class="strip-actions">
+      <button id="strip-mask-half" type="button" aria-describedby="strip-mask-scale-help">Halve light in checked bands</button>
+      <button id="strip-mask-double" type="button" aria-describedby="strip-mask-scale-help">Double light in checked bands</button>
+    </div>
+    <details id="strip-mask-scaling-help">
+      <summary>About changing checked bands</summary>
+      <p id="strip-mask-scale-help">Change only the checked bands’ accumulated light. This is a new timing experiment, not taking light back from a real print. Undo reverses the whole press.</p>
+    </details>
     <button id="strip-mask-invert" type="button" aria-describedby="strip-mask-invert-help">Use the opposite checked bands</button>
     <p id="strip-mask-invert-help">Checked becomes unchecked, and unchecked becomes checked. No light is added until you press an exposure button.</p>
     <button id="strip-mask-left" type="button" aria-describedby="strip-mask-shift-help">Move checks one band left</button>
@@ -245,7 +253,8 @@
   }
   #darkroom-strip #strip-target-reader,
   #darkroom-strip #strip-neighbor-ratios,
-  #darkroom-strip #strip-band-target {
+  #darkroom-strip #strip-band-target,
+  #darkroom-strip #strip-mask-scaling-help {
     border: 1px solid #e9755c;
     border-radius: 8px;
     padding: 8px;
@@ -253,7 +262,8 @@
   }
   #darkroom-strip #strip-target-reader summary,
   #darkroom-strip #strip-neighbor-ratios summary,
-  #darkroom-strip #strip-band-target summary {
+  #darkroom-strip #strip-band-target summary,
+  #darkroom-strip #strip-mask-scaling-help summary {
     min-height: 44px;
   }
   #darkroom-strip #strip-target-differences,
@@ -266,4 +276,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=21"></script>
+<script defer src="/darkroom-strip.js?v=22"></script>
