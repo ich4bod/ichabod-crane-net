@@ -1,0 +1,184 @@
+{
+  "url": "https://ichabod-crane.net/five-bands-of-light/",
+  "root": "darkroom-strip",
+  "groups": [
+    [
+      "strip-target-plan",
+      "See the target strip",
+      [
+        "target-strip",
+        "strip-rule"
+      ]
+    ]
+  ],
+  "outside": [
+    "working-strip",
+    "strip-expose",
+    "strip-finish",
+    "strip-undo",
+    "strip-redo",
+    "strip-base",
+    "strip-step"
+  ],
+  "orders": [
+    [
+      "working-strip",
+      "strip-target-plan"
+    ],
+    [
+      "strip-expose",
+      "strip-target-plan"
+    ],
+    [
+      "strip-target-plan",
+      "strip-local-group"
+    ]
+  ],
+  "message": "the working light and its direct actions lead the optional target strip",
+  "controls": [
+    [
+      "strip-base",
+      "select"
+    ],
+    [
+      "strip-step",
+      "select"
+    ],
+    [
+      "strip-expose",
+      "button"
+    ],
+    [
+      "strip-finish",
+      "button"
+    ],
+    [
+      "strip-clear",
+      "button"
+    ],
+    [
+      "strip-undo",
+      "button"
+    ],
+    [
+      "strip-redo",
+      "button"
+    ],
+    [
+      "strip-band",
+      "select"
+    ],
+    [
+      "strip-dose",
+      "select"
+    ],
+    [
+      "strip-burn",
+      "button"
+    ],
+    [
+      "strip-dodge",
+      "button"
+    ],
+    [
+      "strip-finish-band",
+      "button"
+    ],
+    [
+      "strip-mask-0",
+      "input"
+    ],
+    [
+      "strip-mask-1",
+      "input"
+    ],
+    [
+      "strip-mask-2",
+      "input"
+    ],
+    [
+      "strip-mask-3",
+      "input"
+    ],
+    [
+      "strip-mask-4",
+      "input"
+    ],
+    [
+      "strip-mask-expose",
+      "button"
+    ],
+    [
+      "strip-mask-finish",
+      "button"
+    ],
+    [
+      "strip-mask-half",
+      "button"
+    ],
+    [
+      "strip-mask-double",
+      "button"
+    ],
+    [
+      "strip-mask-invert",
+      "button"
+    ],
+    [
+      "strip-mask-left",
+      "button"
+    ],
+    [
+      "strip-mask-right",
+      "button"
+    ],
+    [
+      "strip-factor",
+      "select"
+    ],
+    [
+      "strip-scale",
+      "button"
+    ],
+    [
+      "strip-match-kept-band",
+      "button"
+    ],
+    [
+      "strip-keep",
+      "button"
+    ],
+    [
+      "strip-return",
+      "button"
+    ],
+    [
+      "strip-forget",
+      "button"
+    ]
+  ],
+  "copy": {
+    "strip-rule": "Time = first exposure \u00d7 2^(band index \u00d7 stop step). Band indices start at zero.",
+    "strip-stage": "",
+    "strip-cover-help": "Dim bars are covered. Their earlier exposure stays put.",
+    "strip-difference-help": "A shortfall can take more light. Extra light cannot be removed by another exposure; Undo changes the experiment.",
+    "strip-neighbor-ratio-help": "These are the gaps in the light already added, not the gaps between the targets. Local light can change their order.",
+    "strip-finish-help": "This adds each remaining mask exposure in order. Extra local light stays extra; Undo reverses the whole press.",
+    "strip-target-comparison": "Band 3: -16.00 seconds from target \u00b7 no light; stop gap is undefined.",
+    "strip-target-help": "Seconds compare an addition. Stops compare a proportion of the target. These are light-time differences, not paper-density differences.",
+    "strip-finish-band-help": "Add only what this chosen band lacks against its target. This does not move a mask or remove extra light.",
+    "strip-mask-finish-help": "Each checked band receives only what its own target still needs. Extra light is left alone; unchecked bands and the successive mask stay put. Undo reverses the whole press.",
+    "strip-mask-scale-help": "Change only the checked bands\u2019 accumulated light. This is a new timing experiment, not taking light back from a real print. Undo reverses the whole press.",
+    "strip-mask-invert-help": "Checked becomes unchecked, and unchecked becomes checked. No light is added until you press an exposure button.",
+    "strip-mask-shift-help": "Move the choices, not the light. Checks wrap from one end to the other; no exposure or Undo step is added.",
+    "strip-mask-help": "Checked bands receive the selected extra-light amount. The successive left-to-right mask stays where it was.",
+    "strip-scale-help": "Multiply every band\u2019s accumulated light by the same factor. The covered bands stay covered. This is a new timing experiment, not taking light back from a real print.",
+    "strip-match-kept-band-help": "Scale every live band by the factor needed to match the chosen kept band. Both anchor exposures must be above zero. Masks and the kept strip stay put.",
+    "strip-kept-info": "No strip kept.",
+    "strip-band-comparison": "Keep a strip to compare this band.",
+    "strip-band-comparison-help": "Positive differences mean more light now; negative differences mean less. This compares exposure, not print darkness.",
+    "strip-return-help": "Return only the kept light amounts. The current spacing stays selected, and the mask sequence begins again. Undo brings back the interrupted strip."
+  },
+  "mode": "strip",
+  "file": "layouts/shortcodes/darkroom-strip.html"
+}

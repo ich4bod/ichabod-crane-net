@@ -1,0 +1,129 @@
+{
+  "url": "https://ichabod-crane.net/blog/computer-that-answers-back/",
+  "root": "constraint-triangle",
+  "groups": [
+    [
+      "triangle-trade-tools",
+      "Trade width for height",
+      [
+        "triangle-widen",
+        "triangle-narrow",
+        "triangle-trade-help"
+      ]
+    ],
+    [
+      "triangle-proportion-tools",
+      "Choose a proportion",
+      [
+        "triangle-proportion",
+        "triangle-apply-proportion",
+        "triangle-proportion-help"
+      ]
+    ],
+    [
+      "triangle-memory-tools",
+      "Compare with a kept triangle",
+      [
+        "triangle-remember",
+        "triangle-return",
+        "triangle-forget",
+        "triangle-match-area",
+        "triangle-match-width",
+        "triangle-memory-values",
+        "triangle-comparison",
+        "triangle-comparison-help",
+        "triangle-match-help",
+        "triangle-match-width-help"
+      ]
+    ]
+  ],
+  "outside": [
+    "triangle-base",
+    "triangle-height",
+    "triangle-keep",
+    "triangle-values",
+    "triangle-reset",
+    "triangle-undo",
+    "triangle-redo"
+  ],
+  "message": "the triangle keeps direct dimensions and Undo before optional trade proportion and memory tools",
+  "controls": [
+    [
+      "triangle-base",
+      "input"
+    ],
+    [
+      "triangle-height",
+      "input"
+    ],
+    [
+      "triangle-keep",
+      "input"
+    ],
+    [
+      "triangle-reset",
+      "button"
+    ],
+    [
+      "triangle-undo",
+      "button"
+    ],
+    [
+      "triangle-redo",
+      "button"
+    ],
+    [
+      "triangle-widen",
+      "button"
+    ],
+    [
+      "triangle-narrow",
+      "button"
+    ],
+    [
+      "triangle-remember",
+      "button"
+    ],
+    [
+      "triangle-return",
+      "button"
+    ],
+    [
+      "triangle-match-area",
+      "button"
+    ],
+    [
+      "triangle-match-width",
+      "button"
+    ],
+    [
+      "triangle-forget",
+      "button"
+    ],
+    [
+      "triangle-proportion",
+      "select"
+    ],
+    [
+      "triangle-apply-proportion",
+      "button"
+    ]
+  ],
+  "copy": {
+    "triangle-values": "Base: 120 \u00b7 height: 120.0 \u00b7 area: 7200.",
+    "triangle-rectangle-area": "Bounding rectangle: 14400 square units \u00b7 triangle: 7200 square units.",
+    "triangle-rectangle-help": "The triangle fills half its width-by-height rectangle. The other half is not extra triangle area.",
+    "triangle-equation": "Area = base \u00d7 height \u00f7 2. When area stays at 7,200, widening the base lowers the top.",
+    "triangle-height-help": "Unlock the area to move the height on its own. Locking again brings the area back to 7,200.",
+    "triangle-ruler-help": "The bottom ruler is width. The dashed line is height, measured straight down to the base.",
+    "triangle-memory-values": "No triangle kept.",
+    "triangle-comparison": "Keep a triangle to compare dimensions.",
+    "triangle-comparison-help": "Ratios compare this shape with the kept outline. Doubling the width need not double the area.",
+    "triangle-match-help": "Keep this width and adjust only the unlocked height to match the kept area. A match outside the height range is unavailable.",
+    "triangle-match-width-help": "Keep this height and change only the unlocked width to match the kept area. The required width must fit the range and the ten-unit steps.",
+    "triangle-trade-help": "Each move trades width for height without changing this triangle\u2019s area. At the range limits, a move may not fit.",
+    "triangle-proportion-help": "Keep the width and change the unlocked height. Unlike the width-height trade, this changes area."
+  },
+  "mode": "triangle",
+  "file": "layouts/shortcodes/constraint-triangle.html"
+}
