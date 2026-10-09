@@ -136,7 +136,9 @@
       <p id="strip-match-kept-band-help">Scale every live band by the factor needed to match the chosen kept band. Both anchor exposures must be above zero. Masks and the kept strip stay put.</p>
     </details>
   </section>
-  <section id="strip-memory-group">
+  <details id="strip-memory-drawer">
+    <summary>Keep one strip for comparison</summary>
+    <section id="strip-memory-group">
     <h2>Keep a comparison</h2>
     <div class="strip-actions">
       <button id="strip-keep" type="button">Keep this strip</button>
@@ -154,7 +156,8 @@
     <p id="strip-band-comparison">Keep a strip to compare this band.</p>
     <p id="strip-band-comparison-help">Positive differences mean more light now; negative differences mean less. This compares exposure, not print darkness.</p>
     <p id="strip-return-help">Return only the kept light amounts. The current spacing stays selected, and the mask sequence begins again. Undo brings back the interrupted strip.</p>
-  </section>
+    </section>
+  </details>
 </section>
 <style>
   #darkroom-strip {
@@ -274,6 +277,18 @@
     color: #f7efcf;
     font: 16px/1.4 system-ui, sans-serif;
   }
+  #darkroom-strip #strip-memory-drawer {
+    border: 1px solid #e9755c;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
+    background: #25282c;
+  }
+  #darkroom-strip #strip-memory-drawer > summary {
+    min-height: 45px;
+    color: #f7efcf;
+    font: 16px/1.4 system-ui, sans-serif;
+  }
   #darkroom-strip #strip-target-reader,
   #darkroom-strip #strip-neighbor-ratios,
   #darkroom-strip #strip-band-target,
@@ -295,7 +310,8 @@
     padding-left: 24px;
     font: 14px/1.5 system-ui, sans-serif;
   }
-  #darkroom-strip [hidden] {
+  #darkroom-strip [hidden],
+  #darkroom-strip #kept-strip[hidden] {
     display: none;
   }
 </style>
