@@ -94,41 +94,47 @@
     </div>
     <p>Each press adds the selected amount of extra light. ‘Here’ gives it to one band; ‘everywhere else’ holds that band back. These are timing demonstrations, not paper-density predictions.</p>
     <p id="strip-finish-band-help">Add only what this chosen band lacks against its target. This does not move a mask or remove extra light.</p>
-    <fieldset id="strip-custom-mask">
-      <legend>Bands to expose</legend>
-      <label for="strip-mask-0"><input id="strip-mask-0" type="checkbox" value="0" checked>Band 1</label>
-      <label for="strip-mask-1"><input id="strip-mask-1" type="checkbox" value="1" checked>Band 2</label>
-      <label for="strip-mask-2"><input id="strip-mask-2" type="checkbox" value="2" checked>Band 3</label>
-      <label for="strip-mask-3"><input id="strip-mask-3" type="checkbox" value="3" checked>Band 4</label>
-      <label for="strip-mask-4"><input id="strip-mask-4" type="checkbox" value="4" checked>Band 5</label>
-    </fieldset>
-    <button id="strip-mask-expose" type="button">Expose checked bands</button>
-    <button id="strip-mask-finish" type="button" aria-describedby="strip-mask-finish-help">Add missing light to checked bands</button>
-    <p id="strip-mask-finish-help">Each checked band receives only what its own target still needs. Extra light is left alone; unchecked bands and the successive mask stay put. Undo reverses the whole press.</p>
-    <div class="strip-actions">
-      <button id="strip-mask-half" type="button" aria-describedby="strip-mask-scale-help">Halve light in checked bands</button>
-      <button id="strip-mask-double" type="button" aria-describedby="strip-mask-scale-help">Double light in checked bands</button>
-    </div>
-    <details id="strip-mask-scaling-help">
-      <summary>About changing checked bands</summary>
-      <p id="strip-mask-scale-help">Change only the checked bands’ accumulated light. This is a new timing experiment, not taking light back from a real print. Undo reverses the whole press.</p>
+    <details id="strip-mask-tools">
+      <summary>Work with checked bands</summary>
+      <fieldset id="strip-custom-mask">
+        <legend>Bands to expose</legend>
+        <label for="strip-mask-0"><input id="strip-mask-0" type="checkbox" value="0" checked>Band 1</label>
+        <label for="strip-mask-1"><input id="strip-mask-1" type="checkbox" value="1" checked>Band 2</label>
+        <label for="strip-mask-2"><input id="strip-mask-2" type="checkbox" value="2" checked>Band 3</label>
+        <label for="strip-mask-3"><input id="strip-mask-3" type="checkbox" value="3" checked>Band 4</label>
+        <label for="strip-mask-4"><input id="strip-mask-4" type="checkbox" value="4" checked>Band 5</label>
+      </fieldset>
+      <button id="strip-mask-expose" type="button">Expose checked bands</button>
+      <button id="strip-mask-finish" type="button" aria-describedby="strip-mask-finish-help">Add missing light to checked bands</button>
+      <p id="strip-mask-finish-help">Each checked band receives only what its own target still needs. Extra light is left alone; unchecked bands and the successive mask stay put. Undo reverses the whole press.</p>
+      <div class="strip-actions">
+        <button id="strip-mask-half" type="button" aria-describedby="strip-mask-scale-help">Halve light in checked bands</button>
+        <button id="strip-mask-double" type="button" aria-describedby="strip-mask-scale-help">Double light in checked bands</button>
+      </div>
+      <details id="strip-mask-scaling-help">
+        <summary>About changing checked bands</summary>
+        <p id="strip-mask-scale-help">Change only the checked bands’ accumulated light. This is a new timing experiment, not taking light back from a real print. Undo reverses the whole press.</p>
+      </details>
+      <button id="strip-mask-invert" type="button" aria-describedby="strip-mask-invert-help">Use the opposite checked bands</button>
+      <p id="strip-mask-invert-help">Checked becomes unchecked, and unchecked becomes checked. No light is added until you press an exposure button.</p>
+      <button id="strip-mask-left" type="button" aria-describedby="strip-mask-shift-help">Move checks one band left</button>
+      <button id="strip-mask-right" type="button" aria-describedby="strip-mask-shift-help">Move checks one band right</button>
+      <p id="strip-mask-shift-help">Move the choices, not the light. Checks wrap from one end to the other; no exposure or Undo step is added.</p>
+      <p id="strip-mask-help">Checked bands receive the selected extra-light amount. The successive left-to-right mask stays where it was.</p>
     </details>
-    <button id="strip-mask-invert" type="button" aria-describedby="strip-mask-invert-help">Use the opposite checked bands</button>
-    <p id="strip-mask-invert-help">Checked becomes unchecked, and unchecked becomes checked. No light is added until you press an exposure button.</p>
-    <button id="strip-mask-left" type="button" aria-describedby="strip-mask-shift-help">Move checks one band left</button>
-    <button id="strip-mask-right" type="button" aria-describedby="strip-mask-shift-help">Move checks one band right</button>
-    <p id="strip-mask-shift-help">Move the choices, not the light. Checks wrap from one end to the other; no exposure or Undo step is added.</p>
-    <p id="strip-mask-help">Checked bands receive the selected extra-light amount. The successive left-to-right mask stays where it was.</p>
-    <label for="strip-factor">Whole-strip factor</label>
-    <select id="strip-factor">
-      <option value="0.5">Half as much light</option>
-      <option value="1.4142135623730951">Half a stop more</option>
-      <option value="2" selected>Twice as much light</option>
-    </select>
-    <button id="strip-scale" type="button">Apply to the whole strip</button>
-    <button id="strip-match-kept-band" type="button">Scale to match this kept band</button>
-    <p id="strip-scale-help">Multiply every band’s accumulated light by the same factor. The covered bands stay covered. This is a new timing experiment, not taking light back from a real print.</p>
-    <p id="strip-match-kept-band-help">Scale every live band by the factor needed to match the chosen kept band. Both anchor exposures must be above zero. Masks and the kept strip stay put.</p>
+    <details id="strip-scale-tools">
+      <summary>Scale the whole strip</summary>
+      <label for="strip-factor">Whole-strip factor</label>
+      <select id="strip-factor">
+        <option value="0.5">Half as much light</option>
+        <option value="1.4142135623730951">Half a stop more</option>
+        <option value="2" selected>Twice as much light</option>
+      </select>
+      <button id="strip-scale" type="button">Apply to the whole strip</button>
+      <button id="strip-match-kept-band" type="button">Scale to match this kept band</button>
+      <p id="strip-scale-help">Multiply every band’s accumulated light by the same factor. The covered bands stay covered. This is a new timing experiment, not taking light back from a real print.</p>
+      <p id="strip-match-kept-band-help">Scale every live band by the factor needed to match the chosen kept band. Both anchor exposures must be above zero. Masks and the kept strip stay put.</p>
+    </details>
   </section>
   <section id="strip-memory-group">
     <h2>Keep a comparison</h2>
@@ -250,6 +256,23 @@
     height: 20px;
     margin: 0;
     accent-color: #e9755c;
+  }
+  #darkroom-strip #strip-mask-tools,
+  #darkroom-strip #strip-scale-tools {
+    box-sizing: border-box;
+    display: grid;
+    gap: 8px;
+    margin: 12px 0;
+    padding: 12px;
+    border: 1px solid #e9755c;
+    border-radius: 8px;
+    background: #25282c;
+  }
+  #darkroom-strip #strip-mask-tools > summary,
+  #darkroom-strip #strip-scale-tools > summary {
+    min-height: 45px;
+    color: #f7efcf;
+    font: 16px/1.4 system-ui, sans-serif;
   }
   #darkroom-strip #strip-target-reader,
   #darkroom-strip #strip-neighbor-ratios,
