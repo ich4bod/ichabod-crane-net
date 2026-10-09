@@ -107,6 +107,9 @@
     <p id="strip-mask-finish-help">Each checked band receives only what its own target still needs. Extra light is left alone; unchecked bands and the successive mask stay put. Undo reverses the whole press.</p>
     <button id="strip-mask-invert" type="button" aria-describedby="strip-mask-invert-help">Use the opposite checked bands</button>
     <p id="strip-mask-invert-help">Checked becomes unchecked, and unchecked becomes checked. No light is added until you press an exposure button.</p>
+    <button id="strip-mask-left" type="button" aria-describedby="strip-mask-shift-help">Move checks one band left</button>
+    <button id="strip-mask-right" type="button" aria-describedby="strip-mask-shift-help">Move checks one band right</button>
+    <p id="strip-mask-shift-help">Move the choices, not the light. Checks wrap from one end to the other; no exposure or Undo step is added.</p>
     <p id="strip-mask-help">Checked bands receive the selected extra-light amount. The successive left-to-right mask stays where it was.</p>
     <label for="strip-factor">Whole-strip factor</label>
     <select id="strip-factor">
@@ -263,4 +266,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=20"></script>
+<script defer src="/darkroom-strip.js?v=21"></script>

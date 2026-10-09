@@ -31,11 +31,18 @@
   const maskExposeButton = strip.querySelector('#strip-mask-expose');
   const maskFinishButton = strip.querySelector('#strip-mask-finish');
   const maskInvertButton = strip.querySelector('#strip-mask-invert');
+  const maskLeftButton = strip.querySelector('#strip-mask-left');
+  const maskRightButton = strip.querySelector('#strip-mask-right');
   const mask = [true, true, true, true, true];
+  const rotatedMask = direction => mask.map((_, index) => mask[(index - direction + mask.length) % mask.length]);
   const updateMask = () => {
     maskChecks.forEach((check, index) => { mask[index] = check.checked; });
     maskExposeButton.disabled = !mask.some(Boolean);
     maskFinishButton.disabled = maskFinishCandidate() === null;
+    const shifted = rotatedMask(1);
+    const uniform = shifted.every(Boolean) || shifted.every(checked => !checked);
+    maskLeftButton.disabled = uniform;
+    maskRightButton.disabled = uniform;
   };
   const totals = [0, 0, 0, 0, 0];
   const past = [];
@@ -206,6 +213,14 @@
   maskInvertButton.addEventListener('click', () => {
     maskChecks.forEach(check => { check.checked = !check.checked; });
     updateMask();
+  });
+  [[maskLeftButton, -1], [maskRightButton, 1]].forEach(([button, direction]) => {
+    button.addEventListener('click', () => {
+      const shifted = rotatedMask(direction);
+      if (shifted.every(Boolean) || shifted.every(checked => !checked)) return;
+      maskChecks.forEach((check, index) => { check.checked = shifted[index]; });
+      updateMask();
+    });
   });
   maskExposeButton.addEventListener('click', () => {
     updateMask();
