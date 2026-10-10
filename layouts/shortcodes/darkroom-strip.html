@@ -13,15 +13,6 @@
     <option value="1">One stop</option>
     <option value="seconds">Equal seconds</option>
   </select>
-  <p id="strip-rule">Time = first exposure × 2^(band index × stop step). Band indices start at zero.</p>
-  <ol id="target-strip" aria-label="Target exposures">
-    <li data-band="0"><span>Band 1: 8.00 seconds.</span><meter min="0" value="8" max="32">8 seconds</meter></li>
-    <li data-band="1"><span>Band 2: 11.31 seconds.</span><meter min="0" value="11.313708498984761" max="32">11.31 seconds</meter></li>
-    <li data-band="2"><span>Band 3: 16.00 seconds.</span><meter min="0" value="16" max="32">16 seconds</meter></li>
-    <li data-band="3"><span>Band 4: 22.63 seconds.</span><meter min="0" value="22.627416997969522" max="32">22.63 seconds</meter></li>
-    <li data-band="4"><span>Band 5: 32.00 seconds.</span><meter min="0" value="32" max="32">32 seconds</meter></li>
-  </ol>
-  <p>These bars measure exposure time, not the darkness of photographic paper. The light is assumed constant; this does not predict a print.</p>
   <section id="strip-build-group">
     <h2>Build the strip</h2>
     <p>Expose every uncovered band, then cover the leftmost one. Each press adds only the time needed for the next target.</p>
@@ -65,6 +56,18 @@
     <p id="strip-finish-help">This adds each remaining mask exposure in order. Extra local light stays extra; Undo reverses the whole press.</p>
     <p>Changing either spacing control starts an empty strip. There is no clock and no lamp connection.</p>
   </section>
+  <details id="strip-target-plan">
+    <summary>See the target strip</summary>
+    <p id="strip-rule">Time = first exposure × 2^(band index × stop step). Band indices start at zero.</p>
+    <ol id="target-strip" aria-label="Target exposures">
+      <li data-band="0"><span>Band 1: 8.00 seconds.</span><meter min="0" value="8" max="32">8 seconds</meter></li>
+      <li data-band="1"><span>Band 2: 11.31 seconds.</span><meter min="0" value="11.313708498984761" max="32">11.31 seconds</meter></li>
+      <li data-band="2"><span>Band 3: 16.00 seconds.</span><meter min="0" value="16" max="32">16 seconds</meter></li>
+      <li data-band="3"><span>Band 4: 22.63 seconds.</span><meter min="0" value="22.627416997969522" max="32">22.63 seconds</meter></li>
+      <li data-band="4"><span>Band 5: 32.00 seconds.</span><meter min="0" value="32" max="32">32 seconds</meter></li>
+    </ol>
+    <p>These bars measure exposure time, not the darkness of photographic paper. The light is assumed constant; this does not predict a print.</p>
+  </details>
   <section id="strip-local-group">
     <h2>Give one place more light</h2>
     <label for="strip-band">Band to work on</label>
@@ -273,6 +276,18 @@
   }
   #darkroom-strip #strip-mask-tools > summary,
   #darkroom-strip #strip-scale-tools > summary {
+    min-height: 45px;
+    color: #f7efcf;
+    font: 16px/1.4 system-ui, sans-serif;
+  }
+  #darkroom-strip #strip-target-plan {
+    border: 1px solid #e9755c;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
+    background: #25282c;
+  }
+  #darkroom-strip #strip-target-plan > summary {
     min-height: 45px;
     color: #f7efcf;
     font: 16px/1.4 system-ui, sans-serif;
