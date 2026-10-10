@@ -109,6 +109,10 @@
       </fieldset>
       <button id="strip-mask-expose" type="button">Expose checked bands</button>
       <button id="strip-mask-finish" type="button" aria-describedby="strip-mask-finish-help">Add missing light to checked bands</button>
+      <div class="strip-actions">
+        <button id="strip-mask-return" type="button" aria-describedby="strip-mask-return-help" disabled>Use kept light in checked bands</button>
+      </div>
+      <p id="strip-mask-return-help">Copy the kept amounts into checked bands, including zero light. Other bands and the successive mask stay put. This edits the toy; it cannot take light back out of real paper. Undo restores the whole press.</p>
       <p id="strip-mask-finish-help">Each checked band receives only what its own target still needs. Extra light is left alone; unchecked bands and the successive mask stay put. Undo reverses the whole press.</p>
       <div class="strip-actions">
         <button id="strip-mask-half" type="button" aria-describedby="strip-mask-scale-help">Halve light in checked bands</button>
@@ -275,6 +279,12 @@
     margin: 0;
     accent-color: #e9755c;
   }
+  #darkroom-strip #strip-mask-return {
+    min-height: 45px;
+    font: 16px/1.4 system-ui, sans-serif;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
   #darkroom-strip #strip-mask-tools,
   #darkroom-strip #strip-scale-tools {
     box-sizing: border-box;
@@ -366,4 +376,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=23"></script>
+<script defer src="/darkroom-strip.js?v=24"></script>

@@ -32,6 +32,7 @@
   const maskChecks = Array.from({ length: 5 }, (_, index) => strip.querySelector(`#strip-mask-${index}`));
   const maskExposeButton = strip.querySelector('#strip-mask-expose');
   const maskFinishButton = strip.querySelector('#strip-mask-finish');
+  const maskReturnButton = strip.querySelector('#strip-mask-return');
   const maskHalfButton = strip.querySelector('#strip-mask-half');
   const maskDoubleButton = strip.querySelector('#strip-mask-double');
   const maskInvertButton = strip.querySelector('#strip-mask-invert');
@@ -43,6 +44,7 @@
     maskChecks.forEach((check, index) => { mask[index] = check.checked; });
     maskExposeButton.disabled = !mask.some(Boolean);
     maskFinishButton.disabled = maskFinishCandidate() === null;
+    maskReturnButton.disabled = maskReturnCandidate() === null;
     maskHalfButton.disabled = maskScaleCandidate(0.5) === null;
     maskDoubleButton.disabled = maskScaleCandidate(2) === null;
     const shifted = rotatedMask(1);
@@ -70,6 +72,12 @@
     if (!deltas.some(delta => Number.isFinite(delta) && delta > 0)) return null;
     const candidate = totals.map((seconds, index) => seconds + deltas[index]);
     return candidate.every(Number.isFinite) ? candidate : null;
+  };
+  const maskReturnCandidate = () => {
+    if (kept === null) return null;
+    const candidate = totals.map((seconds, index) => mask[index] ? kept.totals[index] : seconds);
+    if (!candidate.some((seconds, index) => seconds !== totals[index])) return null;
+    return candidate;
   };
   const maskScaleCandidate = factor => {
     const candidate = totals.map((seconds, index) => mask[index] ? seconds * factor : seconds);
@@ -214,6 +222,7 @@
     keepButton.disabled = totals.every(seconds => seconds === 0);
     scaleButton.disabled = totals.every(seconds => seconds === 0);
     returnButton.disabled = kept === null || (stage === 0 && kept.totals.every((seconds, index) => seconds === totals[index]));
+    maskReturnButton.disabled = maskReturnCandidate() === null;
     forgetButton.disabled = kept === null;
     if (stage < 5) {
       const addition = targets[stage] - (stage ? targets[stage - 1] : 0);
@@ -266,6 +275,14 @@
   maskFinishButton.addEventListener('click', () => {
     updateMask();
     const candidate = maskFinishCandidate();
+    if (candidate === null) return;
+    commitChange(() => {
+      totals.splice(0, totals.length, ...candidate);
+    });
+  });
+  maskReturnButton.addEventListener('click', () => {
+    updateMask();
+    const candidate = maskReturnCandidate();
     if (candidate === null) return;
     commitChange(() => {
       totals.splice(0, totals.length, ...candidate);
