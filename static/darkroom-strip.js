@@ -11,6 +11,8 @@
   const keptList = strip.querySelector('#kept-strip');
   const keptInfo = strip.querySelector('#strip-kept-info');
   const bandComparison = strip.querySelector('#strip-band-comparison');
+  const allKeptEmpty = strip.querySelector('#strip-all-kept-empty');
+  const allKeptList = strip.querySelector('#strip-all-kept-list');
   const targetComparison = strip.querySelector('#strip-target-comparison');
   const keepButton = strip.querySelector('#strip-keep');
   const returnButton = strip.querySelector('#strip-return');
@@ -188,6 +190,25 @@
         if (Object.is(difference, -0)) difference = 0;
         bandComparison.textContent = `${amounts} · difference ${difference.toFixed(2)} stops.`;
       }
+    }
+    allKeptEmpty.hidden = kept !== null;
+    allKeptList.hidden = kept === null;
+    if (kept !== null) {
+      allKeptList.querySelectorAll('li').forEach((item, index) => {
+        const current = totals[index];
+        const reference = kept.totals[index];
+        let secondsGap = (current - reference).toFixed(2);
+        if (secondsGap === '-0.00') secondsGap = '0.00';
+        const signedSecondsGap = `${current - reference >= 0 ? '+' : ''}${secondsGap}`;
+        let stopGap = 'stop difference unavailable at zero light.';
+        if (current > 0 && reference > 0) {
+          let difference = Math.log2(current / reference);
+          if (Object.is(difference, -0)) difference = 0;
+          const amount = difference.toFixed(2);
+          stopGap = `${amount === '-0.00' ? '0.00' : amount} stops.`;
+        }
+        item.textContent = `Band ${index + 1}: current ${current.toFixed(2)} seconds · kept ${reference.toFixed(2)} seconds · ${signedSecondsGap} seconds · ${stopGap}`;
+      });
     }
     updateMask();
     keepButton.disabled = totals.every(seconds => seconds === 0);

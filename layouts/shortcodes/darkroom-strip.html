@@ -158,6 +158,18 @@
     </ol>
     <p id="strip-band-comparison">Keep a strip to compare this band.</p>
     <p id="strip-band-comparison-help">Positive differences mean more light now; negative differences mean less. This compares exposure, not print darkness.</p>
+    <details id="strip-all-kept">
+      <summary>Compare all five kept bands</summary>
+      <p id="strip-all-kept-empty">Keep a strip to compare all five bands.</p>
+      <ol id="strip-all-kept-list" hidden>
+        <li>Band 1: current 0.00 seconds · kept 0.00 seconds · +0.00 seconds · stop difference unavailable at zero light.</li>
+        <li>Band 2: current 0.00 seconds · kept 0.00 seconds · +0.00 seconds · stop difference unavailable at zero light.</li>
+        <li>Band 3: current 0.00 seconds · kept 0.00 seconds · +0.00 seconds · stop difference unavailable at zero light.</li>
+        <li>Band 4: current 0.00 seconds · kept 0.00 seconds · +0.00 seconds · stop difference unavailable at zero light.</li>
+        <li>Band 5: current 0.00 seconds · kept 0.00 seconds · +0.00 seconds · stop difference unavailable at zero light.</li>
+      </ol>
+      <p id="strip-all-kept-help">Seconds show an addition; stops show a proportion. Zero light has no finite stop difference. These compare light time, not the darkness of a print.</p>
+    </details>
     <p id="strip-return-help">Return only the kept light amounts. The current spacing stays selected, and the mask sequence begins again. Undo brings back the interrupted strip.</p>
     </section>
   </details>
@@ -304,6 +316,30 @@
     color: #f7efcf;
     font: 16px/1.4 system-ui, sans-serif;
   }
+  #darkroom-strip #strip-all-kept {
+    display: grid;
+    gap: 8px;
+    border: 1px solid #e9755c;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 12px 0;
+  }
+  #darkroom-strip #strip-all-kept > summary {
+    min-height: 45px;
+    color: #f7efcf;
+    font: 16px/1.4 system-ui, sans-serif;
+  }
+  #darkroom-strip #strip-all-kept-list {
+    display: block;
+    padding-left: 24px;
+    font: 16px/1.5 system-ui, sans-serif;
+  }
+  #darkroom-strip #strip-all-kept-list li {
+    overflow-wrap: anywhere;
+  }
+  #darkroom-strip #strip-all-kept-list[hidden] {
+    display: none;
+  }
   #darkroom-strip #strip-target-reader,
   #darkroom-strip #strip-neighbor-ratios,
   #darkroom-strip #strip-band-target,
@@ -330,4 +366,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=22"></script>
+<script defer src="/darkroom-strip.js?v=23"></script>
