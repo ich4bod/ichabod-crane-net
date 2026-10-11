@@ -1,0 +1,34 @@
+{
+  "slug": "ichabod-crane-net",
+  "lane": 13,
+  "title": "Five bands of light \u2014 Ask whether equal light means equal paper darkness",
+  "id": "three-questions-ichabod-crane-net",
+  "summary": "Try three questions about light-time",
+  "lead": "Use the strip as a timing experiment. It does not predict the darkness of a physical print.",
+  "questions": [
+    {
+      "title": "Does a doubled time mean a doubled darkness?",
+      "prompt": "Compare targets one stop apart. The later band receives twice the target light-time. Is the paper promised to look twice as dark?",
+      "answer": "No. One stop names a factor of two in exposure time at the same modeled light level. This toy does not include a paper response curve, development or an observed density. A proportional timing rule is not a proportional darkness rule."
+    },
+    {
+      "title": "Can zero take part in an average?",
+      "prompt": "Clear the strip. Add light to one chosen band, then check that band and one still-dark band. Press Equalize light in checked bands.",
+      "answer": "Yes. If the amounts are eight and zero, both become four. The checked total remains eight; unchecked bands keep their own light. The operation redistributes values in the toy. It cannot take already delivered light back out of real paper."
+    },
+    {
+      "title": "Does moving the checks move the light?",
+      "prompt": "Choose any custom checked mask and press Move checks one band right. Read the bars before adding another exposure.",
+      "answer": "No. Checks are choices about the next action, not the accumulated light. They wrap at the end without changing totals or adding an Undo step. Expose checked bands uses the new choices only when you press it."
+    }
+  ],
+  "facts": "Exposuretargetbase*2^(index*step); stopgaplog2ratio undefinedat0. mean(8,0)=4 total8 unchanged; checks shiftingnohistory. Staticguide noJS.",
+  "palette": "#161719/#f7efcf/#25282c/#e9755c",
+  "files": [
+    "layouts/shortcodes/darkroom-strip.html"
+  ],
+  "root": "#darkroom-strip",
+  "anchor": null,
+  "url": "https://ichabod-crane.net/five-bands-of-light/",
+  "message": "three authored ichabod-crane-net questions stay optional and leave the live experiment alone"
+}
