@@ -35,6 +35,7 @@
   const maskFinishButton = strip.querySelector('#strip-mask-finish');
   const maskReturnButton = strip.querySelector('#strip-mask-return');
   const maskBlendButton = strip.querySelector('#strip-mask-blend');
+  const maskMeanButton = strip.querySelector('#strip-mask-mean');
   const maskHalfButton = strip.querySelector('#strip-mask-half');
   const maskDoubleButton = strip.querySelector('#strip-mask-double');
   const maskInvertButton = strip.querySelector('#strip-mask-invert');
@@ -48,6 +49,7 @@
     maskFinishButton.disabled = maskFinishCandidate() === null;
     maskReturnButton.disabled = maskReturnCandidate() === null;
     maskBlendButton.disabled = maskBlendCandidate() === null;
+    maskMeanButton.disabled = maskMeanCandidate() === null;
     maskHalfButton.disabled = maskScaleCandidate(0.5) === null;
     maskDoubleButton.disabled = maskScaleCandidate(2) === null;
     const shifted = rotatedMask(1);
@@ -93,6 +95,16 @@
   };
   const maskScaleCandidate = factor => {
     const candidate = totals.map((seconds, index) => mask[index] ? seconds * factor : seconds);
+    if (!candidate.every(Number.isFinite)
+      || !candidate.some((seconds, index) => seconds !== totals[index])) return null;
+    return candidate;
+  };
+  const maskMeanCandidate = () => {
+    const selected = mask.flatMap((checked, index) => checked ? [index] : []);
+    if (!selected.length) return null;
+    const mean = selected.reduce((sum, index) => sum + totals[index], 0) / selected.length;
+    if (!Number.isFinite(mean)) return null;
+    const candidate = totals.map((seconds, index) => mask[index] ? mean : seconds);
     if (!candidate.every(Number.isFinite)
       || !candidate.some((seconds, index) => seconds !== totals[index])) return null;
     return candidate;
@@ -310,6 +322,14 @@
   maskBlendButton.addEventListener('click', () => {
     updateMask();
     const candidate = maskBlendCandidate();
+    if (candidate === null) return;
+    commitChange(() => {
+      totals.splice(0, totals.length, ...candidate);
+    });
+  });
+  maskMeanButton.addEventListener('click', () => {
+    updateMask();
+    const candidate = maskMeanCandidate();
     if (candidate === null) return;
     commitChange(() => {
       totals.splice(0, totals.length, ...candidate);
