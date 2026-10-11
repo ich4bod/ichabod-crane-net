@@ -26,6 +26,7 @@
   const factorSelect = strip.querySelector('#strip-factor');
   const scaleButton = strip.querySelector('#strip-scale');
   const matchKeptBandButton = strip.querySelector('#strip-match-kept-band');
+  const reverseLightButton = strip.querySelector('#strip-reverse-light');
   const burnButton = strip.querySelector('#strip-burn');
   const dodgeButton = strip.querySelector('#strip-dodge');
   const finishBandButton = strip.querySelector('#strip-finish-band');
@@ -96,6 +97,12 @@
       || !candidate.some((seconds, index) => seconds !== totals[index])) return null;
     return candidate;
   };
+  const reverseLightCandidate = () => {
+    const candidate = totals.slice().reverse();
+    if (!candidate.length || !candidate.every(Number.isFinite)
+      || candidate.every((seconds, index) => seconds === totals[index])) return null;
+    return candidate;
+  };
   const missingBandLight = () => {
     const index = Number(bandSelect.value);
     const delta = targetsForSpacing()[index] - totals[index];
@@ -132,6 +139,7 @@
     const targets = targetsForSpacing();
     finishBandButton.disabled = missingBandLight() === null;
     matchKeptBandButton.disabled = matchingKeptBandLight() === null;
+    reverseLightButton.disabled = reverseLightCandidate() === null;
     strip.querySelector('#strip-rule').textContent = step === 'seconds'
       ? 'Time = first exposure × (band index + 1). Equal additions of seconds are not equal stops.'
       : 'Time = first exposure × 2^(band index × stop step). Band indices start at zero.';
@@ -409,6 +417,13 @@
     if (totals.every(seconds => seconds === 0)) return;
     const factor = Number(factorSelect.value);
     const candidate = totals.map(seconds => seconds * factor);
+    commitChange(() => {
+      totals.splice(0, totals.length, ...candidate);
+    });
+  });
+  reverseLightButton.addEventListener('click', () => {
+    const candidate = reverseLightCandidate();
+    if (candidate === null) return;
     commitChange(() => {
       totals.splice(0, totals.length, ...candidate);
     });

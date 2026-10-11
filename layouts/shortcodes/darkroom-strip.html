@@ -143,6 +143,8 @@
       <button id="strip-match-kept-band" type="button">Scale to match this kept band</button>
       <p id="strip-scale-help">Multiply every band’s accumulated light by the same factor. The covered bands stay covered. This is a new timing experiment, not taking light back from a real print.</p>
       <p id="strip-match-kept-band-help">Scale every live band by the factor needed to match the chosen kept band. Both anchor exposures must be above zero. Masks and the kept strip stay put.</p>
+      <button id="strip-reverse-light" type="button" aria-describedby="strip-reverse-light-help" disabled>Reverse the five light amounts</button>
+      <p id="strip-reverse-light-help">Exchange the outer light amounts, then the next pair; the middle stays put. Targets, checks and the successive mask do not turn. This edits the timing toy, not exposed paper. Undo restores the whole strip.</p>
     </details>
   </section>
   <details id="strip-memory-drawer">
@@ -281,6 +283,12 @@
     margin: 0;
     accent-color: #e9755c;
   }
+  #darkroom-strip #strip-reverse-light {
+    min-height: 45px;
+    font: 16px/1.4 system-ui, sans-serif;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
   #darkroom-strip #strip-mask-return,
   #darkroom-strip #strip-mask-blend {
     min-height: 45px;
@@ -379,4 +387,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=25"></script>
+<script defer src="/darkroom-strip.js?v=26"></script>
