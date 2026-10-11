@@ -120,6 +120,8 @@
       <p id="strip-mask-mean-help">Give the checked bands their arithmetic mean light-time, including zero. Their combined light-time stays the same; unchecked bands, targets and the successive mask stay put. This edits the toy, not paper. Undo restores the whole press.</p>
       <p id="strip-mask-return-help">Copy the kept amounts into checked bands, including zero light. Other bands and the successive mask stay put. This edits the toy; it cannot take light back out of real paper. Undo restores the whole press.</p>
       <p id="strip-mask-finish-help">Each checked band receives only what its own target still needs. Extra light is left alone; unchecked bands and the successive mask stay put. Undo reverses the whole press.</p>
+      <p id="strip-finish-preview">Finish would add 0.00 band-seconds across 0 bands.</p>
+      <p id="strip-finish-preview-help">Only checked bands below their own targets receive light. The total adds their separate missing times; it is not the duration of one shared exposure or a prediction of print darkness. Reading does not add light.</p>
       <div class="strip-actions">
         <button id="strip-mask-half" type="button" aria-describedby="strip-mask-scale-help">Halve light in checked bands</button>
         <button id="strip-mask-double" type="button" aria-describedby="strip-mask-scale-help">Double light in checked bands</button>
@@ -329,6 +331,14 @@
     white-space: normal;
     overflow-wrap: anywhere;
   }
+  #darkroom-strip #strip-finish-preview,
+  #darkroom-strip #strip-finish-preview-help {
+    box-sizing: border-box;
+    max-width: 100%;
+    margin: 8px 0;
+    font: 16px/1.5 system-ui, sans-serif;
+    overflow-wrap: anywhere;
+  }
   #darkroom-strip #strip-mask-mean:focus-visible {
     outline: 3px solid #e9755c;
     outline-offset: 3px;
@@ -471,4 +481,4 @@
     overflow-wrap: anywhere;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=28"></script>
+<script defer src="/darkroom-strip.js?v=29"></script>

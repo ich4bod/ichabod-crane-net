@@ -37,6 +37,7 @@
   const maskBlendButton = strip.querySelector('#strip-mask-blend');
   const maskMeanButton = strip.querySelector('#strip-mask-mean');
   const lightSum = strip.querySelector('#strip-light-sum');
+  const finishPreview = strip.querySelector('#strip-finish-preview');
   const maskHalfButton = strip.querySelector('#strip-mask-half');
   const maskDoubleButton = strip.querySelector('#strip-mask-double');
   const maskInvertButton = strip.querySelector('#strip-mask-invert');
@@ -50,7 +51,13 @@
     const checkedBands = totals.reduce((sum, seconds, index) => sum + (mask[index] ? seconds : 0), 0);
     lightSum.textContent = `All five bands: ${allBands.toFixed(2)} band-seconds. Checked ${mask.filter(Boolean).length} bands: ${checkedBands.toFixed(2)} band-seconds.`;
     maskExposeButton.disabled = !mask.some(Boolean);
-    maskFinishButton.disabled = maskFinishCandidate() === null;
+    const finishCandidate = maskFinishCandidate();
+    maskFinishButton.disabled = finishCandidate === null;
+    const missing = finishCandidate === null
+      ? []
+      : finishCandidate.map((seconds, index) => seconds - totals[index]).filter(delta => delta > 0);
+    const added = missing.reduce((sum, delta) => sum + delta, 0);
+    finishPreview.textContent = `Finish would add ${added.toFixed(2)} band-seconds across ${missing.length} bands.`;
     maskReturnButton.disabled = maskReturnCandidate() === null;
     maskBlendButton.disabled = maskBlendCandidate() === null;
     maskMeanButton.disabled = maskMeanCandidate() === null;
