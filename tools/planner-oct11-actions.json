@@ -1,0 +1,28 @@
+{
+  "blendstrip": {
+    "lane": 13,
+    "depends": "nothing",
+    "title": "Five bands of light \u2014 Blend only checked bands halfway toward kept light",
+    "message": "checked exposure blends include kept zero and leave the successive mask and memory unchanged",
+    "buttons": [
+      "strip-mask-blend"
+    ],
+    "copy": {
+      "strip-mask-blend": "Halfway to kept light in checked bands",
+      "strip-mask-blend-help": "Average current and kept light only in checked bands, including zero. Other bands, the kept strip and the successive mask stay put. This edits the toy, not a real print. Undo restores the whole press."
+    }
+  },
+  "reversestrip": {
+    "lane": 13,
+    "depends": "nothing",
+    "title": "Five bands of light \u2014 Reverse the light amounts without reversing the mask",
+    "message": "reversing five light amounts keeps targets checks and successive mask fixed in one Undo",
+    "buttons": [
+      "strip-reverse-light"
+    ],
+    "copy": {
+      "strip-reverse-light": "Reverse the five light amounts",
+      "strip-reverse-light-help": "Exchange the outer light amounts, then the next pair; the middle stays put. Targets, checks and the successive mask do not turn. This edits the timing toy, not exposed paper. Undo restores the whole strip."
+    }
+  }
+}
