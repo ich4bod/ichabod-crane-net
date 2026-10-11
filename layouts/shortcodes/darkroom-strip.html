@@ -185,6 +185,34 @@
     <p id="strip-return-help">Return only the kept light amounts. The current spacing stays selected, and the mask sequence begins again. Undo brings back the interrupted strip.</p>
     </section>
   </details>
+  <details id="three-questions-ichabod-crane-net">
+    <summary>Try three questions about light-time</summary>
+    <p>Use the strip as a timing experiment. It does not predict the darkness of a physical print.</p>
+    <section>
+      <h3>Does a doubled time mean a doubled darkness?</h3>
+      <p>Compare targets one stop apart. The later band receives twice the target light-time. Is the paper promised to look twice as dark?</p>
+      <details>
+        <summary>Read an answer</summary>
+        <p>No. One stop names a factor of two in exposure time at the same modeled light level. This toy does not include a paper response curve, development or an observed density. A proportional timing rule is not a proportional darkness rule.</p>
+      </details>
+    </section>
+    <section>
+      <h3>Can zero take part in an average?</h3>
+      <p>Clear the strip. Add light to one chosen band, then check that band and one still-dark band. Press Equalize light in checked bands.</p>
+      <details>
+        <summary>Read an answer</summary>
+        <p>Yes. If the amounts are eight and zero, both become four. The checked total remains eight; unchecked bands keep their own light. The operation redistributes values in the toy. It cannot take already delivered light back out of real paper.</p>
+      </details>
+    </section>
+    <section>
+      <h3>Does moving the checks move the light?</h3>
+      <p>Choose any custom checked mask and press Move checks one band right. Read the bars before adding another exposure.</p>
+      <details>
+        <summary>Read an answer</summary>
+        <p>No. Checks are choices about the next action, not the accumulated light. They wrap at the end without changing totals or adding an Undo step. Expose checked bands uses the new choices only when you press it.</p>
+      </details>
+    </section>
+  </details>
 </section>
 <style>
   #darkroom-strip {
@@ -394,6 +422,53 @@
   #darkroom-strip [hidden],
   #darkroom-strip #kept-strip[hidden] {
     display: none;
+  }
+  #three-questions-ichabod-crane-net {
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    border: 1px solid #e9755c;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 16px 0;
+    font: 16px/1.5 system-ui, sans-serif;
+  }
+  #three-questions-ichabod-crane-net > summary,
+  #three-questions-ichabod-crane-net section > details > summary {
+    box-sizing: border-box;
+    min-height: 45px;
+    max-width: 100%;
+    padding: 8px;
+    overflow-wrap: anywhere;
+  }
+  #three-questions-ichabod-crane-net summary:focus-visible {
+    outline: 3px solid #e9755c;
+    outline-offset: 3px;
+  }
+  #three-questions-ichabod-crane-net > p,
+  #three-questions-ichabod-crane-net section > p,
+  #three-questions-ichabod-crane-net section > details > p {
+    margin: 8px 0;
+    overflow-wrap: anywhere;
+  }
+  #three-questions-ichabod-crane-net > section {
+    max-width: 100%;
+    margin: 16px 0;
+    overflow-wrap: anywhere;
+  }
+  #three-questions-ichabod-crane-net h3 {
+    margin: 0 0 8px;
+    color: #f7efcf;
+    font: bold 18px/1.35 system-ui, sans-serif;
+    overflow-wrap: anywhere;
+  }
+  #three-questions-ichabod-crane-net section > details {
+    box-sizing: border-box;
+    max-width: 100%;
+    border: 1px solid #25282c;
+    border-radius: 6px;
+    padding: 8px;
+    overflow-wrap: anywhere;
   }
 </style>
 <script defer src="/darkroom-strip.js?v=28"></script>
