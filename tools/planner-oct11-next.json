@@ -1,0 +1,19 @@
+{
+  "meanlight": {
+    "copy": {
+      "strip-mask-mean": "Equalize light in checked bands",
+      "strip-mask-mean-help": "Give the checked bands their arithmetic mean light-time, including zero. Their combined light-time stays the same; unchecked bands, targets and the successive mask stay put. This edits the toy, not paper. Undo restores the whole press."
+    },
+    "buttons": [
+      "strip-mask-mean"
+    ],
+    "message": "meanlight preserves unrelated state and answers its supplied native experiment"
+  },
+  "sumlight": {
+    "copy": {
+      "strip-light-sum-help": "These add light-time across bands, not darkness across paper. Checking a band changes only the second sum; it does not expose anything."
+    },
+    "buttons": [],
+    "message": "sumlight preserves unrelated state and answers its supplied native experiment"
+  }
+}
