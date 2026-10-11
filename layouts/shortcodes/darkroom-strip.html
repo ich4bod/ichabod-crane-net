@@ -112,6 +112,8 @@
       <div class="strip-actions">
         <button id="strip-mask-return" type="button" aria-describedby="strip-mask-return-help" disabled>Use kept light in checked bands</button>
       </div>
+      <button id="strip-mask-blend" type="button" aria-describedby="strip-mask-blend-help" disabled>Halfway to kept light in checked bands</button>
+      <p id="strip-mask-blend-help">Average current and kept light only in checked bands, including zero. Other bands, the kept strip and the successive mask stay put. This edits the toy, not a real print. Undo restores the whole press.</p>
       <p id="strip-mask-return-help">Copy the kept amounts into checked bands, including zero light. Other bands and the successive mask stay put. This edits the toy; it cannot take light back out of real paper. Undo restores the whole press.</p>
       <p id="strip-mask-finish-help">Each checked band receives only what its own target still needs. Extra light is left alone; unchecked bands and the successive mask stay put. Undo reverses the whole press.</p>
       <div class="strip-actions">
@@ -279,7 +281,8 @@
     margin: 0;
     accent-color: #e9755c;
   }
-  #darkroom-strip #strip-mask-return {
+  #darkroom-strip #strip-mask-return,
+  #darkroom-strip #strip-mask-blend {
     min-height: 45px;
     font: 16px/1.4 system-ui, sans-serif;
     white-space: normal;
@@ -376,4 +379,4 @@
     display: none;
   }
 </style>
-<script defer src="/darkroom-strip.js?v=24"></script>
+<script defer src="/darkroom-strip.js?v=25"></script>

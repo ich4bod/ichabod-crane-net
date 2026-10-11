@@ -33,6 +33,7 @@
   const maskExposeButton = strip.querySelector('#strip-mask-expose');
   const maskFinishButton = strip.querySelector('#strip-mask-finish');
   const maskReturnButton = strip.querySelector('#strip-mask-return');
+  const maskBlendButton = strip.querySelector('#strip-mask-blend');
   const maskHalfButton = strip.querySelector('#strip-mask-half');
   const maskDoubleButton = strip.querySelector('#strip-mask-double');
   const maskInvertButton = strip.querySelector('#strip-mask-invert');
@@ -45,6 +46,7 @@
     maskExposeButton.disabled = !mask.some(Boolean);
     maskFinishButton.disabled = maskFinishCandidate() === null;
     maskReturnButton.disabled = maskReturnCandidate() === null;
+    maskBlendButton.disabled = maskBlendCandidate() === null;
     maskHalfButton.disabled = maskScaleCandidate(0.5) === null;
     maskDoubleButton.disabled = maskScaleCandidate(2) === null;
     const shifted = rotatedMask(1);
@@ -77,6 +79,15 @@
     if (kept === null) return null;
     const candidate = totals.map((seconds, index) => mask[index] ? kept.totals[index] : seconds);
     if (!candidate.some((seconds, index) => seconds !== totals[index])) return null;
+    return candidate;
+  };
+  const maskBlendCandidate = () => {
+    if (kept === null) return null;
+    const candidate = totals.map((seconds, index) => mask[index]
+      ? (seconds + kept.totals[index]) / 2
+      : seconds);
+    if (!candidate.every(Number.isFinite)
+      || !candidate.some((seconds, index) => seconds !== totals[index])) return null;
     return candidate;
   };
   const maskScaleCandidate = factor => {
@@ -283,6 +294,14 @@
   maskReturnButton.addEventListener('click', () => {
     updateMask();
     const candidate = maskReturnCandidate();
+    if (candidate === null) return;
+    commitChange(() => {
+      totals.splice(0, totals.length, ...candidate);
+    });
+  });
+  maskBlendButton.addEventListener('click', () => {
+    updateMask();
+    const candidate = maskBlendCandidate();
     if (candidate === null) return;
     commitChange(() => {
       totals.splice(0, totals.length, ...candidate);
