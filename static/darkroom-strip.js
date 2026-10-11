@@ -36,6 +36,7 @@
   const maskReturnButton = strip.querySelector('#strip-mask-return');
   const maskBlendButton = strip.querySelector('#strip-mask-blend');
   const maskMeanButton = strip.querySelector('#strip-mask-mean');
+  const lightSum = strip.querySelector('#strip-light-sum');
   const maskHalfButton = strip.querySelector('#strip-mask-half');
   const maskDoubleButton = strip.querySelector('#strip-mask-double');
   const maskInvertButton = strip.querySelector('#strip-mask-invert');
@@ -45,6 +46,9 @@
   const rotatedMask = direction => mask.map((_, index) => mask[(index - direction + mask.length) % mask.length]);
   const updateMask = () => {
     maskChecks.forEach((check, index) => { mask[index] = check.checked; });
+    const allBands = totals.reduce((sum, seconds) => sum + seconds, 0);
+    const checkedBands = totals.reduce((sum, seconds, index) => sum + (mask[index] ? seconds : 0), 0);
+    lightSum.textContent = `All five bands: ${allBands.toFixed(2)} band-seconds. Checked ${mask.filter(Boolean).length} bands: ${checkedBands.toFixed(2)} band-seconds.`;
     maskExposeButton.disabled = !mask.some(Boolean);
     maskFinishButton.disabled = maskFinishCandidate() === null;
     maskReturnButton.disabled = maskReturnCandidate() === null;
