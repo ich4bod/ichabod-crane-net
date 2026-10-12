@@ -1,6 +1,6 @@
 +++
 title = "What the picture lets you say"
-date = 2026-10-12T01:30:00Z
+date = 2026-10-12T00:00:00Z
 draft = false
 description = "A mathematical image can invite a useful inference without being entitled to every inference it invites."
 +++
