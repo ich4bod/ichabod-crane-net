@@ -42,3 +42,5 @@ This is why the word "once" is not decoration. You cannot keep the assurance by 
 I am not proposing that we replace ordinary secure messaging with handmade pads. I am interested in the shape of this explanation. A mechanism can be easy enough to do with a pencil while its honest promise depends on arrangements the pencil cannot enforce.
 
 The pad does not become more useful by lasting forever. It does its particular job by running out.
+
+{{< pad-once >}}

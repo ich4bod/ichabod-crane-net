@@ -1,0 +1,107 @@
+<section id="pad-once-instrument">
+  <h3>Try one letter</h3>
+  <p id="pad-demo-warning">A fixed alphabet example, not secure messaging. Do not enter secrets here.</p>
+  <div class="pad-controls">
+    <label for="pad-message">Message letter</label>
+    <output id="pad-message-value" for="pad-message">D (3)</output>
+    <input id="pad-message" type="range" min="0" max="25" step="1" value="3">
+    <label for="pad-key">Example key letter</label>
+    <output id="pad-key-value" for="pad-key">I (8)</output>
+    <input id="pad-key" type="range" min="0" max="25" step="1" value="8">
+  </div>
+  <p id="pad-sum">D (3) + I (8) = L (11).</p>
+  <p id="pad-return">L (11) − I (8) returns D (3).</p>
+  <details id="pad-candidates">
+    <summary>Which other letters could give this ciphertext?</summary>
+    <p>Hold the ciphertext fixed. Every possible message letter has one matching example key.</p>
+    <table>
+      <caption>The same ciphertext, twenty-six possible originals</caption>
+      <thead><tr><th scope="col">Message letter</th><th scope="col">Matching key letter</th></tr></thead>
+      <tbody id="pad-candidate-rows">
+        {{- range $message := seq 0 25 }}
+          {{- $key := mod (add (sub 11 $message) 26) 26 }}
+          <tr><td>{{ printf "%c" (add 65 $message) }} ({{ $message }})</td><td>{{ printf "%c" (add 65 $key) }} ({{ $key }})</td></tr>
+        {{- end }}
+      </tbody>
+    </table>
+  </details>
+</section>
+<style>
+  #pad-once-instrument {
+    box-sizing: border-box;
+    max-width: 100%;
+    background: #fffdf2;
+    color: #203a32;
+    border: 1px solid #203a32;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 24px 0;
+    font: 16px/1.5 system-ui, sans-serif;
+    overflow-wrap: anywhere;
+  }
+  #pad-once-instrument h3 {
+    margin: 0 0 8px;
+    color: #203a32;
+    font: 24px/1.25 Georgia, serif;
+  }
+  #pad-once-instrument p {
+    margin: 8px 0;
+  }
+  #pad-once-instrument .pad-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 12px;
+    align-items: center;
+  }
+  #pad-once-instrument label,
+  #pad-once-instrument output {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  #pad-once-instrument input[type="range"] {
+    grid-column: 1 / -1;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    margin: 4px 0 12px;
+    accent-color: #d46a3c;
+  }
+  #pad-once-instrument #pad-sum,
+  #pad-once-instrument #pad-return {
+    font: 16px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    overflow-wrap: anywhere;
+  }
+  #pad-once-instrument details {
+    box-sizing: border-box;
+    max-width: 100%;
+    margin-top: 12px;
+  }
+  #pad-once-instrument summary {
+    box-sizing: border-box;
+    min-height: 45px;
+    max-width: 100%;
+    padding: 8px;
+    overflow-wrap: anywhere;
+  }
+  #pad-once-instrument summary:focus-visible {
+    outline: 3px solid #d46a3c;
+    outline-offset: 3px;
+  }
+  #pad-once-instrument table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+  #pad-once-instrument caption {
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+  #pad-once-instrument th,
+  #pad-once-instrument td {
+    padding: 8px;
+    border: 1px solid #203a32;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+</style>
+<script defer src="/pad-once.js?v=20261012"></script>
