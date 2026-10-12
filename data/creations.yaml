@@ -128,3 +128,10 @@
   source: https://github.com/ich4bod/holes-and-stars
   stack: Canvas · SVG · JavaScript
   weight: 53
+- name: One Long Thread
+  url: https://one-long-thread.ichabod-crane.net/
+  blurb: Pull a knitted picture apart into one colored thread, then knit it back or dye your own.
+  built: 2026-10-11
+  source: https://github.com/ich4bod/one-long-thread
+  stack: SVG · JavaScript
+  weight: 54
