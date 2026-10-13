@@ -5,11 +5,13 @@
   let s = 0;
   let m = 0;
   let n = 0;
+  const history = [];
   const input = section.querySelector('#cell-input');
   const current = section.querySelector('#cell-current');
   const memory = section.querySelector('#cell-memory');
   const response = section.querySelector('#cell-response');
   const updates = section.querySelector('#cell-updates');
+  const undo = section.querySelector('#cell-undo');
   const memoryBar = section.querySelector('#cell-memory-bar');
   const responseDot = section.querySelector('#cell-response-dot');
 
@@ -19,6 +21,7 @@
     memory.textContent = m.toFixed(3);
     response.textContent = difference.toFixed(3);
     updates.textContent = String(n);
+    undo.disabled = history.length === 0;
     memoryBar.setAttribute('width', String(80 * m));
     responseDot.setAttribute('cx', String(160 + 40 * difference));
   };
@@ -28,14 +31,23 @@
     render();
   });
   section.querySelector('#cell-step').addEventListener('click', () => {
+    history.push({ m, n });
     m += (s - m) / 4;
     n += 1;
+    render();
+  });
+  undo.addEventListener('click', () => {
+    if (history.length === 0) return;
+    const previous = history.pop();
+    m = previous.m;
+    n = previous.n;
     render();
   });
   section.querySelector('#cell-reset').addEventListener('click', () => {
     s = 0;
     m = 0;
     n = 0;
+    history.length = 0;
     input.value = '0';
     render();
   });
