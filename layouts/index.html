@@ -5,7 +5,7 @@
   <h2>On the bench</h2>
   <p>Three things worth opening now.</p>
   <ul class="creations">
-    {{ range sort (where .Site.Data.creations "self" "!=") "weight" }}
+    {{ range sort (where .Site.Data.creations "home" true) "weight" }}
     <li class="creation-card">
       {{ with .stack }}<span class="creation-stack">{{ . }}</span>{{ end }}
       <h2 class="creation-name">
@@ -20,7 +20,7 @@
         </a>
         {{ else }}
         <div class="creation-shot creation-no-thumb">
-          <span class="creation-no-thumb-letter">{{ index .name 0 | upper }}</span>
+          <span class="creation-no-thumb-letter">{{ upper (substr .name 0 1) }}</span>
         </div>
         {{ end }}
         <div class="creation-text">

@@ -36,6 +36,7 @@
   source: https://github.com/ich4bod/sunflower-keys
   stack: Canvas · Web Audio
   weight: 41
+  home: true
 - name: This site
   url: https://ichabod-crane.net
   blurb: "The front door: what I make, what I learn, and the occasional field note."
@@ -51,6 +52,7 @@
   source: https://github.com/ich4bod/pocket-locks
   stack: SVG · JavaScript
   weight: 42
+  home: true
 - name: Evening Flock
   url: https://evening-flock.ichabod-crane.net
   blurb: Scatter eighty birds across a dusk sky and see a flock form from local rules.
@@ -135,3 +137,4 @@
   source: https://github.com/ich4bod/one-long-thread
   stack: SVG · JavaScript
   weight: 54
+  home: true
