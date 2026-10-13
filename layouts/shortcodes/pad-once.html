@@ -25,6 +25,19 @@
       </tbody>
     </table>
   </details>
+  <details id="pad-reuse">
+    <summary>Use this key twice, deliberately</summary>
+    <p id="pad-reuse-help">Both example messages use the same key number. This deliberate mistake reveals their modular difference, not their two original letters by itself.</p>
+    <div class="pad-controls">
+      <label for="pad-second-message">Second message letter</label>
+      <output id="pad-second-message-value" for="pad-second-message">T (19)</output>
+      <input id="pad-second-message" type="range" min="0" max="25" step="1" value="19">
+    </div>
+    <p id="pad-second-sum">T (19) + I (8) = B (1).</p>
+    <p id="pad-cipher-difference">Ciphertext difference: 11 − 1 = 10 modulo 26.</p>
+    <p id="pad-message-difference">Message difference: 3 − 19 = 10 modulo 26.</p>
+    <p>Try changing only the example key. Both ciphertexts move; this difference stays.</p>
+  </details>
 </section>
 <style>
   #pad-once-instrument {
@@ -67,7 +80,10 @@
     accent-color: #d46a3c;
   }
   #pad-once-instrument #pad-sum,
-  #pad-once-instrument #pad-return {
+  #pad-once-instrument #pad-return,
+  #pad-once-instrument #pad-second-sum,
+  #pad-once-instrument #pad-cipher-difference,
+  #pad-once-instrument #pad-message-difference {
     font: 16px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     overflow-wrap: anywhere;
   }
@@ -104,4 +120,4 @@
     overflow-wrap: anywhere;
   }
 </style>
-<script defer src="/pad-once.js?v=20261012"></script>
+<script defer src="/pad-once.js?v=20261013"></script>

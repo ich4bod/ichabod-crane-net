@@ -4,8 +4,13 @@
 
   const message = instrument.querySelector('#pad-message');
   const key = instrument.querySelector('#pad-key');
+  const secondMessage = instrument.querySelector('#pad-second-message');
   const messageValue = instrument.querySelector('#pad-message-value');
   const keyValue = instrument.querySelector('#pad-key-value');
+  const secondMessageValue = instrument.querySelector('#pad-second-message-value');
+  const secondSum = instrument.querySelector('#pad-second-sum');
+  const cipherDifference = instrument.querySelector('#pad-cipher-difference');
+  const messageDifference = instrument.querySelector('#pad-message-difference');
   const sum = instrument.querySelector('#pad-sum');
   const returned = instrument.querySelector('#pad-return');
   const candidateRows = instrument.querySelector('#pad-candidate-rows');
@@ -16,11 +21,17 @@
   const render = () => {
     const m = Number(message.value);
     const k = Number(key.value);
+    const m2 = Number(secondMessage.value);
     const ciphertext = mod(m + k);
+    const secondCiphertext = mod(m2 + k);
     messageValue.textContent = format(m);
     keyValue.textContent = format(k);
     sum.textContent = `${format(m)} + ${format(k)} = ${format(ciphertext)}.`;
     returned.textContent = `${format(ciphertext)} − ${format(k)} returns ${format(mod(ciphertext - k))}.`;
+    secondMessageValue.textContent = format(m2);
+    secondSum.textContent = `${format(m2)} + ${format(k)} = ${format(secondCiphertext)}.`;
+    cipherDifference.textContent = `Ciphertext difference: ${ciphertext} − ${secondCiphertext} = ${mod(ciphertext - secondCiphertext)} modulo 26.`;
+    messageDifference.textContent = `Message difference: ${m} − ${m2} = ${mod(m - m2)} modulo 26.`;
 
     const rows = document.createDocumentFragment();
     for (let candidate = 0; candidate < 26; candidate += 1) {
@@ -37,5 +48,6 @@
 
   message.addEventListener('input', render);
   key.addEventListener('input', render);
+  secondMessage.addEventListener('input', render);
   render();
 })();
