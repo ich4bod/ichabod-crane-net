@@ -2,7 +2,8 @@
   const saved = document.getElementById('range-saved');
   const version = document.getElementById('range-version');
   const ifRange = document.getElementById('range-if-range');
-  if (!saved || !version || !ifRange) return;
+  const ignoreRange = document.getElementById('range-ignore');
+  if (!saved || !version || !ifRange || !ignoreRange) return;
 
   const original = 'ABCDEFGHIJ';
   const files = { v1: original, v2: 'abcdefghij' };
@@ -23,22 +24,26 @@
     const currentFile = files[version.value];
     const prefix = original.slice(0, n);
     const failedCondition = ifRange.checked && version.value === 'v2';
-    const body = failedCondition ? currentFile : currentFile.slice(n);
+    const serverIgnoresRange = ignoreRange.checked;
+    const fullResponse = serverIgnoresRange || failedCondition;
+    const body = fullResponse ? currentFile : currentFile.slice(n);
     outputs.currentFile.textContent = currentFile;
-    outputs.joinNote.textContent = failedCondition
-      ? 'The new complete file replaces the saved prefix.'
-      : version.value === 'v1'
+    outputs.joinNote.textContent = serverIgnoresRange
+      ? 'The server ignored the range; the complete file replaces the saved prefix.'
+      : failedCondition
+        ? 'The new complete file replaces the saved prefix.'
+        : version.value === 'v1'
         ? 'The bytes join the original file.'
         : 'This joins bytes from two different files.';
     outputs.prefix.textContent = prefix;
     outputs.request.textContent = `Range: bytes=${n}-`;
     outputs.validator.textContent = ifRange.checked ? 'If-Range: "v1"' : 'If-Range: not sent.';
-    outputs.status.textContent = failedCondition ? '200 OK' : '206 Partial Content';
-    outputs.contentRange.textContent = failedCondition
+    outputs.status.textContent = fullResponse ? '200 OK' : '206 Partial Content';
+    outputs.contentRange.textContent = fullResponse
       ? 'Content-Range: not sent for this full response.'
       : `Content-Range: bytes ${n}-9/10`;
     outputs.body.textContent = body;
-    outputs.result.textContent = failedCondition ? currentFile : prefix + body;
+    outputs.result.textContent = fullResponse ? currentFile : prefix + body;
   };
 
   saved.addEventListener('change', render);
@@ -47,6 +52,8 @@
   version.addEventListener('input', render);
   ifRange.addEventListener('change', render);
   ifRange.addEventListener('input', render);
+  ignoreRange.addEventListener('change', render);
+  ignoreRange.addEventListener('input', render);
   render();
 
   const endOffset = document.getElementById('range-end-offset');

@@ -41,6 +41,11 @@
       <div><dt>Representation bytes</dt><dd id="range-end-body">ABCDEFGHIJ</dd></div>
     </dl>
   </details>
+  <details id="range-whole">
+    <summary>When the server sends the whole file</summary>
+    <p id="range-whole-help">A server may ignore a Range request and send the whole representation. This switch chooses that allowed response for the example; it is not a failed validator. The client must replace its saved prefix when it receives the complete file.</p>
+    <label id="range-ignore-label"><input id="range-ignore" type="checkbox" aria-describedby="range-whole-help"> Ignore the range and send the whole file</label>
+  </details>
 </section>
 <style>
   #range-demo {
@@ -161,6 +166,44 @@
     color: #203a32;
     font: inherit;
   }
+  #range-demo #range-whole {
+    margin-top: 16px;
+    padding: 8px;
+    border: 1px solid #203a32;
+    border-radius: 4px;
+    background: #fffdf2;
+    color: #203a32;
+    font: 16px/1.5 system-ui, sans-serif;
+  }
+  #range-demo #range-whole summary {
+    box-sizing: border-box;
+    min-height: 45px;
+    padding: 8px;
+    cursor: pointer;
+  }
+  #range-demo #range-whole summary:focus-visible,
+  #range-demo #range-ignore:focus-visible {
+    outline: 3px solid #d46a3c;
+    outline-offset: 3px;
+  }
+  #range-demo #range-whole p {
+    margin: 8px 0;
+  }
+  #range-demo #range-whole #range-ignore-label {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 45px;
+    padding: 8px;
+  }
+  #range-demo #range-ignore {
+    box-sizing: border-box;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+  }
   #range-demo #range-ends-readout {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -184,4 +227,4 @@
     }
   }
 </style>
-<script defer src="/range-demo.js?v=20261013-range-demo-4"></script>
+<script defer src="/range-demo.js?v=20261013-range-demo-5"></script>
