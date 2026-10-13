@@ -14,8 +14,14 @@
   <details id="pad-candidates">
     <summary>Which other letters could give this ciphertext?</summary>
     <p>Hold the ciphertext fixed. Every possible message letter has one matching example key.</p>
+    <label for="pad-key-assumption">Assume these example keys</label>
+    <select id="pad-key-assumption" aria-describedby="pad-assumption-help">
+      <option value="all" selected>All twenty-six equally likely numbers</option>
+      <option value="even">Only the thirteen even numbers</option>
+    </select>
+    <p id="pad-assumption-help">These are assumptions for the candidate table, not a key generator or a restriction on the two sliders.</p>
     <table>
-      <caption>The same ciphertext, twenty-six possible originals</caption>
+      <caption id="pad-candidate-caption">The same ciphertext, twenty-six possible originals</caption>
       <thead><tr><th scope="col">Message letter</th><th scope="col">Matching key letter</th></tr></thead>
       <tbody id="pad-candidate-rows">
         {{- range $message := seq 0 25 }}
@@ -24,6 +30,7 @@
         {{- end }}
       </tbody>
     </table>
+    <p id="pad-assumption-note">All twenty-six equally likely key numbers leave all twenty-six originals possible.</p>
   </details>
   <details id="pad-reuse">
     <summary>Use this key twice, deliberately</summary>
@@ -108,6 +115,22 @@
     table-layout: fixed;
     border-collapse: collapse;
   }
+  #pad-once-instrument #pad-key-assumption {
+    box-sizing: border-box;
+    min-height: 45px;
+    width: min(100%, 26rem);
+    max-width: 100%;
+    padding: 8px;
+    color: inherit;
+    background-color: #fffdf2;
+    border: 1px solid #203a32;
+    font: inherit;
+    overflow-wrap: anywhere;
+  }
+  #pad-once-instrument #pad-key-assumption:focus-visible {
+    outline: 3px solid #d46a3c;
+    outline-offset: 3px;
+  }
   #pad-once-instrument caption {
     text-align: left;
     overflow-wrap: anywhere;
@@ -120,4 +143,4 @@
     overflow-wrap: anywhere;
   }
 </style>
-<script defer src="/pad-once.js?v=20261013"></script>
+<script defer src="/pad-once.js?v=20261013-even-keys"></script>

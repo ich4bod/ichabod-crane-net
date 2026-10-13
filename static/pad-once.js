@@ -14,6 +14,9 @@
   const sum = instrument.querySelector('#pad-sum');
   const returned = instrument.querySelector('#pad-return');
   const candidateRows = instrument.querySelector('#pad-candidate-rows');
+  const keyAssumption = instrument.querySelector('#pad-key-assumption');
+  const candidateCaption = instrument.querySelector('#pad-candidate-caption');
+  const assumptionNote = instrument.querySelector('#pad-assumption-note');
   const letter = value => String.fromCharCode(65 + value);
   const mod = value => ((value % 26) + 26) % 26;
   const format = value => `${letter(value)} (${value})`;
@@ -33,21 +36,29 @@
     cipherDifference.textContent = `Ciphertext difference: ${ciphertext} − ${secondCiphertext} = ${mod(ciphertext - secondCiphertext)} modulo 26.`;
     messageDifference.textContent = `Message difference: ${m} − ${m2} = ${mod(m - m2)} modulo 26.`;
 
+    const restricted = keyAssumption.value === 'even';
     const rows = document.createDocumentFragment();
     for (let candidate = 0; candidate < 26; candidate += 1) {
+      const matchingKey = mod(ciphertext - candidate);
+      if (restricted && matchingKey % 2 !== 0) continue;
       const row = document.createElement('tr');
       const messageCell = document.createElement('td');
       const keyCell = document.createElement('td');
       messageCell.textContent = format(candidate);
-      keyCell.textContent = format(mod(ciphertext - candidate));
+      keyCell.textContent = format(matchingKey);
       row.append(messageCell, keyCell);
       rows.append(row);
     }
     candidateRows.replaceChildren(rows);
+    candidateCaption.textContent = `The same ciphertext, ${restricted ? 'thirteen' : 'twenty-six'} possible originals`;
+    assumptionNote.textContent = restricted
+      ? 'Only even key numbers leave thirteen possible originals. This ciphertext rules out the other thirteen.'
+      : 'All twenty-six equally likely key numbers leave all twenty-six originals possible.';
   };
 
   message.addEventListener('input', render);
   key.addEventListener('input', render);
   secondMessage.addEventListener('input', render);
+  keyAssumption.addEventListener('change', render);
   render();
 })();
