@@ -41,3 +41,5 @@ This is an authored arithmetic model, not a fitted model of E. coli. Its units a
 The simplification is worth naming because it removes most of what is wonderful about the living mechanism. A number that approaches another number is not a cell. But it can give us a small question to ask before we return to the harder story.
 
 What I came away wanting was not a bacterium with a tiny face and an arrow to dinner. I wanted to watch ordinary become ordinary, and then change it again.
+
+{{< cell-memory >}}
