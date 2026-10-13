@@ -6,6 +6,13 @@
     <input id="dither-input" type="range" min="0" max="16" step="1" value="8" aria-describedby="dither-help">
     <output id="dither-input-value" for="dither-input">0.5000</output>
   </div>
+  <label for="dither-ranks">Threshold order</label>
+  <select id="dither-ranks" aria-describedby="dither-ranks-help">
+    <option value="spread" selected>Spread ranks</option>
+    <option value="rows">Row-by-row ranks</option>
+    <option value="columns">Column-by-column ranks</option>
+  </select>
+  <p id="dither-ranks-help">Every ordering still uses the ranks zero through fifteen once per tile. Row and column orders gather the switching places into stripes; the spread order separates them. Their encoded average can agree while their texture differs.</p>
   <div class="dither-figures">
     <figure>
       <figcaption>The input number</figcaption>
@@ -92,6 +99,24 @@
     flex: 0 0 auto;
     font-variant-numeric: tabular-nums;
   }
+  #dither-instrument #dither-ranks {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 45px;
+    margin: 0;
+    padding: 8px;
+    border: 1px solid #203a32;
+    border-radius: 4px;
+    background: #fffdf2;
+    color: #203a32;
+    font: 16px/1.5 system-ui, sans-serif;
+  }
+  #dither-instrument #dither-ranks:focus-visible {
+    outline: 3px solid #d46a3c;
+    outline-offset: 3px;
+  }
   #dither-instrument #dither-shift {
     margin-top: 16px;
     padding: 8px;
@@ -159,4 +184,4 @@
     }
   }
 </style>
-<script defer src="/dither-tile.js?v=20261013-dither-tile-2"></script>
+<script defer src="/dither-tile.js?v=20261013-dither-tile-3"></script>

@@ -12,12 +12,18 @@
   const shiftX = document.getElementById('dither-shift-x');
   const shiftY = document.getElementById('dither-shift-y');
   const shiftValue = document.getElementById('dither-shift-value');
-  const ranks = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+  const rankSelect = document.getElementById('dither-ranks');
+  const rankOrders = {
+    spread: [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5],
+    rows: Array.from({ length: 16 }, (_, i) => i),
+    columns: [0, 4, 8, 12, 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15]
+  };
 
   const render = () => {
     const n = Number(input.value);
     const ox = Number(shiftX.value);
     const oy = Number(shiftY.value);
+    const ranks = rankOrders[rankSelect.value];
     const g = n / 16;
     const encoded = g.toFixed(4);
     const shade = Math.round(255 * n / 16);
@@ -51,5 +57,6 @@
   input.addEventListener('input', render);
   shiftX.addEventListener('input', render);
   shiftY.addEventListener('input', render);
+  rankSelect.addEventListener('change', render);
   render();
 })();
