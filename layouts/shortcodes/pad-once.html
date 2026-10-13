@@ -58,6 +58,34 @@
     <p id="pad-changed-cipher">Changed ciphertext: L (11) + 1 = M (12) modulo 26.</p>
     <p id="pad-changed-message">Using the same key returns E (4), not a sender check.</p>
   </details>
+  <details id="pad-questions">
+    <summary>Questions about what the alphabet sum promises</summary>
+    <p>Try the small example before opening an answer. These questions concern its conditions, not a secure way to send a message.</p>
+    <section>
+      <h4>Do twenty-six possibilities mean twenty-six equal chances?</h4>
+      <p>Open the candidate table and choose Zero half the time, other numbers equally. Count the possible originals, then compare their chances.</p>
+      <details>
+        <summary>Open the answer</summary>
+        <p>All twenty-six originals remain possible. With the supplied equal prior for originals and independent biased keys, the ciphertext letter itself has chance fifty percent; each other original has chance two percent. Possibility is not equal probability. Different prior assumptions could give different chances.</p>
+      </details>
+    </section>
+    <section>
+      <h4>Does cancelling the reused key reveal both letters?</h4>
+      <p>Open the deliberate reuse example. Change only its key and compare the two modular differences.</p>
+      <details>
+        <summary>Open the answer</summary>
+        <p>The ciphertext difference stays equal to the message difference because the same key cancels. That relation alone does not identify both original letters. It is information that the separate one-use example did not promise to reveal; another known original would make it more damaging.</p>
+      </details>
+    </section>
+    <section>
+      <h4>Does secrecy tell you who sent a letter?</h4>
+      <p>Change the ciphertext by one and subtract the same key. Does the instrument reject the altered letter?</p>
+      <details>
+        <summary>Open the answer</summary>
+        <p>No. Adding one to the ciphertext adds one modulo twenty-six to the recovered original. The bare sum has no sender check. The one-time secrecy conditions do not, by themselves, authenticate a message; real messaging needs a separate authenticated construction.</p>
+      </details>
+    </section>
+  </details>
 </section>
 <style>
   #pad-once-instrument {
@@ -160,6 +188,38 @@
   #pad-once-instrument .pad-weighted-chance {
     text-align: right;
     font-variant-numeric: tabular-nums;
+  }
+  #pad-questions {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  #pad-questions > section {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+    margin: 16px 0;
+    padding: 12px 0 0;
+    border-top: 1px solid #203a32;
+    overflow-wrap: anywhere;
+  }
+  #pad-questions h4 {
+    margin: 0;
+    color: #203a32;
+    font: 20px/1.3 Georgia, serif;
+    overflow-wrap: anywhere;
+  }
+  #pad-questions summary {
+    box-sizing: border-box;
+    min-height: 45px;
+    max-width: 100%;
+    padding: 8px;
+    overflow-wrap: anywhere;
+  }
+  #pad-questions summary:focus-visible {
+    outline: 3px solid #d46a3c;
+    outline-offset: 3px;
   }
 </style>
 <script defer src="/pad-once.js?v=20261013-weighted-assumption"></script>
