@@ -41,4 +41,49 @@
   });
 
   render();
+
+  const pair = section.querySelector('#cell-pair');
+  let pairInput = 0;
+  let slow = 0;
+  let fast = 0;
+  let pairUpdates = 0;
+  const pairReadouts = {
+    slowMemory: pair.querySelector('#cell-slow-memory'),
+    slowResponse: pair.querySelector('#cell-slow-response'),
+    slowUpdates: pair.querySelector('#cell-slow-updates'),
+    fastMemory: pair.querySelector('#cell-fast-memory'),
+    fastResponse: pair.querySelector('#cell-fast-response'),
+    fastUpdates: pair.querySelector('#cell-fast-updates'),
+  };
+  const renderPair = () => {
+    pairReadouts.slowMemory.textContent = slow.toFixed(3);
+    pairReadouts.slowResponse.textContent = (pairInput - slow).toFixed(3);
+    pairReadouts.slowUpdates.textContent = String(pairUpdates);
+    pairReadouts.fastMemory.textContent = fast.toFixed(3);
+    pairReadouts.fastResponse.textContent = (pairInput - fast).toFixed(3);
+    pairReadouts.fastUpdates.textContent = String(pairUpdates);
+  };
+
+  pair.querySelector('#cell-pair-rise').addEventListener('click', () => {
+    pairInput = 4;
+    renderPair();
+  });
+  pair.querySelector('#cell-pair-fall').addEventListener('click', () => {
+    pairInput = 0;
+    renderPair();
+  });
+  pair.querySelector('#cell-pair-step').addEventListener('click', () => {
+    slow += (pairInput - slow) / 4;
+    fast += (pairInput - fast) / 2;
+    pairUpdates += 1;
+    renderPair();
+  });
+  pair.querySelector('#cell-pair-reset').addEventListener('click', () => {
+    pairInput = 0;
+    slow = 0;
+    fast = 0;
+    pairUpdates = 0;
+    renderPair();
+  });
+  renderPair();
 })();
