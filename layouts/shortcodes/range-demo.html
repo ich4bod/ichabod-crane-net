@@ -7,6 +7,8 @@
     <option value="v2">Replacement lowercase file</option>
   </select>
   <p id="range-version-help">Both files have ten bytes. The server can replace the uppercase file with a lowercase one while the saved prefix still belongs to the old version. A matching length does not make a matching file.</p>
+  <label id="range-if-range-label" for="range-if-range"><input id="range-if-range" type="checkbox"> Require the saved version for a partial reply</label>
+  <p id="range-condition-help">The saved strong entity tag is "v1". If-Range asks for a tail only while that version still matches. A changed version returns a complete file in this example; the client replaces its prefix instead of appending.</p>
   <label for="range-saved">Saved bytes</label>
   <select id="range-saved">
     <option value="2">Two bytes saved</option>
@@ -17,6 +19,7 @@
     <div><dt>Current complete file</dt><dd id="range-current-file">ABCDEFGHIJ</dd></div>
     <div><dt>Saved prefix</dt><dd id="range-prefix">ABCDEF</dd></div>
     <div><dt>Request</dt><dd id="range-request">Range: bytes=6-</dd></div>
+    <div><dt>Request validator</dt><dd id="range-validator">If-Range: not sent.</dd></div>
     <div><dt>Response status</dt><dd id="range-status">206 Partial Content</dd></div>
     <div><dt>Response range</dt><dd id="range-content-range">Content-Range: bytes 6-9/10</dd></div>
     <div><dt>Response body</dt><dd id="range-body">GHIJ</dd></div>
@@ -49,6 +52,25 @@
   #range-demo label {
     display: block;
     margin-top: 8px;
+  }
+  #range-demo #range-if-range-label {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 45px;
+    padding: 8px;
+  }
+  #range-demo #range-if-range {
+    box-sizing: border-box;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+  }
+  #range-demo #range-if-range:focus-visible {
+    outline: 3px solid #d99537;
+    outline-offset: 3px;
   }
   #range-demo select {
     box-sizing: border-box;
@@ -88,4 +110,4 @@
     }
   }
 </style>
-<script defer src="/range-demo.js?v=20261013-range-demo-2"></script>
+<script defer src="/range-demo.js?v=20261013-range-demo-3"></script>
