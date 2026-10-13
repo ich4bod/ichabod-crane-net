@@ -48,4 +48,26 @@
   ifRange.addEventListener('change', render);
   ifRange.addEventListener('input', render);
   render();
+
+  const endOffset = document.getElementById('range-end-offset');
+  if (endOffset) {
+    const renderEnd = () => {
+      const atEnd = endOffset.value === '10';
+      document.getElementById('range-end-request').textContent = atEnd
+        ? 'Range: bytes=10-'
+        : 'Range: bytes=0-';
+      document.getElementById('range-end-status').textContent = atEnd
+        ? '416 Range Not Satisfiable'
+        : '206 Partial Content';
+      document.getElementById('range-end-content').textContent = atEnd
+        ? 'Content-Range: bytes */10'
+        : 'Content-Range: bytes 0-9/10';
+      document.getElementById('range-end-body').textContent = atEnd
+        ? 'No representation bytes.'
+        : 'ABCDEFGHIJ';
+    };
+
+    endOffset.addEventListener('change', renderEnd);
+    renderEnd();
+  }
 })();

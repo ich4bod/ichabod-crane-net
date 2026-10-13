@@ -26,6 +26,21 @@
     <div><dt>Assembled file</dt><dd id="range-result">ABCDEFGHIJ</dd></div>
   </dl>
   <p id="range-join-note">The bytes join the original file.</p>
+  <details id="range-ends">
+    <summary>Ask at the two ends</summary>
+    <p id="range-ends-help">A ten-byte file has offsets zero through nine. Starting at zero can request all ten bytes as a range. Starting at ten is beyond the last byte. This example chooses a 416 reply with no representation bytes; real error responses can have a separate explanation body.</p>
+    <label for="range-end-offset">First byte to request</label>
+    <select id="range-end-offset" aria-describedby="range-ends-help">
+      <option value="0" selected>Start at byte zero</option>
+      <option value="10">Start after all ten bytes</option>
+    </select>
+    <dl id="range-ends-readout">
+      <div><dt>Request</dt><dd id="range-end-request">Range: bytes=0-</dd></div>
+      <div><dt>Chosen reply</dt><dd id="range-end-status">206 Partial Content</dd></div>
+      <div><dt>Returned extent</dt><dd id="range-end-content">Content-Range: bytes 0-9/10</dd></div>
+      <div><dt>Representation bytes</dt><dd id="range-end-body">ABCDEFGHIJ</dd></div>
+    </dl>
+  </details>
 </section>
 <style>
   #range-demo {
@@ -109,5 +124,64 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+  #range-demo #range-ends {
+    margin-top: 16px;
+    padding: 8px;
+    border: 1px solid #203a32;
+    border-radius: 4px;
+    background: #fffdf2;
+    color: #203a32;
+  }
+  #range-demo #range-ends summary {
+    box-sizing: border-box;
+    min-height: 45px;
+    padding: 8px;
+    cursor: pointer;
+  }
+  #range-demo #range-ends summary:focus-visible,
+  #range-demo #range-end-offset:focus-visible {
+    outline: 3px solid #d46a3c;
+    outline-offset: 3px;
+  }
+  #range-demo #range-ends p {
+    margin: 8px 0;
+  }
+  #range-demo #range-ends label {
+    display: block;
+    margin-top: 8px;
+  }
+  #range-demo #range-end-offset {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 45px;
+    padding: 8px;
+    border: 1px solid currentColor;
+    background: #fffdf2;
+    color: #203a32;
+    font: inherit;
+  }
+  #range-demo #range-ends-readout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+    margin: 16px 0 0;
+  }
+  #range-demo #range-ends-readout > div {
+    min-width: 0;
+  }
+  #range-demo #range-ends-readout dt {
+    font-weight: 600;
+  }
+  #range-demo #range-ends-readout dd {
+    margin: 0;
+    font: 16px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    overflow-wrap: anywhere;
+  }
+  @media (min-width: 720px) {
+    #range-demo #range-ends-readout {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
 </style>
-<script defer src="/range-demo.js?v=20261013-range-demo-3"></script>
+<script defer src="/range-demo.js?v=20261013-range-demo-4"></script>
