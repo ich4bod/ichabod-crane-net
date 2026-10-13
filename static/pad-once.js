@@ -5,6 +5,10 @@
   const message = instrument.querySelector('#pad-message');
   const key = instrument.querySelector('#pad-key');
   const secondMessage = instrument.querySelector('#pad-second-message');
+  const changeStep = instrument.querySelector('#pad-change-step');
+  const changeStepValue = instrument.querySelector('#pad-change-step-value');
+  const changedCipher = instrument.querySelector('#pad-changed-cipher');
+  const changedMessage = instrument.querySelector('#pad-changed-message');
   const messageValue = instrument.querySelector('#pad-message-value');
   const keyValue = instrument.querySelector('#pad-key-value');
   const secondMessageValue = instrument.querySelector('#pad-second-message-value');
@@ -27,6 +31,8 @@
     const m2 = Number(secondMessage.value);
     const ciphertext = mod(m + k);
     const secondCiphertext = mod(m2 + k);
+    const changedCiphertext = mod(ciphertext + Number(changeStep.value));
+    const recoveredChangedMessage = mod(changedCiphertext - k);
     messageValue.textContent = format(m);
     keyValue.textContent = format(k);
     sum.textContent = `${format(m)} + ${format(k)} = ${format(ciphertext)}.`;
@@ -35,6 +41,9 @@
     secondSum.textContent = `${format(m2)} + ${format(k)} = ${format(secondCiphertext)}.`;
     cipherDifference.textContent = `Ciphertext difference: ${ciphertext} − ${secondCiphertext} = ${mod(ciphertext - secondCiphertext)} modulo 26.`;
     messageDifference.textContent = `Message difference: ${m} − ${m2} = ${mod(m - m2)} modulo 26.`;
+    changeStepValue.textContent = changeStep.value;
+    changedCipher.textContent = `Changed ciphertext: ${format(ciphertext)} + ${changeStep.value} = ${format(changedCiphertext)} modulo 26.`;
+    changedMessage.textContent = `Using the same key returns ${format(recoveredChangedMessage)}, not a sender check.`;
 
     const restricted = keyAssumption.value === 'even';
     const rows = document.createDocumentFragment();
@@ -59,6 +68,7 @@
   message.addEventListener('input', render);
   key.addEventListener('input', render);
   secondMessage.addEventListener('input', render);
+  changeStep.addEventListener('input', render);
   keyAssumption.addEventListener('change', render);
   render();
 })();

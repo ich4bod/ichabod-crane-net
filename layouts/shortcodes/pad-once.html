@@ -45,6 +45,17 @@
     <p id="pad-message-difference">Message difference: 3 − 19 = 10 modulo 26.</p>
     <p>Try changing only the example key. Both ciphertexts move; this difference stays.</p>
   </details>
+  <details id="pad-change">
+    <summary>Change a ciphertext letter</summary>
+    <p id="pad-change-help">This changes the example ciphertext, then subtracts the same key. The bare alphabet sum has no test of who sent the changed letter. Real messaging protocols need more than this operation.</p>
+    <div class="pad-controls">
+      <label for="pad-change-step">Add to the ciphertext number</label>
+      <output id="pad-change-step-value" for="pad-change-step">1</output>
+      <input id="pad-change-step" type="range" min="0" max="25" step="1" value="1" aria-describedby="pad-change-help">
+    </div>
+    <p id="pad-changed-cipher">Changed ciphertext: L (11) + 1 = M (12) modulo 26.</p>
+    <p id="pad-changed-message">Using the same key returns E (4), not a sender check.</p>
+  </details>
 </section>
 <style>
   #pad-once-instrument {
@@ -90,7 +101,9 @@
   #pad-once-instrument #pad-return,
   #pad-once-instrument #pad-second-sum,
   #pad-once-instrument #pad-cipher-difference,
-  #pad-once-instrument #pad-message-difference {
+  #pad-once-instrument #pad-message-difference,
+  #pad-once-instrument #pad-changed-cipher,
+  #pad-once-instrument #pad-changed-message {
     font: 16px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     overflow-wrap: anywhere;
   }
@@ -143,4 +156,4 @@
     overflow-wrap: anywhere;
   }
 </style>
-<script defer src="/pad-once.js?v=20261013-even-keys"></script>
+<script defer src="/pad-once.js?v=20261013-cipher-change"></script>
