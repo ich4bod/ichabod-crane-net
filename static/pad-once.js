@@ -21,6 +21,8 @@
   const keyAssumption = instrument.querySelector('#pad-key-assumption');
   const candidateCaption = instrument.querySelector('#pad-candidate-caption');
   const assumptionNote = instrument.querySelector('#pad-assumption-note');
+  const weightedHelp = instrument.querySelector('#pad-weighted-help');
+  const candidateHeaderRow = candidateRows.closest('table').querySelector('thead tr');
   const letter = value => String.fromCharCode(65 + value);
   const mod = value => ((value % 26) + 26) % 26;
   const format = value => `${letter(value)} (${value})`;
@@ -46,6 +48,19 @@
     changedMessage.textContent = `Using the same key returns ${format(recoveredChangedMessage)}, not a sender check.`;
 
     const restricted = keyAssumption.value === 'even';
+    const weighted = keyAssumption.value === 'weighted';
+    const weightedHeader = candidateHeaderRow.querySelector('#pad-weighted-header');
+    if (weighted && !weightedHeader) {
+      const header = document.createElement('th');
+      header.id = 'pad-weighted-header';
+      header.className = 'pad-weighted-chance';
+      header.scope = 'col';
+      header.textContent = 'Assumed chance';
+      candidateHeaderRow.append(header);
+    } else if (!weighted && weightedHeader) {
+      weightedHeader.remove();
+    }
+    weightedHelp.hidden = !weighted;
     const rows = document.createDocumentFragment();
     for (let candidate = 0; candidate < 26; candidate += 1) {
       const matchingKey = mod(ciphertext - candidate);
@@ -56,13 +71,23 @@
       messageCell.textContent = format(candidate);
       keyCell.textContent = format(matchingKey);
       row.append(messageCell, keyCell);
+      if (weighted) {
+        const chanceCell = document.createElement('td');
+        chanceCell.className = 'pad-weighted-chance';
+        chanceCell.textContent = matchingKey === 0 ? '50%' : '2%';
+        row.append(chanceCell);
+      }
       rows.append(row);
     }
     candidateRows.replaceChildren(rows);
-    candidateCaption.textContent = `The same ciphertext, ${restricted ? 'thirteen' : 'twenty-six'} possible originals`;
-    assumptionNote.textContent = restricted
-      ? 'Only even key numbers leave thirteen possible originals. This ciphertext rules out the other thirteen.'
-      : 'All twenty-six equally likely key numbers leave all twenty-six originals possible.';
+    candidateCaption.textContent = weighted
+      ? 'The same ciphertext, twenty-six possible originals'
+      : `The same ciphertext, ${restricted ? 'thirteen' : 'twenty-six'} possible originals`;
+    assumptionNote.textContent = weighted
+      ? 'All twenty-six originals remain possible, but they are not equally likely under this key assumption.'
+      : restricted
+        ? 'Only even key numbers leave thirteen possible originals. This ciphertext rules out the other thirteen.'
+        : 'All twenty-six equally likely key numbers leave all twenty-six originals possible.';
   };
 
   message.addEventListener('input', render);

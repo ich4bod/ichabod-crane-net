@@ -18,8 +18,10 @@
     <select id="pad-key-assumption" aria-describedby="pad-assumption-help">
       <option value="all" selected>All twenty-six equally likely numbers</option>
       <option value="even">Only the thirteen even numbers</option>
+      <option value="weighted">Zero half the time, other numbers equally</option>
     </select>
     <p id="pad-assumption-help">These are assumptions for the candidate table, not a key generator or a restriction on the two sliders.</p>
+    <p id="pad-weighted-help" hidden>Assume each original letter is equally likely before seeing the ciphertext. Now suppose key zero has chance fifty percent and each other key has chance two percent, independently of the letter. All originals remain possible, but the ciphertext letter itself has chance fifty percent under these assumptions. These are supplied probabilities, not measurements or a key generator.</p>
     <table>
       <caption id="pad-candidate-caption">The same ciphertext, twenty-six possible originals</caption>
       <thead><tr><th scope="col">Message letter</th><th scope="col">Matching key letter</th></tr></thead>
@@ -155,5 +157,9 @@
     text-align: left;
     overflow-wrap: anywhere;
   }
+  #pad-once-instrument .pad-weighted-chance {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
 </style>
-<script defer src="/pad-once.js?v=20261013-cipher-change"></script>
+<script defer src="/pad-once.js?v=20261013-weighted-assumption"></script>
