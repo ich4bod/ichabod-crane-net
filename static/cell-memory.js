@@ -86,4 +86,68 @@
     renderPair();
   });
   renderPair();
+
+  const paths = {
+    rise: [0, 1, 2, 3, 4],
+    hold: [0, 4, 4, 4, 4],
+    return: [0, 4, 4, 0, 0],
+  };
+  const pathChoice = section.querySelector('#cell-path-choice');
+  const pathUse = section.querySelector('#cell-path-use');
+  const pathNext = section.querySelector('#cell-path-next');
+  const pathCurrent = section.querySelector('#cell-path-current');
+  const pathMemory = section.querySelector('#cell-path-memory');
+  const pathResponse = section.querySelector('#cell-path-response');
+  const pathUpdates = section.querySelector('#cell-path-updates');
+  const pathTrace = section.querySelector('#cell-path-trace');
+  const svgNamespace = 'http://www.w3.org/2000/svg';
+  let activePath = null;
+  let pathS = 0;
+  let pathM = 0;
+  let pathN = 0;
+  let visited = [];
+
+  const renderPath = () => {
+    pathCurrent.textContent = activePath ? String(pathS) : '—';
+    pathMemory.textContent = pathM.toFixed(3);
+    pathResponse.textContent = (pathS - pathM).toFixed(3);
+    pathUpdates.textContent = String(pathN);
+    pathNext.disabled = !activePath || pathN >= activePath.length - 1;
+
+    pathTrace.replaceChildren();
+    if (visited.length === 0) return;
+    const points = visited.map((sample, index) => `${20 + 70 * index},${180 - 40 * sample}`);
+    const line = document.createElementNS(svgNamespace, 'polyline');
+    line.setAttribute('points', points.join(' '));
+    line.setAttribute('fill', 'none');
+    line.setAttribute('stroke', '#efc86b');
+    line.setAttribute('stroke-width', '2');
+    pathTrace.append(line);
+    visited.forEach((sample, index) => {
+      const circle = document.createElementNS(svgNamespace, 'circle');
+      circle.setAttribute('cx', String(20 + 70 * index));
+      circle.setAttribute('cy', String(180 - 40 * sample));
+      circle.setAttribute('r', '5');
+      circle.setAttribute('fill', '#efc86b');
+      pathTrace.append(circle);
+    });
+  };
+
+  pathUse.addEventListener('click', () => {
+    activePath = paths[pathChoice.value].slice();
+    pathS = activePath[0];
+    pathM = 0;
+    pathN = 0;
+    visited = [pathS];
+    renderPath();
+  });
+  pathNext.addEventListener('click', () => {
+    if (!activePath || pathN >= activePath.length - 1) return;
+    pathN += 1;
+    pathS = activePath[pathN];
+    pathM += (pathS - pathM) / 4;
+    visited.push(pathS);
+    renderPath();
+  });
+  renderPath();
 })();
