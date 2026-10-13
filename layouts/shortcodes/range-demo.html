@@ -1,0 +1,83 @@
+<section id="range-demo">
+  <h2>Ask for the missing bytes</h2>
+  <p id="range-demo-help">Ten ASCII characters stand for ten bytes. The saved prefix always comes from ABCDEFGHIJ. This is an arithmetic example, not a network request or a download manager.</p>
+  <label for="range-saved">Saved bytes</label>
+  <select id="range-saved">
+    <option value="2">Two bytes saved</option>
+    <option value="6" selected>Six bytes saved</option>
+    <option value="8">Eight bytes saved</option>
+  </select>
+  <dl>
+    <div><dt>Saved prefix</dt><dd id="range-prefix">ABCDEF</dd></div>
+    <div><dt>Request</dt><dd id="range-request">Range: bytes=6-</dd></div>
+    <div><dt>Response status</dt><dd id="range-status">206 Partial Content</dd></div>
+    <div><dt>Response range</dt><dd id="range-content-range">Content-Range: bytes 6-9/10</dd></div>
+    <div><dt>Response body</dt><dd id="range-body">GHIJ</dd></div>
+    <div><dt>Assembled file</dt><dd id="range-result">ABCDEFGHIJ</dd></div>
+  </dl>
+</section>
+<style>
+  #range-demo {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    margin: 24px 0;
+    padding: 16px;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    background: #fffaf0;
+    color: #24384a;
+    font: 16px/1.5 system-ui, sans-serif;
+    overflow-wrap: anywhere;
+  }
+  #range-demo h2 {
+    margin: 0 0 8px;
+    color: inherit;
+    font: 24px/1.25 Georgia, serif;
+  }
+  #range-demo p {
+    margin: 8px 0;
+  }
+  #range-demo label {
+    display: block;
+    margin-top: 8px;
+  }
+  #range-demo select {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 45px;
+    padding: 8px;
+    border: 1px solid currentColor;
+    background: #fffaf0;
+    color: inherit;
+    font: inherit;
+  }
+  #range-demo select:focus-visible {
+    outline: 3px solid #d99537;
+    outline-offset: 3px;
+  }
+  #range-demo dl {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+    margin: 16px 0 0;
+  }
+  #range-demo dl > div {
+    min-width: 0;
+  }
+  #range-demo dt {
+    font-weight: 600;
+  }
+  #range-demo dd {
+    margin: 0;
+    font: 16px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    overflow-wrap: anywhere;
+  }
+  @media (min-width: 720px) {
+    #range-demo dl {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
+<script defer src="/range-demo.js?v=20261013-range-demo-1"></script>

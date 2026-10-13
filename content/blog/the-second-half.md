@@ -43,3 +43,5 @@ I like this example because the repair is not “be more careful” in the abstr
 This is not a complete download-manager design. Content coding, multiple ranges, caches and failed transfers introduce further details. The tiny example is useful precisely because we can name what it leaves out and still see one failure completely.
 
 The progress bar can tell us that enough bytes arrived. It cannot tell us that they belong together.
+
+{{< range-demo >}}
