@@ -1,0 +1,71 @@
+{
+  "dither": {
+    "id": "dither-questions",
+    "root": "dither-instrument",
+    "summary": "Questions about pixels and tone",
+    "lead": "These questions separate a count, a place and a prediction about light. Open an answer when you want it.",
+    "sections": [
+      [
+        "Does every input have an exact sixteen-pixel average?",
+        "Move the input between two adjacent switching thresholds. Compare its number with the white count.",
+        "No. Sixteen black-or-white places can express only seventeen white counts, from zero through sixteen. A finer input can lie between those counts. The thresholds choose a nearby count; they cannot make a fraction of a white pixel."
+      ],
+      [
+        "Does moving a threshold tile make a new tone?",
+        "Set the input to one half. Move the threshold tile across and down, then count its white places.",
+        "The positions change, but the white count on each complete tile stays eight. A shifted arrangement is not a different encoded average. Edges of an incomplete tile are a separate case."
+      ],
+      [
+        "Do equal encoded averages predict equal light?",
+        "Open the sRGB light calculation. Compare the solid swatch with the black-and-white tile at an input of one half.",
+        "No. The solid swatch uses a rounded eight-bit sRGB channel; the tile uses black and white places. The sRGB calculation predicts different relative linear-light values even when their encoded averages are close. These are model values, not measurements of your display or guarantees about perceived shade."
+      ]
+    ]
+  },
+  "hum": {
+    "id": "hum-questions",
+    "root": "hum-align",
+    "summary": "Questions about a matching strip",
+    "lead": "The samples are invented. These questions ask what the comparison notices, and what it leaves out.",
+    "sections": [
+      [
+        "Does a lowest error certify a recording?",
+        "Inspect the position-by-position differences before choosing a best position.",
+        "No. A search can return its lowest error even when every candidate is poor. This sketch compares invented frequency samples; it neither extracts a hum nor certifies a recording, its date or its scene."
+      ],
+      [
+        "Can a longer strip separate two exact positions?",
+        "Choose the repeated reference. Compare the exact positions at strip lengths four and six.",
+        "Four samples fit at positions zero and four. The next two samples differ at the first of those positions, so six samples fit only at four. More useful samples can separate these invented alternatives; more recording time with no useful signal is not the same thing."
+      ],
+      [
+        "Does removing a mean difference repair missing evidence?",
+        "Compare a frequency offset with a missing middle sample. Read the difference removed and the number of pairs used.",
+        "No. Removing the mean difference lets equal shapes agree despite an absolute frequency offset. Omitting a missing pair changes which samples contribute to the score. Neither operation invents the absent sample or binds the matching signal to the rest of a recording."
+      ]
+    ]
+  },
+  "range": {
+    "id": "range-questions",
+    "root": "range-demo",
+    "summary": "Questions about the next bytes",
+    "lead": "A byte position and a file version answer different questions. These answers do not perform a real download.",
+    "sections": [
+      [
+        "Does byte six always belong after the six bytes you kept?",
+        "Change the server file while keeping a prefix from version one. Inspect the assembled letters.",
+        "No. The offset says where to start in the selected representation, not whether that representation belongs after your old prefix. A suffix from a different version can make a convincing splice that is not the current file."
+      ],
+      [
+        "Does a matching validator force a partial reply?",
+        "Keep the validator matching, then choose the example in which the server ignores the range. Read its status and assembled file.",
+        "No. This example can send the complete current file with a 200 reply even when the validator matches. A full response replaces the kept prefix; it must not be appended to it. The sketch names a permitted server choice, not a promise that every server chooses it."
+      ],
+      [
+        "Is starting after the last byte another empty success?",
+        "Ask at byte ten of the ten-byte example and compare it with asking at byte zero.",
+        "No. The valid byte offsets are zero through nine. Byte zero can request all ten representation bytes as a range; byte ten is outside this example and receives its chosen 416 reply. No representation bytes here does not mean every real error response has an empty explanation body."
+      ]
+    ]
+  }
+}
