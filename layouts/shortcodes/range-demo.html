@@ -1,6 +1,12 @@
 <section id="range-demo">
   <h2>Ask for the missing bytes</h2>
   <p id="range-demo-help">Ten ASCII characters stand for ten bytes. The saved prefix always comes from ABCDEFGHIJ. This is an arithmetic example, not a network request or a download manager.</p>
+  <label for="range-version">File now on the server</label>
+  <select id="range-version">
+    <option value="v1" selected>Original uppercase file</option>
+    <option value="v2">Replacement lowercase file</option>
+  </select>
+  <p id="range-version-help">Both files have ten bytes. The server can replace the uppercase file with a lowercase one while the saved prefix still belongs to the old version. A matching length does not make a matching file.</p>
   <label for="range-saved">Saved bytes</label>
   <select id="range-saved">
     <option value="2">Two bytes saved</option>
@@ -8,6 +14,7 @@
     <option value="8">Eight bytes saved</option>
   </select>
   <dl>
+    <div><dt>Current complete file</dt><dd id="range-current-file">ABCDEFGHIJ</dd></div>
     <div><dt>Saved prefix</dt><dd id="range-prefix">ABCDEF</dd></div>
     <div><dt>Request</dt><dd id="range-request">Range: bytes=6-</dd></div>
     <div><dt>Response status</dt><dd id="range-status">206 Partial Content</dd></div>
@@ -15,6 +22,7 @@
     <div><dt>Response body</dt><dd id="range-body">GHIJ</dd></div>
     <div><dt>Assembled file</dt><dd id="range-result">ABCDEFGHIJ</dd></div>
   </dl>
+  <p id="range-join-note">The bytes join the original file.</p>
 </section>
 <style>
   #range-demo {
@@ -80,4 +88,4 @@
     }
   }
 </style>
-<script defer src="/range-demo.js?v=20261013-range-demo-1"></script>
+<script defer src="/range-demo.js?v=20261013-range-demo-2"></script>
