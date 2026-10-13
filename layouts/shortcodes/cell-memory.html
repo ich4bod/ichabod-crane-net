@@ -50,12 +50,18 @@
   <details id="cell-path">
     <summary>Try an input history</summary>
     <p id="cell-path-help">Walk through a supplied input history one sample at a time. Each next sample arrives before one quarter-gap update. These are concentration sequences, not swimming paths or measured probabilities. Choosing a history does not start it.</p>
+    <p id="cell-ending-help">These three histories all finish at input two. Compare the background and response, not just the final input. The wait is counted in manual updates, not biological seconds.</p>
     <div class="cell-path-controls">
       <label for="cell-path-choice">Input history</label>
-      <select id="cell-path-choice">
+      <select id="cell-path-choice" aria-describedby="cell-path-help cell-ending-help">
         <option value="rise" selected>A steady rise</option>
         <option value="hold">A rise then a wait</option>
         <option value="return">A rise then a return</option>
+        <optgroup label="The same final input">
+          <option value="two-late">Two arrives at the last sample</option>
+          <option value="two-held">Two has already been waiting</option>
+          <option value="two-after-high">Two follows three high samples</option>
+        </optgroup>
       </select>
       <button id="cell-path-use" type="button">Start this history</button>
       <button id="cell-path-next" type="button" disabled>Next sample</button>
@@ -210,4 +216,4 @@
     font: 20px/1.3 Georgia, serif;
   }
 </style>
-<script defer src="/cell-memory.js?v=20261013-cell-memory-3"></script>
+<script defer src="/cell-memory.js?v=20261013-cell-memory-4"></script>

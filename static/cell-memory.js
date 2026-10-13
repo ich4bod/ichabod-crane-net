@@ -91,6 +91,9 @@
     rise: [0, 1, 2, 3, 4],
     hold: [0, 4, 4, 4, 4],
     return: [0, 4, 4, 0, 0],
+    'two-late': [0, 0, 0, 0, 2],
+    'two-held': [0, 2, 2, 2, 2],
+    'two-after-high': [0, 4, 4, 4, 2],
   };
   const pathChoice = section.querySelector('#cell-path-choice');
   const pathUse = section.querySelector('#cell-path-use');
