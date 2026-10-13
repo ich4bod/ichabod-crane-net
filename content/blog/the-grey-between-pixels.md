@@ -39,3 +39,5 @@ I like the constraint best when I can still see its terms. These are the colours
 A nearest-colour rule can be right about every pixel and poor at describing the image. Dithering offers a modest escape: stop demanding that each mark carry the whole answer.
 
 That does not make every noisy surface better. It gives the neighbouring marks a job. A picture can live between them.
+
+{{< dither-tile >}}

@@ -1,0 +1,125 @@
+<section id="dither-instrument" aria-labelledby="dither-heading">
+  <h2 id="dither-heading">Sixteen places for a tone</h2>
+  <p id="dither-help">This is an encoded black-to-white number, not a measurement of light. The tile uses sixteen different thresholds. White pixels mix with black neighbours; a count does not guarantee a perceived shade.</p>
+  <label for="dither-input">White fraction to encode</label>
+  <div class="dither-control">
+    <input id="dither-input" type="range" min="0" max="16" step="1" value="8" aria-describedby="dither-help">
+    <output id="dither-input-value" for="dither-input">0.5000</output>
+  </div>
+  <div class="dither-figures">
+    <figure>
+      <figcaption>The input number</figcaption>
+      <div id="dither-input-swatch" aria-hidden="true"></div>
+    </figure>
+    <figure>
+      <figcaption>Plain cutoff</figcaption>
+      <svg id="dither-cutoff" viewBox="0 0 4 4" role="img" aria-label="Plain cutoff" xmlns="http://www.w3.org/2000/svg">
+        {{ range seq 0 15 }}<rect x="{{ mod . 4 }}" y="{{ div . 4 }}" width="1" height="1" fill="#ffffff" />{{ end }}
+      </svg>
+    </figure>
+    <figure>
+      <figcaption>Ordered thresholds</figcaption>
+      <svg id="dither-tile" viewBox="0 0 4 4" role="img" aria-label="Ordered thresholds" xmlns="http://www.w3.org/2000/svg">
+        {{ $ranks := slice 0 8 2 10 12 4 14 6 3 11 1 9 15 7 13 5 }}{{ range $i, $rank := $ranks }}<rect x="{{ mod $i 4 }}" y="{{ div $i 4 }}" width="1" height="1" data-rank="{{ $rank }}" fill="#000000" />{{ end }}
+      </svg>
+    </figure>
+  </div>
+  <p id="dither-cutoff-count">Plain cutoff: 16 of 16 pixels are white.</p>
+  <p id="dither-count">8 of 16 pixels are white. The encoded average is 0.5000.</p>
+  <p id="dither-rule">At each place, rank r switches to white when the input is at least (r + 0.5) / 16. The plain cutoff switches every place together at 0.5. Sixteen distinct ranks make the requested count exact on this seventeen-step input.</p>
+  <figure class="dither-field-figure">
+    <figcaption>The same threshold tile repeated</figcaption>
+    <svg id="dither-field" viewBox="0 0 32 32" role="img" aria-label="The same threshold tile repeated" xmlns="http://www.w3.org/2000/svg">
+      {{ $ranks := slice 0 8 2 10 12 4 14 6 3 11 1 9 15 7 13 5 }}{{ range seq 0 1023 }}{{ $x := mod . 32 }}{{ $y := div . 32 }}{{ $rank := index $ranks (add (mul (mod $y 4) 4) (mod $x 4)) }}<rect x="{{ $x }}" y="{{ $y }}" width="1" height="1" data-rank="{{ $rank }}" fill="#000000" />{{ end }}
+    </svg>
+  </figure>
+</section>
+<style>
+  #dither-instrument {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 24px 0;
+    padding: 16px;
+    border: 1px solid #c8d0be;
+    border-radius: 8px;
+    background: #fffdf2;
+    color: #203a32;
+    font: 16px/1.5 system-ui, sans-serif;
+    overflow-wrap: anywhere;
+  }
+  #dither-instrument h2 {
+    margin: 0 0 8px;
+    color: inherit;
+    font: 24px/1.25 Georgia, serif;
+  }
+  #dither-instrument p {
+    margin: 8px 0;
+  }
+  #dither-instrument label {
+    display: block;
+    margin-top: 8px;
+  }
+  #dither-instrument .dither-control {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+  }
+  #dither-instrument #dither-input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 45px;
+    margin: 0;
+    accent-color: #d46a3c;
+  }
+  #dither-instrument #dither-input:focus-visible {
+    outline: 3px solid #d46a3c;
+    outline-offset: 3px;
+  }
+  #dither-instrument #dither-input-value {
+    flex: 0 0 auto;
+    font-variant-numeric: tabular-nums;
+  }
+  #dither-instrument .dither-figures {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+  #dither-instrument figure {
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+  }
+  #dither-instrument figcaption {
+    margin-bottom: 8px;
+  }
+  #dither-instrument #dither-input-swatch,
+  #dither-instrument #dither-cutoff,
+  #dither-instrument #dither-tile {
+    display: block;
+    box-sizing: border-box;
+    width: 128px;
+    max-width: 100%;
+    aspect-ratio: 1;
+  }
+  #dither-instrument #dither-field {
+    display: block;
+    box-sizing: border-box;
+    width: 256px;
+    max-width: 100%;
+    aspect-ratio: 1;
+  }
+  #dither-instrument .dither-field-figure {
+    margin-top: 16px;
+  }
+  @media (min-width: 720px) {
+    #dither-instrument .dither-figures {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
+<script defer src="/dither-tile.js?v=20261013-dither-tile-1"></script>
