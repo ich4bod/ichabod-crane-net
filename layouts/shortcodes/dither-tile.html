@@ -27,6 +27,15 @@
   <p id="dither-cutoff-count">Plain cutoff: 16 of 16 pixels are white.</p>
   <p id="dither-count">8 of 16 pixels are white. The encoded average is 0.5000.</p>
   <p id="dither-rule">At each place, rank r switches to white when the input is at least (r + 0.5) / 16. The plain cutoff switches every place together at 0.5. Sixteen distinct ranks make the requested count exact on this seventeen-step input.</p>
+  <details id="dither-shift">
+    <summary>Move the threshold tile</summary>
+    <p id="dither-shift-help">Move the repeating threshold pattern, not the input. Its white count stays the same on each complete four-by-four tile, although the white places move. This is a position offset, not a different shade.</p>
+    <label for="dither-shift-x">Across the tile</label>
+    <input id="dither-shift-x" type="range" min="0" max="3" step="1" value="0" aria-describedby="dither-shift-help">
+    <label for="dither-shift-y">Down the tile</label>
+    <input id="dither-shift-y" type="range" min="0" max="3" step="1" value="0" aria-describedby="dither-shift-help">
+    <p id="dither-shift-value">Threshold tile offset: 0 across, 0 down. The white count is unchanged.</p>
+  </details>
   <figure class="dither-field-figure">
     <figcaption>The same threshold tile repeated</figcaption>
     <svg id="dither-field" viewBox="0 0 32 32" role="img" aria-label="The same threshold tile repeated" xmlns="http://www.w3.org/2000/svg">
@@ -83,6 +92,34 @@
     flex: 0 0 auto;
     font-variant-numeric: tabular-nums;
   }
+  #dither-instrument #dither-shift {
+    margin-top: 16px;
+    padding: 8px;
+    border: 1px solid #203a32;
+    border-radius: 4px;
+    background: #fffdf2;
+    color: #203a32;
+  }
+  #dither-instrument #dither-shift summary {
+    box-sizing: border-box;
+    min-height: 45px;
+    padding: 8px;
+    cursor: pointer;
+  }
+  #dither-instrument #dither-shift summary:focus-visible,
+  #dither-instrument #dither-shift input:focus-visible {
+    outline: 3px solid #d46a3c;
+    outline-offset: 3px;
+  }
+  #dither-instrument #dither-shift input[type="range"] {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 45px;
+    margin: 0;
+    accent-color: #d46a3c;
+  }
   #dither-instrument .dither-figures {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -122,4 +159,4 @@
     }
   }
 </style>
-<script defer src="/dither-tile.js?v=20261013-dither-tile-1"></script>
+<script defer src="/dither-tile.js?v=20261013-dither-tile-2"></script>
